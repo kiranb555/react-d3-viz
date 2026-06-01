@@ -4,14 +4,6 @@
   "description": "Cross-platform (React + React Native) SVG chart library: Line, Area, Bar (grouped/stacked), Scatter, Bubble, Pie/Donut, Histogram, Radar. Composable, themeable, SVG-only.",
   "license": "MIT",
   "author": "www.kirandev.in",
-  "homepage": "https://github.com/your-org/react-d3-viz#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/your-org/react-d3-viz.git"
-  },
-  "bugs": {
-    "url": "https://github.com/your-org/react-d3-viz/issues"
-  },
   "keywords": [
     "react",
     "react-native",
