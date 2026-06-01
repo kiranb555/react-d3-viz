@@ -4,6 +4,14 @@
   "description": "Cross-platform (React + React Native) SVG chart library: Line, Area, Bar (grouped/stacked), Scatter, Bubble, Pie/Donut, Histogram, Radar. Composable, themeable, SVG-only.",
   "license": "MIT",
   "author": "www.kirandev.in",
+  "homepage": "https://kiranb555.github.io/react-d3-viz-ui/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kiranb555/react-d3-viz.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kiranb555/react-d3-viz/issues"
+  },
   "keywords": [
     "react",
     "react-native",
@@ -36,7 +44,9 @@
     }
   },
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.lib.json",
@@ -48,7 +58,8 @@
     "typecheck": "tsc -p tsconfig.lib.json --noEmit",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "shots": "node scripts/shots.mjs"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -57,9 +68,15 @@
     "react-native-svg": "*"
   },
   "peerDependenciesMeta": {
-    "react-dom": { "optional": true },
-    "react-native": { "optional": true },
-    "react-native-svg": { "optional": true }
+    "react-dom": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    },
+    "react-native-svg": {
+      "optional": true
+    }
   },
   "dependencies": {
     "d3-array": "^3.2.4",
@@ -82,6 +99,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
     "jsdom": "^25.0.1",
+    "puppeteer-core": "^25.1.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-native-svg": "^15.0.0",
