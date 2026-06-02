@@ -29,6 +29,9 @@ export type { HistogramProps } from './components/charts/Histogram/Histogram';
 export { RadarChart } from './components/charts/RadarChart/RadarChart';
 export type { RadarChartProps } from './components/charts/RadarChart/RadarChart';
 
+export { TreemapChart } from './components/charts/TreemapChart/TreemapChart';
+export type { TreemapChartProps } from './components/charts/TreemapChart/TreemapChart';
+
 // ── Composable building blocks ─────────────────────────────────────────────
 export { CartesianChart } from './components/CartesianChart';
 export type { CartesianChartProps, XScaleType } from './components/CartesianChart';
@@ -73,6 +76,8 @@ export type { Dimension, ResolvedSize } from './hooks/useAutoSize';
 export { numericDomain, linear, time, band, point } from './core/scales';
 export { linePath, areaPath, pieArcs, resolveCurve } from './core/shapes';
 export type { CurveType, Point, ComputedArc } from './core/shapes';
+export { treemapLayout } from './core/treemap';
+export type { TreemapInput, TreemapOptions, TreemapRect, ChildrenAccessor } from './core/treemap';
 export { continuousTicks, categoricalTicks } from './core/ticks';
 export { computeBounds, DEFAULT_MARGIN } from './core/bounds';
 export { clamp01, lerp, lerpArray, easing } from './core/interpolate';

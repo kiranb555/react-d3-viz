@@ -34,6 +34,7 @@ const SHOTS = [
   'shot-donut',
   'shot-histogram',
   'shot-radar',
+  'shot-treemap',
 ];
 
 async function main() {
