@@ -9,7 +9,7 @@ npm run dev        # Vite dev server — runs the demo harness (src/App.tsx)
 npm run build      # tsc -p tsconfig.lib.json → dist/ (the publishable library)
 npm test           # Vitest (core unit tests + jsdom render tests)
 npm run lint       # ESLint
-npm run storybook  # Storybook (optional; stories are not required)
+npm run storybook  # Storybook — every chart ships a `.stories.tsx` (see "Authoring a new chart")
 ```
 
 ## What this project is
@@ -36,7 +36,7 @@ The core idea is **separating geometry computation from rendering** so the same 
 
 4. **`src/components/` — chart components.** `CartesianChart` is the shared frame for x/y charts: it owns scales, ticks, legend toggling, and hover state, exposes them via `ChartContext`, renders the `Svg` root, and delegates series geometry to a `renderSeries` callback. `Grid`, `XAxis`/`YAxis`, `Legend`, `Tooltip` are SVG-native building blocks that read `ChartContext`. Everything (axes, grid, legend, tooltip) renders **inside the SVG** for cross-platform parity.
 
-   Radial charts (`PieChart`, `RadarChart`) are **self-contained** — they do not use the Cartesian frame.
+   Radial/hierarchical charts (`PieChart`, `RadarChart`, `TreemapChart`) are **self-contained** — they do not use the Cartesian frame.
 
 ### D3 module usage
 
@@ -56,7 +56,7 @@ Import granularly for tree-shaking — never `import * as d3 from 'd3'`. **Only*
 src/
 ├── index.ts                       # Public API
 ├── core/                          # pure JS, platform-agnostic, heavily tested
-│   ├── scales.ts  shapes.ts  ticks.ts  bounds.ts  interpolate.ts  accessors.ts  types.ts
+│   ├── scales.ts  shapes.ts  ticks.ts  treemap.ts  bounds.ts  interpolate.ts  accessors.ts  types.ts
 ├── primitives/
 │   ├── types.ts                   # platform-neutral SVG prop shapes
 │   ├── index.tsx                  # web (DOM) adapter (default)
@@ -69,15 +69,29 @@ src/
 │   └── charts/                    # one folder per chart
 │       ├── common.ts              # BaseCartesianProps + resolveSeries
 │       ├── LineChart/  AreaChart/  BarChart/  ScatterPlot/
-│       ├── BubbleChart/  PieChart/  Histogram/  RadarChart/
+│       ├── BubbleChart/  PieChart/  Histogram/  RadarChart/  TreemapChart/
 └── utils/                         # colorPalettes.ts  dataHelpers.ts
 ```
 
 ## Charts
 
-LineChart, AreaChart, BarChart (grouped + `stacked`), ScatterPlot, BubbleChart, PieChart (+ donut via `innerRadius`), Histogram, RadarChart.
+LineChart, AreaChart, BarChart (grouped + `stacked`), ScatterPlot, BubbleChart, PieChart (+ donut via `innerRadius`), Histogram, RadarChart, TreemapChart (flat, grouped via `group`, or nested via `childrenKey`). The treemap's squarify tiling lives in `core/treemap.ts` — implemented in-house (no `d3-hierarchy`), the same way `core/ticks.ts` replaced `d3-axis`.
 
 Cartesian charts share `BaseCartesianProps` (`data`, `x`, `series` or `y` shorthand, `width`/`height`, `margin`, `theme`, `show*`, formatters, `animate`). Customize via the theme (global) or per-component props (local). Interactivity: SVG tooltips (hover/touch), interactive legends (tap to toggle series), hover/touch highlight, optional rAF enter animations.
+
+## Authoring a new chart
+
+When asked to add a new chart, follow these standards exactly:
+
+1. **Placement** — one folder `src/components/charts/<Name>/<Name>.tsx`. Cartesian (x/y) charts use the `CartesianChart` frame + a `renderSeries` callback. Radial/hierarchical charts are self-contained (own `Svg` root), modeled on `PieChart.tsx`.
+2. **Compute vs. render** — all geometry/layout math goes in a pure-JS `src/core/*.ts` module (no DOM, no React; only `d3-scale`/`d3-array`/`d3-shape`). The component only renders. If a normally-D3 layout isn't in the allowed modules (e.g. hierarchy), implement it in `core/` — see `core/treemap.ts` / `core/ticks.ts`.
+3. **Primitives only** — import from `../../../primitives` (Svg/G/Rect/Path/Circle/Line/SvgText). Never use raw DOM SVG, `<canvas>`, `foreignObject`, `d3-axis`/`d3-selection`/`d3-zoom`, or import `react-native`.
+4. **Props baseline** — `data`, accessor props typed `Accessor<T>`, `width`/`height`/`aspect`, `theme?: DeepPartial<ChartTheme>`, `colors?`, `show*` toggles, `animate?`, and any relevant formatter. Read theme via `useTheme`, size via `useAutoSize`, animate via `useAnimatedValue`.
+5. **Standard interactivity** — SVG tooltip (hover/touch) and an interactive bottom legend (tap to toggle), matching the other charts.
+6. **Always write tests** — unit-test the `core/` layout in `test/<name>.test.ts` (bounds, no overlap, proportionality, edge cases) **and** add a render case to `test/render.test.tsx`. `npm run lint`, `npm test`, and `npm run build` must all stay green.
+7. **Always add a Storybook story** — ship `src/components/charts/<Name>/<Name>.stories.tsx` covering the main variants/props (every existing chart has one).
+8. **Wire-up & docs (this repo)** — export the component + props type from `src/index.ts`; add a demo card to `src/App.tsx`; add a gallery tile in `screenshots/Gallery.tsx` + an entry in `scripts/shots.mjs`; add the chart to the README charts list and to this file.
+9. **Always update the `react-d3-viz-ui` repo** — the docs site / live playground (https://kiranb555.github.io/react-d3-viz-ui/) is a **separate repository**. Add the new chart's documentation page and interactive examples there too. If that repo isn't checked out locally, flag it so it can be cloned/updated as a follow-up — a chart is not "done" until its docs + examples land there.
 
 ## Build output
 

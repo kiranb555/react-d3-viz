@@ -10,6 +10,7 @@ import {
   PieChart,
   Histogram,
   RadarChart,
+  TreemapChart,
 } from '../src/index';
 
 afterEach(cleanup);
@@ -36,6 +37,19 @@ const radar = [
   { axis: 'Power', team: 60 },
   { axis: 'Range', team: 90 },
 ];
+const treemapFlat = [
+  { name: 'A', cat: 'X', value: 40 },
+  { name: 'B', cat: 'X', value: 30 },
+  { name: 'C', cat: 'Y', value: 20 },
+  { name: 'D', cat: 'Y', value: 10 },
+];
+const treemapNested = {
+  name: 'root',
+  children: [
+    { name: 'X', children: [{ name: 'a', value: 10 }, { name: 'b', value: 20 }] },
+    { name: 'Y', children: [{ name: 'c', value: 30 }] },
+  ],
+};
 
 function renderChart(node: React.ReactElement) {
   return render(<ThemeProvider theme={noAnim}>{node}</ThemeProvider>);
@@ -93,6 +107,22 @@ describe('chart rendering (web SVG)', () => {
   it('RadarChart renders polygons', () => {
     const { container } = renderChart(<RadarChart data={radar} axis="axis" series={[{ dataKey: 'team' }]} width={300} height={300} />);
     expect(container.querySelectorAll('path').length).toBeGreaterThan(0);
+  });
+
+  it('TreemapChart (grouped flat) renders a rect per leaf', () => {
+    const { container } = renderChart(
+      <TreemapChart data={treemapFlat} value="value" label="name" group="cat" width={400} height={300} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    // 4 leaves + group bands + background + legend swatches → at least 4 rects.
+    expect(container.querySelectorAll('rect').length).toBeGreaterThanOrEqual(4);
+  });
+
+  it('TreemapChart (nested) renders a rect per leaf', () => {
+    const { container } = renderChart(
+      <TreemapChart data={treemapNested} value="value" label="name" width={400} height={300} />,
+    );
+    expect(container.querySelectorAll('rect').length).toBeGreaterThanOrEqual(3);
   });
 
   it('width="auto" renders a 100%-width measuring svg (responsive mode)', () => {

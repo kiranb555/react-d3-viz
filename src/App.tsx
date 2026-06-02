@@ -8,6 +8,7 @@ import {
   PieChart,
   Histogram,
   RadarChart,
+  TreemapChart,
 } from './index';
 
 const months = [
@@ -50,6 +51,50 @@ const radar = [
   { axis: 'Agility', team: 85, rival: 65 },
   { axis: 'Stamina', team: 60, rival: 70 },
 ];
+
+// Flat records + a `group` accessor → a 2-level (grouped) treemap.
+const marketShare = [
+  { name: 'Chrome', os: 'Desktop', share: 45 },
+  { name: 'Edge', os: 'Desktop', share: 12 },
+  { name: 'Firefox', os: 'Desktop', share: 8 },
+  { name: 'Safari', os: 'Desktop', share: 10 },
+  { name: 'Chrome Mobile', os: 'Mobile', share: 38 },
+  { name: 'Safari Mobile', os: 'Mobile', share: 25 },
+  { name: 'Samsung', os: 'Mobile', share: 6 },
+];
+
+// A nested hierarchy (like the d3 "flare" example) → leaves colored by branch.
+const tech = {
+  name: 'tech',
+  children: [
+    {
+      name: 'Frontend',
+      children: [
+        { name: 'React', value: 40 },
+        { name: 'Vue', value: 18 },
+        { name: 'Svelte', value: 9 },
+        { name: 'Angular', value: 14 },
+      ],
+    },
+    {
+      name: 'Backend',
+      children: [
+        { name: 'Node', value: 30 },
+        { name: 'Go', value: 16 },
+        { name: 'Rust', value: 11 },
+        { name: 'Python', value: 26 },
+      ],
+    },
+    {
+      name: 'Data',
+      children: [
+        { name: 'Postgres', value: 22 },
+        { name: 'Redis', value: 10 },
+        { name: 'Kafka', value: 8 },
+      ],
+    },
+  ],
+};
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -105,6 +150,14 @@ export default function App() {
 
         <Card title="Radar">
           <RadarChart data={radar} axis="axis" series={[{ dataKey: 'team' }, { dataKey: 'rival' }]} height={360} />
+        </Card>
+
+        <Card title="Treemap — grouped (flat data + group)">
+          <TreemapChart data={marketShare} value="share" label="name" group="os" showValues height={320} />
+        </Card>
+
+        <Card title="Treemap — nested hierarchy (flare style)">
+          <TreemapChart data={tech} value="value" label="name" childrenKey="children" showValues height={340} />
         </Card>
       </div>
     </ThemeProvider>

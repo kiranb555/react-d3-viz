@@ -9,6 +9,7 @@ import {
   PieChart,
   Histogram,
   RadarChart,
+  TreemapChart,
 } from '../src/index';
 
 // Deterministic pseudo-random so screenshots are stable across runs.
@@ -62,6 +63,38 @@ const radar = [
   { axis: 'Agility', team: 85, rival: 65 },
   { axis: 'Stamina', team: 60, rival: 70 },
 ];
+
+const tech = {
+  name: 'tech',
+  children: [
+    {
+      name: 'Frontend',
+      children: [
+        { name: 'React', value: 40 },
+        { name: 'Vue', value: 18 },
+        { name: 'Svelte', value: 9 },
+        { name: 'Angular', value: 14 },
+      ],
+    },
+    {
+      name: 'Backend',
+      children: [
+        { name: 'Node', value: 30 },
+        { name: 'Go', value: 16 },
+        { name: 'Rust', value: 11 },
+        { name: 'Python', value: 26 },
+      ],
+    },
+    {
+      name: 'Data',
+      children: [
+        { name: 'Postgres', value: 22 },
+        { name: 'Redis', value: 10 },
+        { name: 'Kafka', value: 8 },
+      ],
+    },
+  ],
+};
 
 const W = 440;
 const H = 280;
@@ -160,6 +193,9 @@ export default function Gallery() {
           </Shot>
           <Shot id="shot-radar">
             <RadarChart data={radar} axis="axis" series={[{ dataKey: 'team' }, { dataKey: 'rival' }]} width={W} height={H} animate={false} />
+          </Shot>
+          <Shot id="shot-treemap">
+            <TreemapChart data={tech} value="value" label="name" showValues width={W} height={H} animate={false} />
           </Shot>
         </div>
       </div>

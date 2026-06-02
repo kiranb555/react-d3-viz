@@ -38,9 +38,11 @@ Most chart libraries are web-only. react-d3-viz separates **geometry computation
 | 🎨 **Themeable end-to-end** | A single `ThemeProvider`, or per-chart overrides merged over sensible defaults. |
 | ✅ **Tested** | 44 unit + jsdom render tests across the compute core and components (Vitest). |
 
+> **Coming from [recharts](https://www.npmjs.com/package/recharts) or [victory](https://www.npmjs.com/package/victory)?** Those are excellent on the web, but web-only. react-d3-viz targets the same composable, themeable API while running unchanged on **React Native** too. See the [size on Bundlephobia](https://bundlephobia.com/package/react-d3-viz) and the [download trend](https://npmtrends.com/react-d3-viz).
+
 ## Charts
 
-`LineChart` · `AreaChart` · `BarChart` (grouped & stacked) · `ScatterPlot` · `BubbleChart` · `PieChart` (+ donut) · `Histogram` · `RadarChart`
+`LineChart` · `AreaChart` · `BarChart` (grouped & stacked) · `ScatterPlot` · `BubbleChart` · `PieChart` (+ donut) · `Histogram` · `RadarChart` · `TreemapChart` (flat, grouped & nested)
 
 <table>
   <tr>
@@ -62,6 +64,10 @@ Most chart libraries are web-only. react-d3-viz separates **geometry computation
   <tr>
     <td align="center"><b>Histogram</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/histogram.png" width="300"></td>
     <td align="center"><b>Radar</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/radar.png" width="300"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Treemap</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/treemap.png" width="300"></td>
+    <td></td>
   </tr>
 </table>
 
