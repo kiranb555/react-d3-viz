@@ -14,7 +14,7 @@ npm run storybook  # Storybook — every chart ships a `.stories.tsx` (see "Auth
 
 ## What this project is
 
-A reusable **cross-platform SVG chart library** that runs on **both React (web) and React Native** from one codebase. It is published as a tree-shakeable package (entry `src/index.ts`). React/react-dom (web) and react-native/react-native-svg (native) are **optional peer dependencies** — never bundle them. `d3-scale`, `d3-shape`, `d3-array` are regular dependencies (pure JS, platform-agnostic).
+A reusable **cross-platform SVG chart library** that runs on **both React (web) and React Native** from one codebase. It is published as a tree-shakeable package (entry `src/index.ts`). `react`/`react-dom` (web) are peer dependencies; `react-native` and `react-native-svg` are deliberately **not** listed as peers (so web installs are never prompted to install native packages — tools ignore `peerDependenciesMeta.optional`). Native consumers install `react-native-svg` themselves. Never bundle any of them. `d3-scale`, `d3-shape`, `d3-array` are regular dependencies (pure JS, platform-agnostic).
 
 It is **SVG only** (no Canvas). `src/App.tsx` is the web demo/dev harness and is not part of the published package.
 

@@ -33,7 +33,7 @@ Most chart libraries are web-only. react-d3-viz separates **geometry computation
 |---|---|
 | 📱 **Truly cross-platform** | One import, one codebase — runs on web **and** React Native. Axes, grid, legend, and tooltips all render *inside* the SVG for pixel parity. |
 | 🪶 **Lightweight & tree-shakeable** | Ships as ESM with `"sideEffects": false`. Only `d3-scale`, `d3-shape`, `d3-array` (pure JS) are bundled — import one chart, ship one chart. |
-| 🤝 **No framework lock-in** | `react`, `react-dom`, `react-native`, `react-native-svg` are **optional peer dependencies** — never bundled, never duplicated. |
+| 🤝 **No framework lock-in** | `react` / `react-dom` are peer deps (web). On React Native you add `react-native-svg` yourself — it's **not** a peer dependency, so web installs never get prompted for native packages. Nothing is bundled or duplicated. |
 | 🔷 **TypeScript-first** | Written in TypeScript, ships `.d.ts` declarations for every component, prop, and theme token. |
 | 🎨 **Themeable end-to-end** | A single `ThemeProvider`, or per-chart overrides merged over sensible defaults. |
 | ✅ **Tested** | 44 unit + jsdom render tests across the compute core and components (Vitest). |
@@ -83,7 +83,7 @@ npm i react-d3-viz
 npm i react-d3-viz react-native-svg
 ```
 
-`react`, `react-dom`, `react-native`, and `react-native-svg` are optional peer dependencies — only install what your platform needs.
+`react` (+ `react-dom` on web) is the only peer dependency. `react-native-svg` is required **only** for React Native — you install it there yourself; it is intentionally not a peer dependency, so web installs are never prompted to add native packages.
 
 ## Usage
 
