@@ -36,7 +36,7 @@ Most chart libraries are web-only. react-d3-viz separates **geometry computation
 | 🤝 **No framework lock-in** | `react` / `react-dom` are peer deps (web). On React Native you add `react-native-svg` yourself — it's **not** a peer dependency, so web installs never get prompted for native packages. Nothing is bundled or duplicated. |
 | 🔷 **TypeScript-first** | Written in TypeScript, ships `.d.ts` declarations for every component, prop, and theme token. |
 | 🎨 **Themeable end-to-end** | A single `ThemeProvider`, or per-chart overrides merged over sensible defaults. |
-| ✅ **Tested** | 44 unit + jsdom render tests across the compute core and components (Vitest). |
+| ✅ **Tested** | 89 unit + jsdom render tests across the compute core and components (Vitest). |
 
 > **Coming from [recharts](https://www.npmjs.com/package/recharts) or [victory](https://www.npmjs.com/package/victory)?** Those are excellent on the web, but web-only. react-d3-viz targets the same composable, themeable API while running unchanged on **React Native** too. See the [size on Bundlephobia](https://bundlephobia.com/package/react-d3-viz) and the [download trend](https://npmtrends.com/react-d3-viz).
 
@@ -67,7 +67,11 @@ Most chart libraries are web-only. react-d3-viz separates **geometry computation
   </tr>
   <tr>
     <td align="center"><b>Treemap</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/treemap.png" width="300"></td>
-    <td></td>
+    <td align="center"><b>Waterfall</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/waterfall.png" width="300"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Sankey</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/sankey.png" width="300"></td>
+    <td align="center"><b>Mekko</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/mekko.png" width="300"></td>
   </tr>
 </table>
 
@@ -90,7 +94,7 @@ npm i react-d3-viz react-native-svg
 The same import works on web and native:
 
 ```tsx
-import { LineChart, BarChart, PieChart, ThemeProvider } from 'react-d3-viz';
+import { LineChart, BarChart, PieChart, WaterfallChart, SankeyDiagram, MekkoChart, ThemeProvider } from 'react-d3-viz';
 
 const data = [
   { month: 'Jan', sales: 42, profit: 18 },
