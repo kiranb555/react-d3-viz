@@ -15,6 +15,7 @@ import {
   ButterflyChart,
   HeatmapChart,
   SunburstChart,
+  QuadrantChart,
 } from './index';
 
 const months = [
@@ -195,6 +196,21 @@ export default function App() {
 
         <Card title="Scatter">
           <ScatterPlot data={scatter} x="x" y="y" height={280} />
+        </Card>
+
+        <Card title="Quadrant Chart">
+          <QuadrantChart
+            data={Array.from({ length: 50 }, () => ({
+              x: Math.round(Math.random() * 100),
+              y: Math.round(Math.random() * 100),
+            }))}
+            x="x"
+            y="y"
+            thresholdMode="mean"
+            quadrantLabels={['High-High', 'Low-High', 'Low-Low', 'High-Low']}
+            showQuadrantLabels
+            height={300}
+          />
         </Card>
 
         <Card title="Bubble (size = third dimension)">
