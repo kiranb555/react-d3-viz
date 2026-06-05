@@ -32,6 +32,9 @@ export type { RadarChartProps } from './components/charts/RadarChart/RadarChart'
 export { TreemapChart } from './components/charts/TreemapChart/TreemapChart';
 export type { TreemapChartProps } from './components/charts/TreemapChart/TreemapChart';
 
+export { WaterfallChart } from './components/charts/WaterfallChart/WaterfallChart';
+export type { WaterfallChartProps } from './components/charts/WaterfallChart/WaterfallChart';
+
 // ── Composable building blocks ─────────────────────────────────────────────
 export { CartesianChart } from './components/CartesianChart';
 export type { CartesianChartProps, XScaleType } from './components/CartesianChart';

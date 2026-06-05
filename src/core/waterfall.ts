@@ -1,6 +1,13 @@
 // src/core/waterfall.ts
 import { scaleLinear } from "d3-scale";
-import { Bounds, Margin } from "./types";
+import { Margin } from "./types";
+
+interface Bounds {
+  minX: number;
+  maxX: number;
+  minY: number;
+  maxY: number;
+}
 
 export interface WaterfallDataPoint {
   label: string;
