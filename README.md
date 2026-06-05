@@ -67,13 +67,17 @@ Most chart libraries are web-only. react-d3-viz separates **geometry computation
   </tr>
   <tr>
     <td align="center"><b>Treemap</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/treemap.png" width="300"></td>
-    <td align="center"><b>Waterfall</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/waterfall.png" width="300"></td>
-  </tr>
-  <tr>
-    <td align="center"><b>Sankey</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/sankey.png" width="300"></td>
-    <td align="center"><b>Mekko</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/mekko.png" width="300"></td>
+    <td align="center"><b>Radar</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/radar.png" width="300"></td>
   </tr>
 </table>
+
+### New in v1.1.0 — Three New Chart Types
+
+| Chart | Use Case |
+|-------|----------|
+| **WaterfallChart** | Cumulative flows with positive/negative steps (revenue, P&L analysis) |
+| **SankeyDiagram** | Node-and-link flows showing movement between states (supply chains, user journeys) |
+| **MekkoChart** | Varying-width stacked bars combining two dimensions (market analysis, portfolios) |
 
 > 🎮 **Play with every chart, prop, and theme live in the [Playground →](https://kiranb555.github.io/react-d3-viz-ui/)**
 
