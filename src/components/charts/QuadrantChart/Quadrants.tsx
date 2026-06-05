@@ -32,7 +32,7 @@ export function Quadrants({
   xDomain,
   yDomain,
 }: QuadrantsProps) {
-  const { xPixel, yPixel, bounds, theme } = useChartContext();
+  const { bounds, theme } = useChartContext();
 
   // For a linear numeric x-scale, the scale maps data values [xDomain[0], xDomain[1]]
   // to pixel positions [0, bounds.innerWidth]. We can invert by sampling two points.
@@ -108,8 +108,8 @@ export function Quadrants({
     },
   ];
 
-  const defaultFontSize = theme.axis.fontSize || 12;
-  const labelColor = theme.colors.text || '#666';
+  const defaultFontSize = theme.axis.labelSize || 12;
+  const labelColor = theme.axis.labelColor || '#666';
 
   return (
     <G>
@@ -126,7 +126,6 @@ export function Quadrants({
             height={quad.height}
             fill={quadrantStyles[i].backgroundColor}
             fillOpacity={quadrantStyles[i].backgroundOpacity}
-            pointerEvents="none"
           />
         );
       })}
@@ -140,7 +139,6 @@ export function Quadrants({
         stroke={quadrantStyles[0].dividerStroke}
         strokeWidth={quadrantStyles[0].dividerStrokeWidth}
         strokeDasharray="2,2"
-        pointerEvents="none"
       />
 
       {/* Horizontal divider line (Y threshold) */}
@@ -152,7 +150,6 @@ export function Quadrants({
         stroke={quadrantStyles[0].dividerStroke}
         strokeWidth={quadrantStyles[0].dividerStrokeWidth}
         strokeDasharray="2,2"
-        pointerEvents="none"
       />
 
       {/* Quadrant labels (centered in each quadrant) */}
@@ -171,7 +168,6 @@ export function Quadrants({
               fontSize={defaultFontSize}
               fill={labelColor}
               opacity={0.6}
-              pointerEvents="none"
             >
               {quadrantLabels[i]}
             </SvgText>

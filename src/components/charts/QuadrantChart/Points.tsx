@@ -62,7 +62,7 @@ export function Points({
 
         r = r * t;
 
-        const isActive = active?.seriesIndex === series.seriesIndex && active?.index === i;
+        const isActive = active?.index === i;
 
         return (
           <Circle
