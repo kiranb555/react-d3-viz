@@ -144,6 +144,69 @@ native: `onLayout`) — no wrapper component needed.
 
 The same applies on React Native (wrap the chart in a `View` with a width).
 
+## New in v1.1.0
+
+### Waterfall Chart
+Visualize cumulative flows with positive and negative steps. Perfect for showing how an initial value changes through a series of increases and decreases (e.g., revenue flows, financial analysis).
+
+```tsx
+<WaterfallChart
+  data={[
+    { label: "Starting Balance", value: 1000 },
+    { label: "Revenue", value: 500 },
+    { label: "Expenses", value: -300 },
+    { label: "Final Balance", value: 1200, isTotal: true }
+  ]}
+  width={600}
+  height={400}
+/>
+```
+
+### Sankey Diagram
+Node-and-link flow diagrams showing the movement of quantities between different states or categories. Ideal for showing supply chains, energy flows, or user journeys.
+
+```tsx
+<SankeyDiagram
+  data={{
+    nodes: [
+      { id: "source1", label: "Source 1" },
+      { id: "sink1", label: "Sink 1" }
+    ],
+    links: [
+      { source: "source1", target: "sink1", value: 100 }
+    ]
+  }}
+  width={600}
+  height={400}
+/>
+```
+
+### Mekko Chart
+Stacked bars with varying column widths, combining two dimensions in one visualization. Great for market analysis, product portfolio analysis, and segment comparisons.
+
+```tsx
+<MekkoChart
+  data={{
+    categories: [
+      { label: "Q1", value: 1000 },
+      { label: "Q2", value: 1200 }
+    ],
+    series: [
+      {
+        id: "product-a",
+        label: "Product A",
+        data: [
+          { categoryId: "Q1", value: 600 },
+          { categoryId: "Q2", value: 700 }
+        ]
+      }
+    ]
+  }}
+  width={600}
+  height={400}
+/>
+```
+
 ## Customization
 
 **Per-chart props** — every chart accepts `width`, `height`, `margin`, `showGrid`, `showXAxis`, `showYAxis`, `showTooltip`, `showLegend`, `xTickCount`, `yTickCount`, `formatX`, `formatY`, and `animate`. Each series accepts `color`, `label`, `curve`, `strokeWidth`, `showPoints`, `fillOpacity`, `dashArray`.
