@@ -10,6 +10,7 @@ import {
   Histogram,
   RadarChart,
   TreemapChart,
+  ButterflyChart,
 } from '../src/index';
 
 // Deterministic pseudo-random so screenshots are stable across runs.
@@ -95,6 +96,16 @@ const tech = {
     },
   ],
 };
+
+const butterflyData = [
+  { age: '0–14', male: 12.5, female: 11.8 },
+  { age: '15–24', male: 9.0, female: 8.6 },
+  { age: '25–34', male: 10.3, female: 10.0 },
+  { age: '35–44', male: 9.8, female: 9.9 },
+  { age: '45–54', male: 8.7, female: 9.0 },
+  { age: '55–64', male: 7.2, female: 7.8 },
+  { age: '65+', male: 5.1, female: 6.9 },
+];
 
 const W = 440;
 const H = 280;
@@ -196,6 +207,21 @@ export default function Gallery() {
           </Shot>
           <Shot id="shot-treemap">
             <TreemapChart data={tech} value="value" label="name" showValues width={W} height={H} animate={false} />
+          </Shot>
+          <Shot id="shot-butterfly">
+            <ButterflyChart
+              data={butterflyData}
+              category="age"
+              left="male"
+              right="female"
+              leftLabel="Male"
+              rightLabel="Female"
+              valueFormat={(v) => v + '%'}
+              showValues
+              width={W}
+              height={H}
+              animate={false}
+            />
           </Shot>
         </div>
       </div>

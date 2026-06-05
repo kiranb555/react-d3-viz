@@ -12,6 +12,9 @@ import {
   WaterfallChart,
   SankeyDiagram,
   MekkoChart,
+  ButterflyChart,
+  HeatmapChart,
+  SunburstChart,
 } from './index';
 
 const months = [
@@ -94,6 +97,65 @@ const tech = {
         { name: 'Postgres', value: 22 },
         { name: 'Redis', value: 10 },
         { name: 'Kafka', value: 8 },
+      ],
+    },
+  ],
+};
+
+const butterflyData = [
+  { age: '0–14', male: 12.5, female: 11.8 },
+  { age: '15–24', male: 9.0, female: 8.6 },
+  { age: '25–34', male: 10.3, female: 10.0 },
+  { age: '35–44', male: 9.8, female: 9.9 },
+  { age: '45–54', male: 8.7, female: 9.0 },
+  { age: '55–64', male: 7.2, female: 7.8 },
+  { age: '65+', male: 5.1, female: 6.9 },
+];
+
+const heatmapData = [
+  { hour: '00:00', day: 'Mon', temp: 15 },
+  { hour: '00:00', day: 'Tue', temp: 16 },
+  { hour: '00:00', day: 'Wed', temp: 14 },
+  { hour: '04:00', day: 'Mon', temp: 12 },
+  { hour: '04:00', day: 'Tue', temp: 13 },
+  { hour: '04:00', day: 'Wed', temp: 11 },
+  { hour: '08:00', day: 'Mon', temp: 18 },
+  { hour: '08:00', day: 'Tue', temp: 19 },
+  { hour: '08:00', day: 'Wed', temp: 17 },
+  { hour: '12:00', day: 'Mon', temp: 24 },
+  { hour: '12:00', day: 'Tue', temp: 25 },
+  { hour: '12:00', day: 'Wed', temp: 23 },
+  { hour: '16:00', day: 'Mon', temp: 26 },
+  { hour: '16:00', day: 'Tue', temp: 27 },
+  { hour: '16:00', day: 'Wed', temp: 25 },
+  { hour: '20:00', day: 'Mon', temp: 22 },
+  { hour: '20:00', day: 'Tue', temp: 23 },
+  { hour: '20:00', day: 'Wed', temp: 21 },
+];
+
+const sunburstData = {
+  name: 'Organization',
+  children: [
+    {
+      name: 'Engineering',
+      children: [
+        { name: 'Frontend', value: 45 },
+        { name: 'Backend', value: 38 },
+        { name: 'DevOps', value: 22 },
+      ],
+    },
+    {
+      name: 'Product',
+      children: [
+        { name: 'Design', value: 18 },
+        { name: 'Management', value: 12 },
+      ],
+    },
+    {
+      name: 'Sales',
+      children: [
+        { name: 'Enterprise', value: 35 },
+        { name: 'Mid-Market', value: 28 },
       ],
     },
   ],
@@ -224,6 +286,43 @@ export default function App() {
               ]
             }}
             height={280}
+          />
+        </Card>
+
+        <Card title="Butterfly Chart">
+          <ButterflyChart
+            data={butterflyData}
+            category="age"
+            left="male"
+            right="female"
+            leftLabel="Male"
+            rightLabel="Female"
+            valueFormat={(v) => v + '%'}
+            showValues
+            height={280}
+          />
+        </Card>
+
+        <Card title="Heatmap (temperature by day/hour)">
+          <HeatmapChart
+            data={heatmapData}
+            rowKey="day"
+            columnKey="hour"
+            valueKey="temp"
+            formatValue={(v) => `${v}°C`}
+            colorStart="#4575b4"
+            colorEnd="#d73027"
+            height={280}
+          />
+        </Card>
+
+        <Card title="Sunburst (hierarchical — click to drill-down)">
+          <SunburstChart
+            data={sunburstData}
+            value="value"
+            label="name"
+            childrenKey="children"
+            height={360}
           />
         </Card>
       </div>

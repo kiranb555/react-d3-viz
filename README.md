@@ -42,7 +42,7 @@ Most chart libraries are web-only. react-d3-viz separates **geometry computation
 
 ## Charts
 
-`LineChart` · `AreaChart` · `BarChart` (grouped & stacked) · `ScatterPlot` · `BubbleChart` · `PieChart` (+ donut) · `Histogram` · `RadarChart` · `TreemapChart` (flat, grouped & nested) · `WaterfallChart` · `SankeyDiagram` · `MekkoChart`
+`LineChart` · `AreaChart` · `BarChart` (grouped & stacked) · `ScatterPlot` · `BubbleChart` · `PieChart` (+ donut) · `Histogram` · `RadarChart` · `TreemapChart` (flat, grouped & nested) · `WaterfallChart` · `SankeyDiagram` · `MekkoChart` · `ButterflyChart` · `HeatmapChart`
 
 <table>
   <tr>
@@ -78,6 +78,12 @@ Most chart libraries are web-only. react-d3-viz separates **geometry computation
 | **WaterfallChart** | Cumulative flows with positive/negative steps (revenue, P&L analysis) |
 | **SankeyDiagram** | Node-and-link flows showing movement between states (supply chains, user journeys) |
 | **MekkoChart** | Varying-width stacked bars combining two dimensions (market analysis, portfolios) |
+
+### New in v1.2.0 — Butterfly Chart
+
+| Chart | Use Case |
+|-------|----------|
+| **ButterflyChart** | Side-by-side horizontal bars from a center axis (population pyramids, A/B comparisons) |
 
 > 🎮 **Play with every chart, prop, and theme live in the [Playground →](https://kiranb555.github.io/react-d3-viz-ui/)**
 
