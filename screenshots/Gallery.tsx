@@ -12,6 +12,7 @@ import {
   TreemapChart,
   ButterflyChart,
   HeatmapChart,
+  QuadrantChart,
 } from '../src/index';
 
 // Deterministic pseudo-random so screenshots are stable across runs.
@@ -128,6 +129,11 @@ const heatmapData = [
   { hour: '20:00', day: 'Tue', temp: 23 },
   { hour: '20:00', day: 'Wed', temp: 21 },
 ];
+
+const quadrantData = Array.from({ length: 50 }, () => ({
+  x: rnd() * 100,
+  value: rnd() * 100,
+}));
 
 const W = 440;
 const H = 280;
@@ -256,6 +262,18 @@ export default function Gallery() {
               colorEnd="#d73027"
               width={W}
               height={H}
+              animate={false}
+            />
+          </Shot>
+          <Shot id="shot-quadrant">
+            <QuadrantChart
+              data={quadrantData}
+              x="x"
+              y="value"
+              width={W}
+              height={H}
+              thresholdMode="mean"
+              showQuadrantLabels={true}
               animate={false}
             />
           </Shot>

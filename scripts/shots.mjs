@@ -37,6 +37,7 @@ const SHOTS = [
   'shot-treemap',
   'shot-butterfly',
   'shot-heatmap',
+  'shot-quadrant',
 ];
 
 async function main() {
