@@ -11,6 +11,7 @@ import {
   RadarChart,
   TreemapChart,
   ButterflyChart,
+  HeatmapChart,
 } from '../src/index';
 
 // Deterministic pseudo-random so screenshots are stable across runs.
@@ -105,6 +106,27 @@ const butterflyData = [
   { age: '45–54', male: 8.7, female: 9.0 },
   { age: '55–64', male: 7.2, female: 7.8 },
   { age: '65+', male: 5.1, female: 6.9 },
+];
+
+const heatmapData = [
+  { hour: '00:00', day: 'Mon', temp: 15 },
+  { hour: '00:00', day: 'Tue', temp: 16 },
+  { hour: '00:00', day: 'Wed', temp: 14 },
+  { hour: '04:00', day: 'Mon', temp: 12 },
+  { hour: '04:00', day: 'Tue', temp: 13 },
+  { hour: '04:00', day: 'Wed', temp: 11 },
+  { hour: '08:00', day: 'Mon', temp: 18 },
+  { hour: '08:00', day: 'Tue', temp: 19 },
+  { hour: '08:00', day: 'Wed', temp: 17 },
+  { hour: '12:00', day: 'Mon', temp: 24 },
+  { hour: '12:00', day: 'Tue', temp: 25 },
+  { hour: '12:00', day: 'Wed', temp: 23 },
+  { hour: '16:00', day: 'Mon', temp: 26 },
+  { hour: '16:00', day: 'Tue', temp: 27 },
+  { hour: '16:00', day: 'Wed', temp: 25 },
+  { hour: '20:00', day: 'Mon', temp: 22 },
+  { hour: '20:00', day: 'Tue', temp: 23 },
+  { hour: '20:00', day: 'Wed', temp: 21 },
 ];
 
 const W = 440;
@@ -218,6 +240,20 @@ export default function Gallery() {
               rightLabel="Female"
               valueFormat={(v) => v + '%'}
               showValues
+              width={W}
+              height={H}
+              animate={false}
+            />
+          </Shot>
+          <Shot id="shot-heatmap">
+            <HeatmapChart
+              data={heatmapData}
+              rowKey="day"
+              columnKey="hour"
+              valueKey="temp"
+              formatValue={(v) => `${v}°C`}
+              colorStart="#4575b4"
+              colorEnd="#d73027"
               width={W}
               height={H}
               animate={false}

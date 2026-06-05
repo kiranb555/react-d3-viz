@@ -36,6 +36,7 @@ const SHOTS = [
   'shot-radar',
   'shot-treemap',
   'shot-butterfly',
+  'shot-heatmap',
 ];
 
 async function main() {

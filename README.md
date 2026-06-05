@@ -42,7 +42,7 @@ Most chart libraries are web-only. react-d3-viz separates **geometry computation
 
 ## Charts
 
-`LineChart` · `AreaChart` · `BarChart` (grouped & stacked) · `ScatterPlot` · `BubbleChart` · `PieChart` (+ donut) · `Histogram` · `RadarChart` · `TreemapChart` (flat, grouped & nested) · `WaterfallChart` · `SankeyDiagram` · `MekkoChart` · `ButterflyChart` · `HeatmapChart`
+`LineChart` · `AreaChart` · `BarChart` (grouped & stacked) · `ScatterPlot` · `BubbleChart` · `PieChart` (+ donut) · `QuadrantChart` · `Histogram` · `RadarChart` · `TreemapChart` (flat, grouped & nested) · `WaterfallChart` · `SankeyDiagram` · `MekkoChart` · `ButterflyChart` · `HeatmapChart`
 
 <table>
   <tr>
