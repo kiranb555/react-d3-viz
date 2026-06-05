@@ -46,6 +46,18 @@ export type {
   SankeyData,
 } from './core/sankey';
 
+export { ButterflyChart } from './components/charts/ButterflyChart';
+export type { ButterflyChartProps } from './components/charts/ButterflyChart';
+
+export { HeatmapChart } from './components/charts/HeatmapChart/HeatmapChart';
+export type { HeatmapChartProps } from './components/charts/HeatmapChart/HeatmapChart';
+
+export { SunburstChart } from './components/charts/SunburstChart/SunburstChart';
+export type { SunburstChartProps } from './components/charts/SunburstChart/SunburstChart';
+
+export { QuadrantChart } from './components/charts/QuadrantChart/QuadrantChart';
+export type { QuadrantChartProps } from './components/charts/QuadrantChart/QuadrantChart';
+
 export type {
   WaterfallDataPoint,
   WaterfallLayoutResult,
@@ -97,6 +109,8 @@ export { linePath, areaPath, pieArcs, resolveCurve } from './core/shapes';
 export type { CurveType, Point, ComputedArc } from './core/shapes';
 export { treemapLayout } from './core/treemap';
 export type { TreemapInput, TreemapOptions, TreemapRect, ChildrenAccessor } from './core/treemap';
+export { sunburstLayout } from './core/sunburst';
+export type { SunburstInput, SunburstOptions, SunburstArc, ChildrenAccessor as SunburstChildrenAccessor } from './core/sunburst';
 export { continuousTicks, categoricalTicks } from './core/ticks';
 export { computeBounds, DEFAULT_MARGIN } from './core/bounds';
 export { clamp01, lerp, lerpArray, easing } from './core/interpolate';
@@ -104,6 +118,8 @@ export { makeAccessor, getNumber, getCategory } from './core/accessors';
 export type { Accessor } from './core/accessors';
 export { calculateMekkoLayout } from './core/mekko';
 export type { MekkoCategory, MekkoSeriesData, MekkoSeries, MekkoData, MekkoSegment, MekkoColumn, MekkoLayoutResult } from './core/mekko';
+export { createLinearColorScale, createDivergingColorScale, computeHeatmapCells, heatmapExtent } from './core/heatmap';
+export type { HeatmapColorScale, HeatmapCell, ColorInterpolation } from './core/heatmap';
 export type { Datum, Margin, ChartBounds, NumericDomain, Tick } from './core/types';
 
 // ── Color palettes & data helpers ──────────────────────────────────────────

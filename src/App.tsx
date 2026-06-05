@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
   ThemeProvider,
   LineChart,
@@ -12,6 +13,10 @@ import {
   WaterfallChart,
   SankeyDiagram,
   MekkoChart,
+  ButterflyChart,
+  HeatmapChart,
+  SunburstChart,
+  QuadrantChart,
 } from './index';
 
 const months = [
@@ -24,12 +29,6 @@ const months = [
   { month: 'Jul', sales: 84, profit: 36 },
 ];
 
-const scatter = Array.from({ length: 60 }, () => ({
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 100 + 5,
-}));
-
 const pie = [
   { label: 'JavaScript', value: 38.7 },
   { label: 'Python', value: 24.5 },
@@ -39,12 +38,29 @@ const pie = [
   { label: 'Other', value: 3.2 },
 ];
 
-const histValues = Array.from({ length: 500 }, () => {
-  // Roughly normal via central limit.
-  let s = 0;
-  for (let i = 0; i < 6; i++) s += Math.random();
-  return (s / 6) * 100;
-});
+function generateScatterData() {
+  return Array.from({ length: 60 }, () => ({
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 100 + 5,
+  }));
+}
+
+function generateHistValues() {
+  return Array.from({ length: 500 }, () => {
+    // Roughly normal via central limit.
+    let s = 0;
+    for (let i = 0; i < 6; i++) s += Math.random();
+    return (s / 6) * 100;
+  });
+}
+
+function generateQuadrantData() {
+  return Array.from({ length: 50 }, () => ({
+    x: Math.round(Math.random() * 100),
+    y: Math.round(Math.random() * 100),
+  }));
+}
 
 const radar = [
   { axis: 'Speed', team: 80, rival: 60 },
@@ -99,6 +115,65 @@ const tech = {
   ],
 };
 
+const butterflyData = [
+  { age: '0–14', male: 12.5, female: 11.8 },
+  { age: '15–24', male: 9.0, female: 8.6 },
+  { age: '25–34', male: 10.3, female: 10.0 },
+  { age: '35–44', male: 9.8, female: 9.9 },
+  { age: '45–54', male: 8.7, female: 9.0 },
+  { age: '55–64', male: 7.2, female: 7.8 },
+  { age: '65+', male: 5.1, female: 6.9 },
+];
+
+const heatmapData = [
+  { hour: '00:00', day: 'Mon', temp: 15 },
+  { hour: '00:00', day: 'Tue', temp: 16 },
+  { hour: '00:00', day: 'Wed', temp: 14 },
+  { hour: '04:00', day: 'Mon', temp: 12 },
+  { hour: '04:00', day: 'Tue', temp: 13 },
+  { hour: '04:00', day: 'Wed', temp: 11 },
+  { hour: '08:00', day: 'Mon', temp: 18 },
+  { hour: '08:00', day: 'Tue', temp: 19 },
+  { hour: '08:00', day: 'Wed', temp: 17 },
+  { hour: '12:00', day: 'Mon', temp: 24 },
+  { hour: '12:00', day: 'Tue', temp: 25 },
+  { hour: '12:00', day: 'Wed', temp: 23 },
+  { hour: '16:00', day: 'Mon', temp: 26 },
+  { hour: '16:00', day: 'Tue', temp: 27 },
+  { hour: '16:00', day: 'Wed', temp: 25 },
+  { hour: '20:00', day: 'Mon', temp: 22 },
+  { hour: '20:00', day: 'Tue', temp: 23 },
+  { hour: '20:00', day: 'Wed', temp: 21 },
+];
+
+const sunburstData = {
+  name: 'Organization',
+  children: [
+    {
+      name: 'Engineering',
+      children: [
+        { name: 'Frontend', value: 45 },
+        { name: 'Backend', value: 38 },
+        { name: 'DevOps', value: 22 },
+      ],
+    },
+    {
+      name: 'Product',
+      children: [
+        { name: 'Design', value: 18 },
+        { name: 'Management', value: 12 },
+      ],
+    },
+    {
+      name: 'Sales',
+      children: [
+        { name: 'Enterprise', value: 35 },
+        { name: 'Mid-Market', value: 28 },
+      ],
+    },
+  ],
+};
+
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div style={{ background: '#fff', borderRadius: 12, padding: 20, boxShadow: '0 1px 3px rgba(0,0,0,0.08)', marginBottom: 28 }}>
@@ -109,6 +184,10 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 }
 
 export default function App() {
+  const scatter = useMemo(() => generateScatterData(), []);
+  const histValues = useMemo(() => generateHistValues(), []);
+  const quadrantData = useMemo(() => generateQuadrantData(), []);
+
   return (
     <ThemeProvider>
       <div style={{ maxWidth: 640, margin: '0 auto', padding: '40px 20px', background: '#f9fafb', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
@@ -133,6 +212,18 @@ export default function App() {
 
         <Card title="Scatter">
           <ScatterPlot data={scatter} x="x" y="y" height={280} />
+        </Card>
+
+        <Card title="Quadrant Chart">
+          <QuadrantChart
+            data={quadrantData}
+            x="x"
+            y="y"
+            thresholdMode="mean"
+            quadrantLabels={['High-High', 'Low-High', 'Low-Low', 'High-Low']}
+            showQuadrantLabels
+            height={300}
+          />
         </Card>
 
         <Card title="Bubble (size = third dimension)">
@@ -224,6 +315,43 @@ export default function App() {
               ]
             }}
             height={280}
+          />
+        </Card>
+
+        <Card title="Butterfly Chart">
+          <ButterflyChart
+            data={butterflyData}
+            category="age"
+            left="male"
+            right="female"
+            leftLabel="Male"
+            rightLabel="Female"
+            valueFormat={(v) => v + '%'}
+            showValues
+            height={280}
+          />
+        </Card>
+
+        <Card title="Heatmap (temperature by day/hour)">
+          <HeatmapChart
+            data={heatmapData}
+            rowKey="day"
+            columnKey="hour"
+            valueKey="temp"
+            formatValue={(v) => `${v}°C`}
+            colorStart="#4575b4"
+            colorEnd="#d73027"
+            height={280}
+          />
+        </Card>
+
+        <Card title="Sunburst (hierarchical — click to drill-down)">
+          <SunburstChart
+            data={sunburstData}
+            value="value"
+            label="name"
+            childrenKey="children"
+            height={360}
           />
         </Card>
       </div>

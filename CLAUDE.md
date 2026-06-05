@@ -75,7 +75,7 @@ src/
 
 ## Charts
 
-LineChart, AreaChart, BarChart (grouped + `stacked`), ScatterPlot, BubbleChart, PieChart (+ donut via `innerRadius`), Histogram, RadarChart, TreemapChart (flat, grouped via `group`, or nested via `childrenKey`). The treemap's squarify tiling lives in `core/treemap.ts` — implemented in-house (no `d3-hierarchy`), the same way `core/ticks.ts` replaced `d3-axis`.
+LineChart, AreaChart, BarChart (grouped + `stacked`), ScatterPlot, BubbleChart, QuadrantChart, PieChart (+ donut via `innerRadius`), Histogram, RadarChart, TreemapChart (flat, grouped via `group`, or nested via `childrenKey`). The treemap's squarify tiling lives in `core/treemap.ts` — implemented in-house (no `d3-hierarchy`), the same way `core/ticks.ts` replaced `d3-axis`.
 
 Cartesian charts share `BaseCartesianProps` (`data`, `x`, `series` or `y` shorthand, `width`/`height`, `margin`, `theme`, `show*`, formatters, `animate`). Customize via the theme (global) or per-component props (local). Interactivity: SVG tooltips (hover/touch), interactive legends (tap to toggle series), hover/touch highlight, optional rAF enter animations.
 
