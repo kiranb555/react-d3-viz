@@ -40,6 +40,16 @@ export type { MekkoChartProps } from './components/charts/MekkoChart/MekkoChart'
 
 export { SankeyDiagram } from './components/charts/SankeyDiagram/SankeyDiagram';
 export type { SankeyDiagramProps } from './components/charts/SankeyDiagram/SankeyDiagram';
+export type {
+  SankeyNode,
+  SankeyLink,
+  SankeyData,
+} from './core/sankey';
+
+export type {
+  WaterfallDataPoint,
+  WaterfallLayoutResult,
+} from './core/waterfall';
 
 // ── Composable building blocks ─────────────────────────────────────────────
 export { CartesianChart } from './components/CartesianChart';
