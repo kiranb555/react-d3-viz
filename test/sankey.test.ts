@@ -109,7 +109,7 @@ describe("calculateSankeyLayout", () => {
       id: `node-${i}`,
       label: `Node ${i}`
     }));
-    const links = Array.from({ length: 200 }, (_, i) => ({
+    const links = Array.from({ length: 200 }, () => ({
       source: nodes[Math.floor(Math.random() * 50)].id,
       target: nodes[50 + Math.floor(Math.random() * 50)].id,
       value: Math.random() * 100
