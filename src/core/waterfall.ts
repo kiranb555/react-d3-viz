@@ -1,6 +1,6 @@
 // src/core/waterfall.ts
 import { scaleLinear } from "d3-scale";
-import { Margin } from "./types";
+import type { Margin } from "./types";
 
 interface Bounds {
   minX: number;

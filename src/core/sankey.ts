@@ -1,5 +1,5 @@
 // src/core/sankey.ts
-import { Margin } from "./types";
+import type { Margin } from "./types";
 
 export interface SankeyNode {
   id: string | number;

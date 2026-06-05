@@ -1,6 +1,6 @@
 // src/core/mekko.ts
 import { scaleLinear } from "d3-scale";
-import { Margin } from "./types";
+import type { Margin } from "./types";
 
 export interface MekkoCategory {
   id?: string;
