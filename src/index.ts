@@ -38,6 +38,9 @@ export type { WaterfallChartProps } from './components/charts/WaterfallChart/Wat
 export { MekkoChart } from './components/charts/MekkoChart/MekkoChart';
 export type { MekkoChartProps } from './components/charts/MekkoChart/MekkoChart';
 
+export { SankeyDiagram } from './components/charts/SankeyDiagram/SankeyDiagram';
+export type { SankeyDiagramProps } from './components/charts/SankeyDiagram/SankeyDiagram';
+
 // ── Composable building blocks ─────────────────────────────────────────────
 export { CartesianChart } from './components/CartesianChart';
 export type { CartesianChartProps, XScaleType } from './components/CartesianChart';
