@@ -32,6 +32,25 @@ export type { RadarChartProps } from './components/charts/RadarChart/RadarChart'
 export { TreemapChart } from './components/charts/TreemapChart/TreemapChart';
 export type { TreemapChartProps } from './components/charts/TreemapChart/TreemapChart';
 
+export { WaterfallChart } from './components/charts/WaterfallChart/WaterfallChart';
+export type { WaterfallChartProps } from './components/charts/WaterfallChart/WaterfallChart';
+
+export { MekkoChart } from './components/charts/MekkoChart/MekkoChart';
+export type { MekkoChartProps } from './components/charts/MekkoChart/MekkoChart';
+
+export { SankeyDiagram } from './components/charts/SankeyDiagram/SankeyDiagram';
+export type { SankeyDiagramProps } from './components/charts/SankeyDiagram/SankeyDiagram';
+export type {
+  SankeyNode,
+  SankeyLink,
+  SankeyData,
+} from './core/sankey';
+
+export type {
+  WaterfallDataPoint,
+  WaterfallLayoutResult,
+} from './core/waterfall';
+
 // ── Composable building blocks ─────────────────────────────────────────────
 export { CartesianChart } from './components/CartesianChart';
 export type { CartesianChartProps, XScaleType } from './components/CartesianChart';
@@ -83,6 +102,8 @@ export { computeBounds, DEFAULT_MARGIN } from './core/bounds';
 export { clamp01, lerp, lerpArray, easing } from './core/interpolate';
 export { makeAccessor, getNumber, getCategory } from './core/accessors';
 export type { Accessor } from './core/accessors';
+export { calculateMekkoLayout } from './core/mekko';
+export type { MekkoCategory, MekkoSeriesData, MekkoSeries, MekkoData, MekkoSegment, MekkoColumn, MekkoLayoutResult } from './core/mekko';
 export type { Datum, Margin, ChartBounds, NumericDomain, Tick } from './core/types';
 
 // ── Color palettes & data helpers ──────────────────────────────────────────

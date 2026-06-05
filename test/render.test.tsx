@@ -11,6 +11,9 @@ import {
   Histogram,
   RadarChart,
   TreemapChart,
+  WaterfallChart,
+  SankeyDiagram,
+  MekkoChart,
 } from '../src/index';
 
 afterEach(cleanup);
@@ -133,5 +136,152 @@ describe('chart rendering (web SVG)', () => {
     expect(svg).toBeTruthy();
     expect(svg?.getAttribute('width')).toBe('100%');
     expect(svg?.getAttribute('height')).toBe('240');
+  });
+
+  it('WaterfallChart renders without crashing', () => {
+    const { container } = renderChart(
+      <WaterfallChart
+        data={[
+          { label: 'A', value: 100 },
+          { label: 'B', value: 50 },
+          { label: 'C', value: 150, isTotal: true },
+        ]}
+        width={400}
+        height={300}
+      />
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+  });
+
+  it('WaterfallChart renders correct number of segments', () => {
+    const data = [
+      { label: 'A', value: 100 },
+      { label: 'B', value: 50 },
+    ];
+    const { container } = renderChart(
+      <WaterfallChart data={data} width={400} height={300} />
+    );
+    expect(container.querySelectorAll('rect').length).toBeGreaterThan(0);
+  });
+
+  it('WaterfallChart handles empty data gracefully', () => {
+    const { container } = renderChart(
+      <WaterfallChart data={[]} width={400} height={300} />
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+  });
+
+  it('SankeyDiagram renders without crashing', () => {
+    const { container } = renderChart(
+      <SankeyDiagram
+        data={{
+          nodes: [
+            { id: 'a', label: 'A' },
+            { id: 'b', label: 'B' },
+          ],
+          links: [{ source: 'a', target: 'b', value: 50 }],
+        }}
+        width={400}
+        height={300}
+      />
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+  });
+
+  it('SankeyDiagram renders correct number of nodes and links', () => {
+    const { container } = renderChart(
+      <SankeyDiagram
+        data={{
+          nodes: [
+            { id: 'a', label: 'A' },
+            { id: 'b', label: 'B' },
+            { id: 'c', label: 'C' },
+          ],
+          links: [
+            { source: 'a', target: 'b', value: 50 },
+            { source: 'b', target: 'c', value: 50 },
+          ],
+        }}
+        width={400}
+        height={300}
+      />
+    );
+    expect(container.querySelectorAll('rect').length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('SankeyDiagram handles empty data gracefully', () => {
+    const { container } = renderChart(
+      <SankeyDiagram
+        data={{ nodes: [], links: [] }}
+        width={400}
+        height={300}
+      />
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+  });
+
+  it('MekkoChart renders without crashing', () => {
+    const { container } = renderChart(
+      <MekkoChart
+        data={{
+          categories: [{ label: 'Q1', value: 100 }],
+          series: [
+            {
+              id: 'a',
+              label: 'A',
+              data: [{ categoryId: 'Q1', value: 100 }],
+            },
+          ],
+        }}
+        width={400}
+        height={300}
+      />
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+  });
+
+  it('MekkoChart renders correct number of segments', () => {
+    const { container } = renderChart(
+      <MekkoChart
+        data={{
+          categories: [
+            { label: 'Q1', value: 100 },
+            { label: 'Q2', value: 150 },
+          ],
+          series: [
+            {
+              id: 'a',
+              label: 'A',
+              data: [
+                { categoryId: 'Q1', value: 50 },
+                { categoryId: 'Q2', value: 75 },
+              ],
+            },
+            {
+              id: 'b',
+              label: 'B',
+              data: [
+                { categoryId: 'Q1', value: 50 },
+                { categoryId: 'Q2', value: 75 },
+              ],
+            },
+          ],
+        }}
+        width={400}
+        height={300}
+      />
+    );
+    expect(container.querySelectorAll('rect').length).toBeGreaterThan(0);
+  });
+
+  it('MekkoChart handles empty data gracefully', () => {
+    const { container } = renderChart(
+      <MekkoChart
+        data={{ categories: [], series: [] }}
+        width={400}
+        height={300}
+      />
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
   });
 });

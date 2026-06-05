@@ -9,6 +9,9 @@ import {
   Histogram,
   RadarChart,
   TreemapChart,
+  WaterfallChart,
+  SankeyDiagram,
+  MekkoChart,
 } from './index';
 
 const months = [
@@ -158,6 +161,70 @@ export default function App() {
 
         <Card title="Treemap — nested hierarchy (flare style)">
           <TreemapChart data={tech} value="value" label="name" childrenKey="children" showValues height={340} />
+        </Card>
+
+        <Card title="Waterfall Chart">
+          <WaterfallChart
+            data={[
+              { label: 'Start', value: 100 },
+              { label: 'Revenue', value: 50 },
+              { label: 'Costs', value: -20 },
+              { label: 'End', value: 130, isTotal: true }
+            ]}
+            height={280}
+          />
+        </Card>
+
+        <Card title="Sankey Diagram">
+          <SankeyDiagram
+            data={{
+              nodes: [
+                { id: 'a', label: 'Source A' },
+                { id: 'b', label: 'Source B' },
+                { id: 'x', label: 'Sink X' },
+                { id: 'y', label: 'Sink Y' }
+              ],
+              links: [
+                { source: 'a', target: 'x', value: 30 },
+                { source: 'a', target: 'y', value: 20 },
+                { source: 'b', target: 'x', value: 40 }
+              ]
+            }}
+            height={280}
+          />
+        </Card>
+
+        <Card title="Mekko Chart">
+          <MekkoChart
+            data={{
+              categories: [
+                { label: 'Q1', value: 100 },
+                { label: 'Q2', value: 150 },
+                { label: 'Q3', value: 120 }
+              ],
+              series: [
+                {
+                  id: 'a',
+                  label: 'Product A',
+                  data: [
+                    { categoryId: 'Q1', value: 40 },
+                    { categoryId: 'Q2', value: 60 },
+                    { categoryId: 'Q3', value: 50 }
+                  ]
+                },
+                {
+                  id: 'b',
+                  label: 'Product B',
+                  data: [
+                    { categoryId: 'Q1', value: 60 },
+                    { categoryId: 'Q2', value: 90 },
+                    { categoryId: 'Q3', value: 70 }
+                  ]
+                }
+              ]
+            }}
+            height={280}
+          />
         </Card>
       </div>
     </ThemeProvider>
