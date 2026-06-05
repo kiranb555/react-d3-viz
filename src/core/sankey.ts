@@ -140,7 +140,7 @@ export function calculateSankeyLayout(
         ? (innerWidth / (layers.length - 1)) * layerIndex
         : innerWidth / 2;
 
-    const totalFlow = layer.reduce((sum, nodeId) => {
+    const totalFlow = layer.reduce((sum: number, nodeId) => {
       const flow = nodeFlows.get(nodeId) || { in: 0, out: 0 };
       return sum + Math.max(flow.in, flow.out);
     }, 0);
