@@ -5,13 +5,6 @@ const EPSILON = 1e-6;
 
 const arcsAtDepth = (arcs: SunburstArc[], depth: number) => arcs.filter((a) => a.depth === depth);
 
-const containsAngle = (parent: SunburstArc, child: SunburstArc): boolean => {
-  return (
-    child.startAngle >= parent.startAngle - EPSILON &&
-    child.endAngle <= parent.endAngle + EPSILON
-  );
-};
-
 const flatData = [
   { name: 'A', value: 40 },
   { name: 'B', value: 30 },

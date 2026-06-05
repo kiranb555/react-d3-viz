@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
   ThemeProvider,
   LineChart,
@@ -28,12 +29,6 @@ const months = [
   { month: 'Jul', sales: 84, profit: 36 },
 ];
 
-const scatter = Array.from({ length: 60 }, () => ({
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 100 + 5,
-}));
-
 const pie = [
   { label: 'JavaScript', value: 38.7 },
   { label: 'Python', value: 24.5 },
@@ -43,12 +38,29 @@ const pie = [
   { label: 'Other', value: 3.2 },
 ];
 
-const histValues = Array.from({ length: 500 }, () => {
-  // Roughly normal via central limit.
-  let s = 0;
-  for (let i = 0; i < 6; i++) s += Math.random();
-  return (s / 6) * 100;
-});
+function generateScatterData() {
+  return Array.from({ length: 60 }, () => ({
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 100 + 5,
+  }));
+}
+
+function generateHistValues() {
+  return Array.from({ length: 500 }, () => {
+    // Roughly normal via central limit.
+    let s = 0;
+    for (let i = 0; i < 6; i++) s += Math.random();
+    return (s / 6) * 100;
+  });
+}
+
+function generateQuadrantData() {
+  return Array.from({ length: 50 }, () => ({
+    x: Math.round(Math.random() * 100),
+    y: Math.round(Math.random() * 100),
+  }));
+}
 
 const radar = [
   { axis: 'Speed', team: 80, rival: 60 },
@@ -172,6 +184,10 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 }
 
 export default function App() {
+  const scatter = useMemo(() => generateScatterData(), []);
+  const histValues = useMemo(() => generateHistValues(), []);
+  const quadrantData = useMemo(() => generateQuadrantData(), []);
+
   return (
     <ThemeProvider>
       <div style={{ maxWidth: 640, margin: '0 auto', padding: '40px 20px', background: '#f9fafb', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
@@ -200,10 +216,7 @@ export default function App() {
 
         <Card title="Quadrant Chart">
           <QuadrantChart
-            data={Array.from({ length: 50 }, () => ({
-              x: Math.round(Math.random() * 100),
-              y: Math.round(Math.random() * 100),
-            }))}
+            data={quadrantData}
             x="x"
             y="y"
             thresholdMode="mean"

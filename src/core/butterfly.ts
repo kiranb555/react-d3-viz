@@ -1,7 +1,7 @@
 import { scaleLinear, scaleBand, type ScaleLinear } from 'd3-scale';
 import { type Accessor, getNumber, getCategory } from './accessors';
 import { type Datum, type Tick } from './types';
-import { continuousTicks } from './ticks';
+import { continuousTicks, type Formatter } from './ticks';
 
 export interface ButterflyRow {
   category: string;
@@ -109,8 +109,8 @@ export function computeButterflyLayout(data: Datum[], opts: ButterflyLayoutOpts)
     barHeight,
   }));
 
-  const leftTicks = continuousTicks(leftScale, tickCount, valueFormat as any);
-  const rightTicks = continuousTicks(rightScale, tickCount, valueFormat as any);
+  const leftTicks = continuousTicks(leftScale, tickCount, valueFormat as Formatter);
+  const rightTicks = continuousTicks(rightScale, tickCount, valueFormat as Formatter);
 
   return {
     rows,
