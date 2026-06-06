@@ -279,15 +279,29 @@ export function HeatmapChart({
       {showTooltip && hoveredCell && (
         <G>
           {(() => {
+            const CHAR_W = 0.6;
             const pad = 8;
             const lineH = 18;
-            const boxW = 120;
-            const boxH = 50;
+            const fontSize = 11;
+
+            const row = yCategories[hoveredCell.y];
+            const col = xCategories[hoveredCell.x];
+            const val = formatValue(hoveredCell.value);
+
+            const rowText = `Row: ${row}`;
+            const colText = `Col: ${col}`;
+            const valText = `Val: ${val}`;
+
+            const longest = Math.max(rowText.length, colText.length, valText.length);
+            const boxW = pad * 2 + longest * fontSize * CHAR_W;
+            const boxH = pad * 2 + lineH * 3;
+
             const innerX = mousePos.x - bounds.margin.left;
             const innerY = mousePos.y - bounds.margin.top;
             const flip = innerX + boxW + 12 > bounds.innerWidth;
             const tooltipX = bounds.margin.left + (flip ? Math.max(0, innerX - boxW - 12) : Math.min(innerX + 12, bounds.margin.left + bounds.innerWidth - boxW));
             const tooltipY = bounds.margin.top + Math.max(0, Math.min(innerY - boxH / 2, bounds.innerHeight - boxH));
+
             return (
               <>
                 <Rect
@@ -303,20 +317,20 @@ export function HeatmapChart({
                 <SvgText
                   x={tooltipX + pad}
                   y={tooltipY + pad + 4}
-                  fontSize={11}
+                  fontSize={fontSize}
                   fill={theme.tooltip.color}
                   verticalAnchor="start"
                 >
-                  {`Row: ${yCategories[hoveredCell.y]}`}
+                  {rowText}
                 </SvgText>
                 <SvgText
                   x={tooltipX + pad}
                   y={tooltipY + pad + lineH}
-                  fontSize={11}
+                  fontSize={fontSize}
                   fill={theme.tooltip.color}
                   verticalAnchor="start"
                 >
-                  {`Col: ${xCategories[hoveredCell.x]}`}
+                  {colText}
                 </SvgText>
                 <SvgText
                   x={tooltipX + pad}
@@ -326,7 +340,7 @@ export function HeatmapChart({
                   fill={theme.tooltip.color}
                   verticalAnchor="start"
                 >
-                  {`Val: ${formatValue(hoveredCell.value)}`}
+                  {valText}
                 </SvgText>
               </>
             );
