@@ -45,13 +45,24 @@ const meta = {
   title: 'Charts/SunburstChart',
   component: SunburstChart,
   tags: ['autodocs'],
+  parameters: {
+    layout: 'centered',
+  },
   args: {
     data: hierarchicalData,
     value: 'value',
     label: 'name',
     childrenKey: 'children',
-    width: 400,
-    height: 400,
+    width: 450,
+    height: 450,
+  },
+  argTypes: {
+    width: { control: { type: 'range', min: 300, max: 600, step: 50 } },
+    height: { control: { type: 'range', min: 300, max: 600, step: 50 } },
+    innerRadius: { control: { type: 'range', min: 0, max: 0.6, step: 0.05 } },
+    showLabels: { control: 'boolean' },
+    showLegend: { control: 'boolean' },
+    animate: { control: 'boolean' },
   },
 } satisfies Meta<typeof SunburstChart>;
 

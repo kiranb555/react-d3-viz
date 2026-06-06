@@ -59,7 +59,17 @@ const meta = {
   title: 'Charts/TreemapChart',
   component: TreemapChart,
   tags: ['autodocs'],
-  args: { width: 480, height: 320, value: 'value', label: 'name' },
+  parameters: {
+    layout: 'centered',
+  },
+  args: { width: 600, height: 400, value: 'value', label: 'name' },
+  argTypes: {
+    width: { control: { type: 'range', min: 400, max: 800, step: 50 } },
+    height: { control: { type: 'range', min: 300, max: 600, step: 50 } },
+    showLabels: { control: 'boolean' },
+    showValues: { control: 'boolean' },
+    showLegend: { control: 'boolean' },
+  },
 } satisfies Meta<typeof TreemapChart>;
 
 export default meta;

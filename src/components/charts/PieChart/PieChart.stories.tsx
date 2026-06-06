@@ -14,14 +14,61 @@ const meta = {
   title: 'Charts/PieChart',
   component: PieChart,
   tags: ['autodocs'],
-  args: { data, value: 'value', label: 'label', width: 360, height: 360 },
+  parameters: {
+    layout: 'centered',
+  },
+  args: { data, value: 'value', label: 'label', width: 400, height: 400 },
+  argTypes: {
+    width: { control: { type: 'range', min: 300, max: 600, step: 50 } },
+    height: { control: { type: 'range', min: 300, max: 600, step: 50 } },
+    innerRadius: { control: { type: 'range', min: 0, max: 0.8, step: 0.1 } },
+    showLabels: { control: 'boolean' },
+    showValues: { control: 'boolean' },
+    showLegend: { control: 'boolean' },
+    animate: { control: 'boolean' },
+  },
 } satisfies Meta<typeof PieChart>;
 
 export default meta;
-type Story = StoryObj<typeof PieChart>;
+type Story = StoryObj<typeof meta>;
 
-export const Pie: Story = {};
+export const Pie: Story = {
+  args: { showLabels: true, showLegend: true },
+};
 
 export const Donut: Story = {
-  args: { innerRadius: 0.6 },
+  args: { innerRadius: 0.6, showLabels: true, showLegend: true },
+};
+
+export const WithValues: Story = {
+  args: { showLabels: true, showValues: true, showLegend: true },
+};
+
+export const WithoutLabels: Story = {
+  args: { showLabels: false, showLegend: true },
+};
+
+export const CustomColors: Story = {
+  args: {
+    colors: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7b731', '#5f27cd', '#00d2d3'],
+    showLabels: true,
+    showLegend: true,
+  },
+};
+
+export const LargeInnerRadius: Story = {
+  args: {
+    innerRadius: 0.75,
+    showLabels: true,
+    showLegend: true,
+  },
+};
+
+export const NoAnimation: Story = {
+  args: {
+    innerRadius: 0.4,
+    showLabels: true,
+    animate: false,
+    showLegend: true,
+  },
 };

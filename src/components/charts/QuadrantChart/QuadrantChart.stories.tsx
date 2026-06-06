@@ -15,7 +15,21 @@ const meta = {
   title: 'Charts/QuadrantChart',
   component: QuadrantChart,
   tags: ['autodocs'],
-  args: { data, x: 'x', y: 'y', height: 320 },
+  parameters: {
+    layout: 'centered',
+  },
+  args: { data, x: 'x', y: 'y', width: 500, height: 400 },
+  argTypes: {
+    width: { control: { type: 'range', min: 300, max: 700, step: 50 } },
+    height: { control: { type: 'range', min: 300, max: 600, step: 50 } },
+    thresholdMode: {
+      control: { type: 'select', options: ['mean', 'median', 'custom'] },
+    },
+    thresholdX: { control: { type: 'range', min: 0, max: 100, step: 5 } },
+    thresholdY: { control: { type: 'range', min: 0, max: 100, step: 5 } },
+    showQuadrantLabels: { control: 'boolean' },
+    animate: { control: 'boolean' },
+  },
 } satisfies Meta<typeof QuadrantChart>;
 
 export default meta;
