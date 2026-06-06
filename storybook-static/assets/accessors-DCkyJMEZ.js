@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-DnJy8xQt.js";function t(e){return typeof e==`function`?e:t=>t[e]}function n(e,n,r){let i=t(n)(e,r),a=Number(i);return Number.isFinite(a)?a:NaN}function r(e,n,r){return String(t(n)(e,r))}var i=e((()=>{}));export{t as i,n,i as r,r as t};

@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-DnJy8xQt.js";function t(e,t=5,n){let r=e.ticks(t),i=n??(n=>String(e.tickFormat(t)(n)));return r.map(t=>({value:typeof t==`number`?t:+t,position:e(t),label:i(t)}))}function n(e,t){let n=t??(e=>String(e)),r=`bandwidth`in e?e.bandwidth()/2:0;return e.domain().map((t,i)=>({value:i,position:(e(t)??0)+r,label:n(t)}))}var r=e((()=>{}));export{t as n,r,n as t};

@@ -1,6 +1,6 @@
 {
   "name": "react-d3-viz",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "16 cross-platform SVG charts for React & React Native: LineChart, AreaChart, BarChart, ScatterPlot, BubbleChart, PieChart, QuadrantChart, Histogram, RadarChart, TreemapChart, SunburstChart, HeatmapChart, WaterfallChart, SankeyDiagram, MekkoChart, ButterflyChart. Composable, themeable, with tooltips, legends, animations.",
   "license": "MIT",
   "author": "www.kirandev.in",

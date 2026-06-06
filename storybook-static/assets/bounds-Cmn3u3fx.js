@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-DnJy8xQt.js";function t(e,t,r){let i={...n,...r};return{width:e,height:t,innerWidth:Math.max(0,e-i.left-i.right),innerHeight:Math.max(0,t-i.top-i.bottom),margin:i}}var n,r=e((()=>{n={top:16,right:16,bottom:32,left:40}}));export{t as n,r,n as t};

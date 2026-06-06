@@ -1,0 +1,61 @@
+import{a as e,n as t}from"./chunk-DnJy8xQt.js";import{n,t as r}from"./iframe-CISgnNV3.js";import{a as i,c as a,d as o,f as s,i as c,l,n as u,o as d,r as f,s as p,t as m,u as h}from"./useAutoSize-D-qkoCtK.js";import{n as g,r as _,t as v}from"./accessors-DCkyJMEZ.js";import{n as y,t as b}from"./useAnimatedValue-DThFBlZ4.js";function x(e){return e.length===0?``:e.map((e,t)=>`${t===0?`M`:`L`}${e[0].toFixed(2)},${e[1].toFixed(2)}`).join(` `)+` Z`}function S({data:e,axis:t,series:n,width:r,height:s,aspect:f=1,theme:m,maxValue:_,levels:b=4,fillOpacity:S=.2,showLegend:E=!0,showAxisLabels:D=!0,animate:O}){let k=c(m),A=u(r,s??`auto`,f),[j,M]=(0,w.useState)(new Set),N=y({enabled:(O??k.animation.enabled)&&k.animation.enabled,durationMs:k.animation.durationMs}),P=e.length,F=E?k.legend.swatchSize+16:0,I=A.width/2,L=(A.height-F)/2,R=Math.max(0,Math.min(A.width,A.height-F)/2-28),z=n.map((e,t)=>({...e,color:e.color??k.colors[t%k.colors.length],label:e.label??(typeof e.dataKey==`string`?e.dataKey:`series ${t+1}`),seriesIndex:t,hidden:j.has(t)})),B=_??0;_??(e.forEach((e,t)=>n.forEach(n=>{let r=g(e,n.dataKey,t);Number.isFinite(r)&&r>B&&(B=r)})),B===0&&(B=1));let V=e=>-Math.PI/2+e/P*Math.PI*2,H=(e,t)=>[Math.cos(V(e))*t,Math.sin(V(e))*t];return(0,T.jsx)(h,{width:A.svgWidth,height:A.svgHeight,onLayout:A.onLayout,children:A.width>0&&(0,T.jsxs)(T.Fragment,{children:[k.background!==`transparent`&&(0,T.jsx)(l,{x:0,y:0,width:A.width,height:A.height,fill:k.background}),(0,T.jsxs)(d,{transform:`translate(${I},${L})`,children:[Array.from({length:b},(e,t)=>{let n=R*(t+1)/b;return(0,T.jsx)(a,{d:x(Array.from({length:P},(e,t)=>H(t,n))),fill:`none`,stroke:k.grid.color,strokeWidth:k.grid.strokeWidth},`ring${t}`)}),e.map((e,n)=>{let[r,i]=H(n,R),[a,s]=H(n,R+14);return(0,T.jsxs)(d,{children:[(0,T.jsx)(p,{x1:0,y1:0,x2:r,y2:i,stroke:k.grid.color,strokeWidth:k.grid.strokeWidth}),D&&(0,T.jsx)(o,{x:a,y:s,fill:k.axis.labelColor,fontSize:k.axis.labelSize,fontFamily:k.font.family,textAnchor:`middle`,verticalAnchor:`middle`,children:v(e,t,n)})]},`spoke${n}`)}),z.map(t=>{if(t.hidden)return null;let n=e.map((e,n)=>H(n,g(e,t.dataKey,n)/B*R*N));return(0,T.jsxs)(d,{children:[(0,T.jsx)(a,{d:x(n),fill:t.color,fillOpacity:S,stroke:t.color,strokeWidth:2,strokeLinejoin:`round`}),n.map((e,n)=>(0,T.jsx)(i,{cx:e[0],cy:e[1],r:3,fill:t.color},n))]},t.seriesIndex)})]}),E&&(0,T.jsx)(C,{items:z,theme:k,width:A.width,y:A.height-F+2,onToggle:e=>M(t=>{let n=new Set(t);return n.has(e)?n.delete(e):n.add(e),n})})]})})}function C({items:e,theme:t,width:n,y:r,onToggle:i}){let{swatchSize:a,gap:s,fontSize:c,color:u}=t.legend,f=e.map(e=>({it:e,w:a+6+e.label.length*c*E})),p=f.reduce((e,t)=>e+t.w+s,-s),m=Math.max(0,(n-p)/2);return(0,T.jsx)(d,{children:f.map((e,t)=>({...e,x:m+f.slice(0,t).reduce((e,t)=>e+t.w+s,0)})).map(({it:e,w:n,x:s})=>{let f=e.hidden?.35:1;return(0,T.jsxs)(d,{transform:`translate(${s},${r})`,onPress:()=>i(e.seriesIndex),children:[(0,T.jsx)(l,{x:0,y:0,width:n,height:a+4,fill:`transparent`}),(0,T.jsx)(l,{x:0,y:2,width:a,height:a,rx:2,fill:e.color,opacity:f}),(0,T.jsx)(o,{x:a+6,y:2+a/2,fill:u,opacity:f,fontSize:c,fontFamily:t.font.family,textAnchor:`start`,verticalAnchor:`middle`,children:e.label})]},e.seriesIndex)})})}var w,T,E,D=t((()=>{w=e(n(),1),s(),f(),b(),m(),_(),T=r(),E=.6,S.__docgenInfo={description:`Radar (spider) chart. Each record is an axis; each series is a polygon across
+the axes. Self-contained radial chart (does not use the Cartesian frame).`,methods:[],displayName:`RadarChart`,props:{data:{required:!0,tsType:{name:`Array`,elements:[{name:`Record`,elements:[{name:`string`},{name:`unknown`}],raw:`Record<string, unknown>`}],raw:`Datum[]`},description:`One record per axis (spoke).`},axis:{required:!0,tsType:{name:`union`,raw:`string | ((d: Datum, index: number) => T)`,elements:[{name:`string`},{name:`unknown`}]},description:`Accessor for each axis label.`},series:{required:!0,tsType:{name:`Array`,elements:[{name:`SeriesConfig`}],raw:`SeriesConfig[]`},description:`Series to overlay; each reads a value per axis via its dataKey.`},width:{required:!1,tsType:{name:`union`,raw:`number | 'auto'`,elements:[{name:`number`},{name:`literal`,value:`'auto'`}]},description:`Pixel width, or 'auto' (default) to fill the parent.`},height:{required:!1,tsType:{name:`union`,raw:`number | 'auto'`,elements:[{name:`number`},{name:`literal`,value:`'auto'`}]},description:`Pixel height, or 'auto' (default) to match the width (square).`},aspect:{required:!1,tsType:{name:`number`},description:`width / height ratio when height is 'auto'. Default 1 (square).`,defaultValue:{value:`1`,computed:!1}},theme:{required:!1,tsType:{name:`signature`,type:`object`,raw:`{
+  // Keep arrays (e.g. the colors palette) intact rather than widening their
+  // elements to \`T | undefined\`; only plain objects get a shallow Partial.
+  [P in keyof T]?: T[P] extends readonly unknown[]
+    ? T[P]
+    : T[P] extends object
+      ? Partial<T[P]>
+      : T[P];
+}`,signature:{properties:[{key:{name:`ChartTheme`,required:!1},value:{name:`unknown`}}]}},description:``},maxValue:{required:!1,tsType:{name:`number`},description:`Domain max. Defaults to the largest value across all series.`},levels:{required:!1,tsType:{name:`number`},description:`Number of concentric grid rings. Default 4.`,defaultValue:{value:`4`,computed:!1}},fillOpacity:{required:!1,tsType:{name:`number`},description:`Fill opacity for each series polygon. Default 0.2.`,defaultValue:{value:`0.2`,computed:!1}},showLegend:{required:!1,tsType:{name:`boolean`},description:``,defaultValue:{value:`true`,computed:!1}},showAxisLabels:{required:!1,tsType:{name:`boolean`},description:``,defaultValue:{value:`true`,computed:!1}},animate:{required:!1,tsType:{name:`boolean`},description:``}}}})),O,k,A,j,M,N,P;t((()=>{D(),O={title:`Charts/RadarChart`,component:S,tags:[`autodocs`],parameters:{layout:`centered`},args:{data:[{axis:`Speed`,team:80,rival:60,competitor:70},{axis:`Power`,team:65,rival:75,competitor:72},{axis:`Range`,team:90,rival:55,competitor:85},{axis:`Defense`,team:70,rival:80,competitor:68},{axis:`Agility`,team:85,rival:65,competitor:78},{axis:`Stamina`,team:60,rival:70,competitor:65}],axis:`axis`,width:400,height:400},argTypes:{width:{control:{type:`range`,min:300,max:600,step:50}},height:{control:{type:`range`,min:300,max:600,step:50}},levels:{control:{type:`range`,min:2,max:10,step:1}},showLegend:{control:`boolean`},animate:{control:`boolean`}}},k={args:{series:[{dataKey:`team`}],showGrid:!0,showLegend:!1}},A={args:{series:[{dataKey:`team`},{dataKey:`rival`}],showGrid:!0,showLegend:!0}},j={args:{series:[{dataKey:`team`},{dataKey:`rival`},{dataKey:`competitor`}],showGrid:!0,showLegend:!0}},M={args:{series:[{dataKey:`team`},{dataKey:`rival`}],showPoints:!0,showGrid:!0,showLegend:!0}},N={args:{series:[{dataKey:`team`},{dataKey:`rival`}],levels:6,showLegend:!0}},k.parameters={...k.parameters,docs:{...k.parameters?.docs,source:{originalSource:`{
+  args: {
+    series: [{
+      dataKey: 'team'
+    }],
+    showGrid: true,
+    showLegend: false
+  }
+}`,...k.parameters?.docs?.source}}},A.parameters={...A.parameters,docs:{...A.parameters?.docs,source:{originalSource:`{
+  args: {
+    series: [{
+      dataKey: 'team'
+    }, {
+      dataKey: 'rival'
+    }],
+    showGrid: true,
+    showLegend: true
+  }
+}`,...A.parameters?.docs?.source}}},j.parameters={...j.parameters,docs:{...j.parameters?.docs,source:{originalSource:`{
+  args: {
+    series: [{
+      dataKey: 'team'
+    }, {
+      dataKey: 'rival'
+    }, {
+      dataKey: 'competitor'
+    }],
+    showGrid: true,
+    showLegend: true
+  }
+}`,...j.parameters?.docs?.source}}},M.parameters={...M.parameters,docs:{...M.parameters?.docs,source:{originalSource:`{
+  args: {
+    series: [{
+      dataKey: 'team'
+    }, {
+      dataKey: 'rival'
+    }],
+    showPoints: true,
+    showGrid: true,
+    showLegend: true
+  }
+}`,...M.parameters?.docs?.source}}},N.parameters={...N.parameters,docs:{...N.parameters?.docs,source:{originalSource:`{
+  args: {
+    series: [{
+      dataKey: 'team'
+    }, {
+      dataKey: 'rival'
+    }],
+    levels: 6,
+    showLegend: true
+  }
+}`,...N.parameters?.docs?.source}}},P=[`SingleSeries`,`TwoSeries`,`ThreeSeriesComparison`,`WithPoints`,`WithLevels`]}))();export{k as SingleSeries,j as ThreeSeriesComparison,A as TwoSeries,N as WithLevels,M as WithPoints,P as __namedExportsOrder,O as default};
