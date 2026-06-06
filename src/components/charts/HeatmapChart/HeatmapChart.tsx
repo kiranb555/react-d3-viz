@@ -85,7 +85,7 @@ export function HeatmapChart({
   animate = true,
 }: HeatmapChartProps) {
   const theme = useTheme(themeOverride);
-  const { width: containerWidth, height: containerHeight } = useAutoSize(width, height, aspect);
+  const { width: containerWidth, height: containerHeight, svgWidth, svgHeight, onLayout } = useAutoSize(width, height, aspect);
   const [hoveredCell, setHoveredCell] = useState<{ x: number; y: number; value: number } | null>(null);
 
   const margin = { ...DEFAULT_MARGIN, ...marginProp };
@@ -201,7 +201,7 @@ export function HeatmapChart({
   };
 
   return (
-    <Svg width={containerWidth} height={containerHeight} onMove={handleMove} onLeave={() => setHoveredCell(null)}>
+    <Svg width={svgWidth} height={svgHeight} onLayout={onLayout} onMove={handleMove} onLeave={() => setHoveredCell(null)}>
       {/* Background */}
       <Rect x={0} y={0} width={containerWidth} height={containerHeight} fill={theme.background} />
 
