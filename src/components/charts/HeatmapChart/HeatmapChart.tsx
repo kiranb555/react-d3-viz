@@ -86,7 +86,7 @@ export function HeatmapChart({
 }: HeatmapChartProps) {
   const theme = useTheme(themeOverride);
   const { width: containerWidth, height: containerHeight, svgWidth, svgHeight, onLayout } = useAutoSize(width, height, aspect);
-  const [hoveredCell, setHoveredCell] = useState<{ x: number; y: number; value: number } | null>(null);
+  const [hoveredCell, setHoveredCell] = useState<{ x: number; y: number; value: number; color: string } | null>(null);
   const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const margin = { ...DEFAULT_MARGIN, ...marginProp };
@@ -195,11 +195,18 @@ export function HeatmapChart({
       const cellX = xScale(cell.x) ?? 0;
       const cellY = yScale(cell.y) ?? 0;
       if (x >= cellX && x < cellX + cellWidth && y >= cellY && y < cellY + cellHeight) {
-        setHoveredCell({ x: cell.x, y: cell.y, value: cell.value });
+        setHoveredCell({ x: cell.x, y: cell.y, value: cell.value, color: cell.color });
         return;
       }
     }
     setHoveredCell(null);
+  };
+
+  const getLuminance = (hex: string): number => {
+    const rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    if (!rgb) return 0.5;
+    const [r, g, b] = [parseInt(rgb[1], 16), parseInt(rgb[2], 16), parseInt(rgb[3], 16)];
+    return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   };
 
   return (
@@ -302,6 +309,10 @@ export function HeatmapChart({
             const tooltipX = bounds.margin.left + (flip ? Math.max(0, innerX - boxW - 12) : Math.min(innerX + 12, bounds.margin.left + bounds.innerWidth - boxW));
             const tooltipY = bounds.margin.top + Math.max(0, Math.min(innerY - boxH / 2, bounds.innerHeight - boxH));
 
+            const bgColor = hoveredCell.color;
+            const luminance = getLuminance(bgColor);
+            const textColor = luminance > 0.6 ? '#000000' : '#ffffff';
+
             return (
               <>
                 <Rect
@@ -309,16 +320,17 @@ export function HeatmapChart({
                   y={tooltipY}
                   width={boxW}
                   height={boxH}
-                  fill={theme.tooltip.background}
-                  stroke={theme.tooltip.borderColor}
+                  fill={bgColor}
+                  stroke={textColor}
                   strokeWidth={1}
                   rx={4}
+                  opacity={0.95}
                 />
                 <SvgText
                   x={tooltipX + pad}
                   y={tooltipY + pad + 4}
                   fontSize={fontSize}
-                  fill={theme.tooltip.color}
+                  fill={textColor}
                   verticalAnchor="start"
                 >
                   {rowText}
@@ -327,7 +339,7 @@ export function HeatmapChart({
                   x={tooltipX + pad}
                   y={tooltipY + pad + lineH}
                   fontSize={fontSize}
-                  fill={theme.tooltip.color}
+                  fill={textColor}
                   verticalAnchor="start"
                 >
                   {colText}
@@ -337,7 +349,7 @@ export function HeatmapChart({
                   y={tooltipY + pad + lineH * 2}
                   fontSize={12}
                   fontWeight="bold"
-                  fill={theme.tooltip.color}
+                  fill={textColor}
                   verticalAnchor="start"
                 >
                   {valText}
