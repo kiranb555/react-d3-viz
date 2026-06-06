@@ -8,7 +8,6 @@ import { computeBounds, DEFAULT_MARGIN } from '../../../core/bounds';
 import { lerp } from '../../../core/interpolate';
 import { computeHeatmapCells, createLinearColorScale, createDivergingColorScale, heatmapExtent } from '../../../core/heatmap';
 import { makeAccessor } from '../../../core/accessors';
-import { getContrastingTextColor } from '../../../utils/colorHelpers';
 import type { Accessor } from '../../../core/accessors';
 import type { Datum, NumericDomain } from '../../../core/types';
 import type { DeepPartial, ChartTheme } from '../../../theme/defaultTheme';
@@ -304,8 +303,8 @@ export function HeatmapChart({
             const tooltipX = bounds.margin.left + (flip ? Math.max(0, innerX - boxW - 12) : Math.min(innerX + 12, bounds.margin.left + bounds.innerWidth - boxW));
             const tooltipY = bounds.margin.top + Math.max(0, Math.min(innerY - boxH / 2, bounds.innerHeight - boxH));
 
-            const bgColor = hoveredCell.color;
-            const textColor = getContrastingTextColor(bgColor);
+            const bgColor = theme.tooltip.background;
+            const textColor = theme.tooltip.color;
 
             return (
               <>
@@ -315,10 +314,10 @@ export function HeatmapChart({
                   width={boxW}
                   height={boxH}
                   fill={bgColor}
-                  stroke={textColor}
+                  stroke={theme.tooltip.borderColor}
                   strokeWidth={1}
                   rx={4}
-                  opacity={0.95}
+                  opacity={0.96}
                 />
                 <SvgText
                   x={tooltipX + pad}
