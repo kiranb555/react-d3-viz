@@ -8,6 +8,7 @@ import { computeBounds, DEFAULT_MARGIN } from '../../../core/bounds';
 import { lerp } from '../../../core/interpolate';
 import { computeHeatmapCells, createLinearColorScale, createDivergingColorScale, heatmapExtent } from '../../../core/heatmap';
 import { makeAccessor } from '../../../core/accessors';
+import { getContrastingTextColor } from '../../../utils/colorHelpers';
 import type { Accessor } from '../../../core/accessors';
 import type { Datum, NumericDomain } from '../../../core/types';
 import type { DeepPartial, ChartTheme } from '../../../theme/defaultTheme';
@@ -202,12 +203,6 @@ export function HeatmapChart({
     setHoveredCell(null);
   };
 
-  const getLuminance = (hex: string): number => {
-    const rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    if (!rgb) return 0.5;
-    const [r, g, b] = [parseInt(rgb[1], 16), parseInt(rgb[2], 16), parseInt(rgb[3], 16)];
-    return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-  };
 
   return (
     <Svg width={svgWidth} height={svgHeight} onLayout={onLayout} onMove={handleMove} onLeave={() => setHoveredCell(null)}>
@@ -310,8 +305,7 @@ export function HeatmapChart({
             const tooltipY = bounds.margin.top + Math.max(0, Math.min(innerY - boxH / 2, bounds.innerHeight - boxH));
 
             const bgColor = hoveredCell.color;
-            const luminance = getLuminance(bgColor);
-            const textColor = luminance > 0.6 ? '#000000' : '#ffffff';
+            const textColor = getContrastingTextColor(bgColor);
 
             return (
               <>

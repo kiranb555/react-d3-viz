@@ -5,6 +5,7 @@ import { useAnimatedValue } from '../../../hooks/useAnimatedValue';
 import { useAutoSize, type Dimension } from '../../../hooks/useAutoSize';
 import { treemapLayout, type TreemapRect, type ChildrenAccessor } from '../../../core/treemap';
 import { getCategory } from '../../../core/accessors';
+import { getContrastingTextColor } from '../../../utils/colorHelpers';
 import type { Accessor } from '../../../core/accessors';
 import type { Datum } from '../../../core/types';
 import type { ChartTheme, DeepPartial } from '../../../theme/defaultTheme';
@@ -345,6 +346,8 @@ function TreemapTooltip({ x, y, text, valueText, color, theme, bounds }: Treemap
   const boxX = Math.max(0, flip ? x - boxW - 12 : x + 12);
   const boxY = Math.max(0, Math.min(y + 8, bounds.height - boxH));
 
+  const textColor = getContrastingTextColor(color);
+
   return (
     <G transform={`translate(${boxX},${boxY})`}>
       <Rect
@@ -354,16 +357,16 @@ function TreemapTooltip({ x, y, text, valueText, color, theme, bounds }: Treemap
         height={boxH}
         rx={theme.tooltip.radius}
         ry={theme.tooltip.radius}
-        fill={theme.tooltip.background}
-        stroke={theme.tooltip.borderColor}
+        fill={color}
+        stroke={textColor}
         strokeWidth={1}
-        opacity={0.96}
+        opacity={0.95}
       />
-      <Rect x={pad} y={pad + 1} width={8} height={8} rx={2} fill={color} />
+      <Rect x={pad} y={pad + 1} width={8} height={8} rx={2} fill={textColor} opacity={0.5} />
       <SvgText
         x={pad + 14}
         y={pad + fontSize - 1}
-        fill={theme.tooltip.color}
+        fill={textColor}
         fontSize={fontSize}
         fontWeight="bold"
         fontFamily={theme.font.family}
@@ -375,7 +378,7 @@ function TreemapTooltip({ x, y, text, valueText, color, theme, bounds }: Treemap
         <SvgText
           x={pad}
           y={pad + lineH + fontSize - 1}
-          fill={theme.tooltip.color}
+          fill={textColor}
           fontSize={fontSize}
           fontFamily={theme.font.family}
           verticalAnchor="start"

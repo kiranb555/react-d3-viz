@@ -4,6 +4,7 @@ import { useTheme } from '../../../theme/useTheme';
 import { useAnimatedValue } from '../../../hooks/useAnimatedValue';
 import { useAutoSize, type Dimension } from '../../../hooks/useAutoSize';
 import { computeButterflyLayout } from '../../../core/butterfly';
+import { getContrastingTextColor } from '../../../utils/colorHelpers';
 import type { Accessor } from '../../../core/accessors';
 import type { Datum, Margin } from '../../../core/types';
 import type { ChartTheme, DeepPartial } from '../../../theme/defaultTheme';
@@ -410,6 +411,9 @@ function ButterflyTooltip({ row, theme, valueFormat, leftLabel, rightLabel }: Bu
   const tooltipX = 16;
   const tooltipY = 16;
 
+  const bgColor = theme.tooltip.background;
+  const textColor = getContrastingTextColor(bgColor);
+
   return (
     <G x={tooltipX} y={tooltipY}>
       <Rect
@@ -417,15 +421,16 @@ function ButterflyTooltip({ row, theme, valueFormat, leftLabel, rightLabel }: Bu
         y={0}
         width={tooltipW}
         height={tooltipH}
-        fill={theme.tooltip.background}
-        stroke={theme.tooltip.borderColor}
+        fill={bgColor}
+        stroke={textColor}
         strokeWidth={1}
         rx={theme.tooltip.radius}
+        opacity={0.95}
       />
       <SvgText
         x={tooltipW / 2}
         y={12}
-        fill={theme.tooltip.color}
+        fill={textColor}
         fontSize={theme.tooltip.fontSize}
         fontFamily={theme.font.family}
         fontWeight="bold"
@@ -436,7 +441,7 @@ function ButterflyTooltip({ row, theme, valueFormat, leftLabel, rightLabel }: Bu
       <SvgText
         x={tooltipW / 2}
         y={36}
-        fill={theme.tooltip.color}
+        fill={textColor}
         fontSize={theme.tooltip.fontSize - 2}
         fontFamily={theme.font.family}
         textAnchor="middle"
@@ -446,7 +451,7 @@ function ButterflyTooltip({ row, theme, valueFormat, leftLabel, rightLabel }: Bu
       <SvgText
         x={tooltipW / 2}
         y={56}
-        fill={theme.tooltip.color}
+        fill={textColor}
         fontSize={theme.tooltip.fontSize - 2}
         fontFamily={theme.font.family}
         textAnchor="middle"

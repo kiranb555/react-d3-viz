@@ -1,6 +1,7 @@
 import { G, Rect, Line, Circle, SvgText } from '../primitives';
 import { useChartContext } from './ChartContext';
 import { getNumber } from '../core/accessors';
+import { getContrastingTextColor } from '../utils/colorHelpers';
 
 export interface TooltipProps {
   /** Show the vertical crosshair line at the active point. Default true. */
@@ -52,6 +53,10 @@ export function Tooltip({ crosshair = true, highlightPoints = true, format, head
   const boxX = flip ? active.x - boxW - 12 : active.x + 12;
   const boxY = Math.max(0, Math.min(8, bounds.innerHeight - boxH));
 
+  // Use first series color for tooltip background (dynamic color)
+  const bgColor = rows.length > 0 ? rows[0].color : theme.tooltip.background;
+  const textColor = getContrastingTextColor(bgColor);
+
   return (
     <G>
       {crosshair && (
@@ -91,16 +96,16 @@ export function Tooltip({ crosshair = true, highlightPoints = true, format, head
           height={boxH}
           rx={theme.tooltip.radius}
           ry={theme.tooltip.radius}
-          fill={theme.tooltip.background}
-          stroke={theme.tooltip.borderColor}
+          fill={bgColor}
+          stroke={textColor}
           strokeWidth={1}
-          opacity={0.96}
+          opacity={0.95}
         />
         {header ? (
           <SvgText
             x={pad}
             y={pad + fontSize - 2}
-            fill={theme.tooltip.color}
+            fill={textColor}
             fontSize={fontSize}
             fontWeight="bold"
             fontFamily={theme.font.family}
@@ -117,7 +122,7 @@ export function Tooltip({ crosshair = true, highlightPoints = true, format, head
               <SvgText
                 x={pad + 14}
                 y={ry}
-                fill={theme.tooltip.color}
+                fill={textColor}
                 fontSize={fontSize}
                 fontFamily={theme.font.family}
                 verticalAnchor="start"
