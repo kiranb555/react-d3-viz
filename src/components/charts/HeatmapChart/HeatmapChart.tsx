@@ -85,8 +85,9 @@ export function HeatmapChart({
   animate = true,
 }: HeatmapChartProps) {
   const theme = useTheme(themeOverride);
-  const { width: containerWidth, height: containerHeight } = useAutoSize(width, height, aspect);
-  const [hoveredCell, setHoveredCell] = useState<{ x: number; y: number; value: number } | null>(null);
+  const { width: containerWidth, height: containerHeight, svgWidth, svgHeight, onLayout } = useAutoSize(width, height, aspect);
+  const [hoveredCell, setHoveredCell] = useState<{ x: number; y: number; value: number; color: string } | null>(null);
+  const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const margin = { ...DEFAULT_MARGIN, ...marginProp };
   const bounds = computeBounds(containerWidth, containerHeight, margin);
@@ -189,19 +190,21 @@ export function HeatmapChart({
   const handleMove = (evt: { x: number; y: number }) => {
     if (!showTooltip) return;
     const { x, y } = evt;
+    setMousePos({ x, y });
     for (const cell of cells) {
       const cellX = xScale(cell.x) ?? 0;
       const cellY = yScale(cell.y) ?? 0;
       if (x >= cellX && x < cellX + cellWidth && y >= cellY && y < cellY + cellHeight) {
-        setHoveredCell({ x: cell.x, y: cell.y, value: cell.value });
+        setHoveredCell({ x: cell.x, y: cell.y, value: cell.value, color: cell.color });
         return;
       }
     }
     setHoveredCell(null);
   };
 
+
   return (
-    <Svg width={containerWidth} height={containerHeight} onMove={handleMove} onLeave={() => setHoveredCell(null)}>
+    <Svg width={svgWidth} height={svgHeight} onLayout={onLayout} onMove={handleMove} onLeave={() => setHoveredCell(null)}>
       {/* Background */}
       <Rect x={0} y={0} width={containerWidth} height={containerHeight} fill={theme.background} />
 
@@ -276,47 +279,77 @@ export function HeatmapChart({
       {/* Tooltip */}
       {showTooltip && hoveredCell && (
         <G>
-          <Rect
-            x={bounds.margin.left + bounds.innerWidth - 120}
-            y={bounds.margin.top + 10}
-            width={110}
-            height={50}
-            fill={theme.tooltip.background}
-            stroke={theme.tooltip.borderColor}
-            strokeWidth={1}
-            rx={4}
-          />
-          <SvgText
-            x={bounds.margin.left + bounds.innerWidth - 65}
-            y={bounds.margin.top + 20}
-            textAnchor="middle"
-            fontSize={12}
-            fill={theme.tooltip.color}
-            verticalAnchor="middle"
-          >
-            {`Row: ${yCategories[hoveredCell.y]}`}
-          </SvgText>
-          <SvgText
-            x={bounds.margin.left + bounds.innerWidth - 65}
-            y={bounds.margin.top + 35}
-            textAnchor="middle"
-            fontSize={12}
-            fill={theme.tooltip.color}
-            verticalAnchor="middle"
-          >
-            {`Col: ${xCategories[hoveredCell.x]}`}
-          </SvgText>
-          <SvgText
-            x={bounds.margin.left + bounds.innerWidth - 65}
-            y={bounds.margin.top + 50}
-            textAnchor="middle"
-            fontSize={13}
-            fontWeight="bold"
-            fill={theme.tooltip.color}
-            verticalAnchor="middle"
-          >
-            {`Val: ${formatValue(hoveredCell.value)}`}
-          </SvgText>
+          {(() => {
+            const CHAR_W = 0.6;
+            const pad = 8;
+            const lineH = 18;
+            const fontSize = 11;
+
+            const row = yCategories[hoveredCell.y];
+            const col = xCategories[hoveredCell.x];
+            const val = formatValue(hoveredCell.value);
+
+            const rowText = `Row: ${row}`;
+            const colText = `Col: ${col}`;
+            const valText = `Val: ${val}`;
+
+            const longest = Math.max(rowText.length, colText.length, valText.length);
+            const boxW = pad * 2 + longest * fontSize * CHAR_W;
+            const boxH = pad * 2 + lineH * 3;
+
+            const innerX = mousePos.x - bounds.margin.left;
+            const innerY = mousePos.y - bounds.margin.top;
+            const flip = innerX + boxW + 12 > bounds.innerWidth;
+            const tooltipX = bounds.margin.left + (flip ? Math.max(0, innerX - boxW - 12) : Math.min(innerX + 12, bounds.margin.left + bounds.innerWidth - boxW));
+            const tooltipY = bounds.margin.top + Math.max(0, Math.min(innerY - boxH / 2, bounds.innerHeight - boxH));
+
+            const bgColor = theme.tooltip.background;
+            const textColor = theme.tooltip.color;
+
+            return (
+              <>
+                <Rect
+                  x={tooltipX}
+                  y={tooltipY}
+                  width={boxW}
+                  height={boxH}
+                  fill={bgColor}
+                  stroke={theme.tooltip.borderColor}
+                  strokeWidth={1}
+                  rx={4}
+                  opacity={0.96}
+                />
+                <SvgText
+                  x={tooltipX + pad}
+                  y={tooltipY + pad + 4}
+                  fontSize={fontSize}
+                  fill={textColor}
+                  verticalAnchor="start"
+                >
+                  {rowText}
+                </SvgText>
+                <SvgText
+                  x={tooltipX + pad}
+                  y={tooltipY + pad + lineH}
+                  fontSize={fontSize}
+                  fill={textColor}
+                  verticalAnchor="start"
+                >
+                  {colText}
+                </SvgText>
+                <SvgText
+                  x={tooltipX + pad}
+                  y={tooltipY + pad + lineH * 2}
+                  fontSize={12}
+                  fontWeight="bold"
+                  fill={textColor}
+                  verticalAnchor="start"
+                >
+                  {valText}
+                </SvgText>
+              </>
+            );
+          })()}
         </G>
       )}
     </Svg>

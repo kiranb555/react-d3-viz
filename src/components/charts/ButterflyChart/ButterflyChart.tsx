@@ -421,6 +421,7 @@ function ButterflyTooltip({ row, theme, valueFormat, leftLabel, rightLabel }: Bu
         stroke={theme.tooltip.borderColor}
         strokeWidth={1}
         rx={theme.tooltip.radius}
+        opacity={0.96}
       />
       <SvgText
         x={tooltipW / 2}

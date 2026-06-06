@@ -359,15 +359,15 @@ function TreemapTooltip({ x, y, text, valueText, color, theme, bounds }: Treemap
         strokeWidth={1}
         opacity={0.96}
       />
-      <Rect x={pad} y={pad + 1} width={8} height={8} rx={2} fill={color} />
+      <Rect x={pad} y={pad + fontSize / 2 - 4} width={8} height={8} rx={2} fill={color} />
       <SvgText
         x={pad + 14}
-        y={pad + fontSize - 1}
+        y={pad + fontSize / 2}
         fill={theme.tooltip.color}
         fontSize={fontSize}
         fontWeight="bold"
         fontFamily={theme.font.family}
-        verticalAnchor="start"
+        verticalAnchor="middle"
       >
         {text}
       </SvgText>
