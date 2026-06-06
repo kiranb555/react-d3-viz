@@ -45,7 +45,8 @@ export function Tooltip({ crosshair = true, highlightPoints = true, format, head
   const pad = 8;
   const longest = Math.max(header.length, ...rows.map((r) => r.text.length + 2), 1);
   const boxW = pad * 2 + 12 + longest * fontSize * CHAR_W;
-  const boxH = pad * 2 + lineH * (rows.length + (header ? 1 : 0));
+  const headerGap = header ? 4 : 0;
+  const boxH = pad * 2 + lineH * (rows.length + (header ? 1 : 0)) + headerGap;
 
   // Flip to the left of the crosshair when near the right edge.
   const flip = active.x + boxW + 16 > bounds.innerWidth;
@@ -114,7 +115,8 @@ export function Tooltip({ crosshair = true, highlightPoints = true, format, head
           </SvgText>
         ) : null}
         {rows.map((r, i) => {
-          const rowY = pad + (header ? lineH : 0) + i * lineH + lineH / 2;
+          const headerGap = header ? 4 : 0;
+          const rowY = pad + (header ? lineH : 0) + headerGap + i * lineH + lineH / 2;
           return (
             <G key={i}>
               <Rect x={pad} y={rowY - 4} width={8} height={8} rx={2} fill={r.color} />
