@@ -38,6 +38,10 @@ const SHOTS = [
   'shot-butterfly',
   'shot-heatmap',
   'shot-quadrant',
+  'shot-sunburst',
+  'shot-waterfall',
+  'shot-sankey',
+  'shot-mekko',
 ];
 
 async function main() {

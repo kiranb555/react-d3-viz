@@ -10,8 +10,12 @@ import {
   Histogram,
   RadarChart,
   TreemapChart,
+  SunburstChart,
   ButterflyChart,
   HeatmapChart,
+  WaterfallChart,
+  SankeyDiagram,
+  MekkoChart,
   QuadrantChart,
 } from '../src/index';
 
@@ -134,6 +138,83 @@ const quadrantData = Array.from({ length: 50 }, () => ({
   x: rnd() * 100,
   value: rnd() * 100,
 }));
+
+const sunburstData = {
+  name: 'Organization',
+  children: [
+    {
+      name: 'Engineering',
+      children: [
+        { name: 'Frontend', value: 45 },
+        { name: 'Backend', value: 38 },
+        { name: 'DevOps', value: 22 },
+      ],
+    },
+    {
+      name: 'Product',
+      children: [
+        { name: 'Design', value: 18 },
+        { name: 'Management', value: 12 },
+      ],
+    },
+    {
+      name: 'Sales',
+      children: [
+        { name: 'Enterprise', value: 35 },
+        { name: 'Mid-Market', value: 28 },
+      ],
+    },
+  ],
+};
+
+const waterfallData = [
+  { label: 'Start', value: 100 },
+  { label: 'Revenue', value: 50 },
+  { label: 'Costs', value: -20 },
+  { label: 'End', value: 130, isTotal: true }
+];
+
+const sankeyData = {
+  nodes: [
+    { id: 'a', label: 'Source A' },
+    { id: 'b', label: 'Source B' },
+    { id: 'x', label: 'Sink X' },
+    { id: 'y', label: 'Sink Y' }
+  ],
+  links: [
+    { source: 'a', target: 'x', value: 30 },
+    { source: 'a', target: 'y', value: 20 },
+    { source: 'b', target: 'x', value: 40 }
+  ]
+};
+
+const mekkoData = {
+  categories: [
+    { label: 'Q1', value: 100 },
+    { label: 'Q2', value: 150 },
+    { label: 'Q3', value: 120 }
+  ],
+  series: [
+    {
+      id: 'a',
+      label: 'Product A',
+      data: [
+        { categoryId: 'Q1', value: 40 },
+        { categoryId: 'Q2', value: 60 },
+        { categoryId: 'Q3', value: 50 }
+      ]
+    },
+    {
+      id: 'b',
+      label: 'Product B',
+      data: [
+        { categoryId: 'Q1', value: 60 },
+        { categoryId: 'Q2', value: 90 },
+        { categoryId: 'Q3', value: 70 }
+      ]
+    }
+  ]
+};
 
 const W = 440;
 const H = 280;
@@ -274,6 +355,41 @@ export default function Gallery() {
               height={H}
               thresholdMode="mean"
               showQuadrantLabels={true}
+              animate={false}
+            />
+          </Shot>
+          <Shot id="shot-sunburst">
+            <SunburstChart
+              data={sunburstData}
+              value="value"
+              label="name"
+              childrenKey="children"
+              width={W}
+              height={H}
+              animate={false}
+            />
+          </Shot>
+          <Shot id="shot-waterfall">
+            <WaterfallChart
+              data={waterfallData}
+              width={W}
+              height={H}
+              animate={false}
+            />
+          </Shot>
+          <Shot id="shot-sankey">
+            <SankeyDiagram
+              data={sankeyData}
+              width={W}
+              height={H}
+              animate={false}
+            />
+          </Shot>
+          <Shot id="shot-mekko">
+            <MekkoChart
+              data={mekkoData}
+              width={W}
+              height={H}
               animate={false}
             />
           </Shot>
