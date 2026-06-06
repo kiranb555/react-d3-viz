@@ -14,9 +14,7 @@ const meta = {
   argTypes: {
     width: { control: { type: 'range', min: 400, max: 800, step: 50 } },
     height: { control: { type: 'range', min: 300, max: 600, step: 50 } },
-    showGrid: { control: 'boolean' },
-    showValues: { control: 'boolean' },
-    showLegend: { control: 'boolean' },
+    aspect: { control: { type: 'range', min: 0.5, max: 3, step: 0.1 } },
     animate: { control: 'boolean' },
   },
 } satisfies Meta<typeof WaterfallChart>;

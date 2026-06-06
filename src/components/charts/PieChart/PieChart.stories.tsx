@@ -23,7 +23,6 @@ const meta = {
     height: { control: { type: 'range', min: 300, max: 600, step: 50 } },
     innerRadius: { control: { type: 'range', min: 0, max: 0.8, step: 0.1 } },
     showLabels: { control: 'boolean' },
-    showValues: { control: 'boolean' },
     showLegend: { control: 'boolean' },
     animate: { control: 'boolean' },
   },
@@ -38,10 +37,6 @@ export const Pie: Story = {
 
 export const Donut: Story = {
   args: { innerRadius: 0.6, showLabels: true, showLegend: true },
-};
-
-export const WithValues: Story = {
-  args: { showLabels: true, showValues: true, showLegend: true },
 };
 
 export const WithoutLabels: Story = {

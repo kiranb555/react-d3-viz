@@ -21,10 +21,9 @@ const meta = {
   argTypes: {
     width: { control: { type: 'range', min: 300, max: 600, step: 50 } },
     height: { control: { type: 'range', min: 300, max: 600, step: 50 } },
-    closed: { control: 'boolean' },
-    showPoints: { control: 'boolean' },
-    showGrid: { control: 'boolean' },
+    levels: { control: { type: 'range', min: 2, max: 10, step: 1 } },
     showLegend: { control: 'boolean' },
+    animate: { control: 'boolean' },
   },
 } satisfies Meta<typeof RadarChart>;
 
@@ -64,11 +63,10 @@ export const WithPoints: Story = {
   },
 };
 
-export const CustomColors: Story = {
+export const WithLevels: Story = {
   args: {
     series: [{ dataKey: 'team' }, { dataKey: 'rival' }],
-    colors: ['#ff6b6b', '#4ecdc4'],
-    showGrid: true,
+    levels: 6,
     showLegend: true,
   },
 };

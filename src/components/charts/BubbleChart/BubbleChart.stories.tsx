@@ -40,12 +40,14 @@ export const SmallBubbles: Story = {
   args: { radiusRange: [3, 15], showGrid: true },
 };
 
-export const CustomColors: Story = {
+export const ThemedColors: Story = {
   args: {
-    color: 'category',
-    colors: ['#ff6b6b', '#4ecdc4'],
+    radiusRange: [6, 35],
     showGrid: true,
     showLegend: true,
+    theme: {
+      colors: ['#ff6b6b', '#4ecdc4'],
+    },
   },
 };
 

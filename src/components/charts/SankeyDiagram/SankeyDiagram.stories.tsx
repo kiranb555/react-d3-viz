@@ -14,8 +14,7 @@ const meta = {
   argTypes: {
     width: { control: { type: 'range', min: 400, max: 900, step: 50 } },
     height: { control: { type: 'range', min: 300, max: 700, step: 50 } },
-    showLabels: { control: 'boolean' },
-    showLegend: { control: 'boolean' },
+    aspect: { control: { type: 'range', min: 0.5, max: 2, step: 0.1 } },
     animate: { control: 'boolean' },
   },
 } satisfies Meta<typeof SankeyDiagram>;

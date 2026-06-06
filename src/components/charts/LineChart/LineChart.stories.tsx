@@ -72,12 +72,14 @@ export const StepCurve: Story = {
   },
 };
 
-export const CustomColors: Story = {
+export const ThemedColors: Story = {
   args: {
     series: [{ dataKey: 'sales' }, { dataKey: 'profit' }, { dataKey: 'revenue' }],
-    colors: ['#ff6b6b', '#4ecdc4', '#45b7d1'],
     showPoints: true,
     showLegend: true,
+    theme: {
+      colors: ['#ff6b6b', '#4ecdc4', '#45b7d1'],
+    },
   },
 };
 

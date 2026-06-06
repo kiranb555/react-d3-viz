@@ -24,9 +24,7 @@ const meta = {
     stacked: { control: 'boolean' },
     showGrid: { control: 'boolean' },
     showLegend: { control: 'boolean' },
-    showValues: { control: 'boolean' },
     animate: { control: 'boolean' },
-    horizontal: { control: 'boolean' },
   },
 } satisfies Meta<typeof BarChart>;
 
@@ -55,36 +53,30 @@ export const StackedBars: Story = {
   },
 };
 
-export const HorizontalBars: Story = {
+export const CustomTheme: Story = {
   args: {
     series: [{ dataKey: 'sales' }, { dataKey: 'profit' }],
-    horizontal: true,
     stacked: false,
     showGrid: true,
     showLegend: true,
+    theme: {
+      colors: ['#ff6b6b', '#4ecdc4'],
+    },
   },
 };
 
-export const HorizontalStackedBars: Story = {
-  args: {
-    series: [{ dataKey: 'sales' }, { dataKey: 'profit' }, { dataKey: 'revenue' }],
-    horizontal: true,
-    stacked: true,
-    showValues: true,
-    showLegend: true,
-  },
-};
-
-export const CustomColors: Story = {
+export const ThemedColors: Story = {
   args: {
     series: [
       { dataKey: 'sales' },
       { dataKey: 'profit' },
       { dataKey: 'revenue' },
     ],
-    colors: ['#ff6b6b', '#4ecdc4', '#45b7d1'],
     stacked: true,
     showLegend: true,
+    theme: {
+      colors: ['#ff6b6b', '#4ecdc4', '#45b7d1'],
+    },
   },
 };
 

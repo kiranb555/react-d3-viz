@@ -23,8 +23,7 @@ const meta = {
     height: { control: { type: 'range', min: 200, max: 500, step: 50 } },
     bins: { control: { type: 'range', min: 5, max: 50, step: 1 } },
     showGrid: { control: 'boolean' },
-    showLegend: { control: 'boolean' },
-    showValues: { control: 'boolean' },
+    animate: { control: 'boolean' },
   },
 } satisfies Meta<typeof Histogram>;
 
@@ -47,6 +46,6 @@ export const UniformDistribution: Story = {
   args: { values: uniformValues, bins: 20, showGrid: true },
 };
 
-export const WithLegend: Story = {
-  args: { showGrid: true, showLegend: true, showValues: true },
+export const LargeHist: Story = {
+  args: { bins: 50, showGrid: true },
 };

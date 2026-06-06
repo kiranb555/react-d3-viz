@@ -57,12 +57,13 @@ export const WithGrid: Story = {
   args: { showGrid: true, showLegend: false },
 };
 
-export const CustomColors: Story = {
+export const ThemedColors: Story = {
   args: {
-    color: 'category',
-    colors: ['#ff6b6b', '#4ecdc4'],
     showGrid: true,
     showLegend: true,
+    theme: {
+      colors: ['#ff6b6b', '#4ecdc4'],
+    },
   },
 };
 
