@@ -79,6 +79,9 @@ const meta = {
   title: 'Charts/HeatmapChart',
   component: HeatmapChart,
   tags: ['autodocs'],
+  parameters: {
+    layout: 'centered',
+  },
   args: {
     width: 'auto',
     height: 400,
@@ -86,6 +89,14 @@ const meta = {
     showYLabels: true,
     showTooltip: true,
     animate: true,
+  },
+  argTypes: {
+    height: { control: { type: 'range', min: 300, max: 700, step: 50 } },
+    showXLabels: { control: 'boolean' },
+    showYLabels: { control: 'boolean' },
+    showTooltip: { control: 'boolean' },
+    animate: { control: 'boolean' },
+    cellStrokeWidth: { control: { type: 'range', min: 0, max: 3, step: 0.5 } },
   },
 } satisfies Meta<typeof HeatmapChart>;
 

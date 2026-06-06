@@ -1,7 +1,7 @@
 {
   "name": "react-d3-viz",
   "version": "1.2.0",
-  "description": "Cross-platform (React + React Native) SVG chart library: Line, Area, Bar (grouped/stacked), Scatter, Bubble, Pie/Donut, Histogram, Radar. Composable, themeable, SVG-only.",
+  "description": "16 cross-platform SVG charts for React & React Native: LineChart, AreaChart, BarChart, ScatterPlot, BubbleChart, PieChart, QuadrantChart, Histogram, RadarChart, TreemapChart, SunburstChart, HeatmapChart, WaterfallChart, SankeyDiagram, MekkoChart, ButterflyChart. Composable, themeable, with tooltips, legends, animations.",
   "license": "MIT",
   "author": "www.kirandev.in",
   "homepage": "https://kiranb555.github.io/react-d3-viz-ui/",
@@ -33,10 +33,23 @@
     "pie-chart",
     "donut-chart",
     "scatter-plot",
+    "bubble-chart",
     "radar-chart",
     "histogram",
+    "treemap",
+    "sunburst",
+    "heatmap",
+    "waterfall",
+    "sankey",
+    "mekko",
+    "butterfly",
+    "quadrant",
+    "cross-platform",
     "typescript",
-    "cross-platform"
+    "composable",
+    "themeable",
+    "tooltips",
+    "legend"
   ],
   "publishConfig": {
     "access": "public"

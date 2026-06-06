@@ -7,6 +7,16 @@ const meta = {
   component: MekkoChart,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },
+  args: {
+    width: 600,
+    height: 400,
+  },
+  argTypes: {
+    width: { control: { type: 'range', min: 400, max: 900, step: 50 } },
+    height: { control: { type: 'range', min: 300, max: 600, step: 50 } },
+    aspect: { control: { type: 'range', min: 0.5, max: 3, step: 0.1 } },
+    animate: { control: 'boolean' },
+  },
 } satisfies Meta<typeof MekkoChart>;
 
 export default meta;

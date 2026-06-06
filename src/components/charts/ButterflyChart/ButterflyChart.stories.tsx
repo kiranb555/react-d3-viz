@@ -23,6 +23,9 @@ const meta = {
   title: 'Charts/ButterflyChart',
   component: ButterflyChart,
   tags: ['autodocs'],
+  parameters: {
+    layout: 'centered',
+  },
   args: {
     data,
     category: 'age',
@@ -30,7 +33,17 @@ const meta = {
     right: 'female',
     leftLabel: 'Male',
     rightLabel: 'Female',
-    height: 320,
+    width: 600,
+    height: 350,
+  },
+  argTypes: {
+    width: { control: { type: 'range', min: 400, max: 800, step: 50 } },
+    height: { control: { type: 'range', min: 250, max: 500, step: 50 } },
+    syncScale: { control: 'boolean' },
+    showValues: { control: 'boolean' },
+    showGrid: { control: 'boolean' },
+    showLegend: { control: 'boolean' },
+    animate: { control: 'boolean' },
   },
 } satisfies Meta<typeof ButterflyChart>;
 

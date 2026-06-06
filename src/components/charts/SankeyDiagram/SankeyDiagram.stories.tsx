@@ -7,6 +7,16 @@ const meta = {
   component: SankeyDiagram,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },
+  args: {
+    width: 600,
+    height: 450,
+  },
+  argTypes: {
+    width: { control: { type: 'range', min: 400, max: 900, step: 50 } },
+    height: { control: { type: 'range', min: 300, max: 700, step: 50 } },
+    aspect: { control: { type: 'range', min: 0.5, max: 2, step: 0.1 } },
+    animate: { control: 'boolean' },
+  },
 } satisfies Meta<typeof SankeyDiagram>;
 
 export default meta;
