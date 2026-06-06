@@ -283,9 +283,11 @@ export function HeatmapChart({
             const lineH = 18;
             const boxW = 120;
             const boxH = 50;
-            const flip = mousePos.x + boxW + 12 > bounds.innerWidth;
-            const tooltipX = flip ? mousePos.x - boxW - 12 : mousePos.x + 12;
-            const tooltipY = Math.max(0, Math.min(mousePos.y - boxH / 2, bounds.innerHeight - boxH));
+            const innerX = mousePos.x - bounds.margin.left;
+            const innerY = mousePos.y - bounds.margin.top;
+            const flip = innerX + boxW + 12 > bounds.innerWidth;
+            const tooltipX = bounds.margin.left + (flip ? Math.max(0, innerX - boxW - 12) : Math.min(innerX + 12, bounds.margin.left + bounds.innerWidth - boxW));
+            const tooltipY = bounds.margin.top + Math.max(0, Math.min(innerY - boxH / 2, bounds.innerHeight - boxH));
             return (
               <>
                 <Rect
