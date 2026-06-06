@@ -115,17 +115,17 @@ export function Tooltip({ crosshair = true, highlightPoints = true, format, head
           </SvgText>
         ) : null}
         {rows.map((r, i) => {
-          const ry = pad + (header ? lineH : 0) + i * lineH + fontSize - 2;
+          const rowY = pad + (header ? lineH : 0) + i * lineH + lineH / 2;
           return (
             <G key={i}>
-              <Rect x={pad} y={ry - fontSize + 2} width={8} height={8} rx={2} fill={r.color} />
+              <Rect x={pad} y={rowY - 4} width={8} height={8} rx={2} fill={r.color} />
               <SvgText
                 x={pad + 14}
-                y={ry}
+                y={rowY}
                 fill={textColor}
                 fontSize={fontSize}
                 fontFamily={theme.font.family}
-                verticalAnchor="start"
+                verticalAnchor="middle"
               >
                 {r.text}
               </SvgText>
