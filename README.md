@@ -42,7 +42,7 @@ Most chart libraries are web-only. react-d3-viz separates **geometry computation
 
 ## Charts
 
-`LineChart` · `AreaChart` · `BarChart` (grouped & stacked) · `ScatterPlot` · `BubbleChart` · `PieChart` (+ donut) · `QuadrantChart` · `Histogram` · `RadarChart` · `TreemapChart` (flat, grouped & nested) · `WaterfallChart` · `SankeyDiagram` · `MekkoChart` · `ButterflyChart` · `HeatmapChart`
+`LineChart` · `AreaChart` · `BarChart` (grouped & stacked) · `ScatterPlot` · `BubbleChart` · `PieChart` (+ donut) · `QuadrantChart` · `Histogram` · `RadarChart` · `TreemapChart` (flat, grouped & nested) · `SunburstChart` (hierarchical with drill-down) · `HeatmapChart` · `WaterfallChart` · `SankeyDiagram` · `MekkoChart` · `ButterflyChart`
 
 <table>
   <tr>
@@ -67,9 +67,42 @@ Most chart libraries are web-only. react-d3-viz separates **geometry computation
   </tr>
   <tr>
     <td align="center"><b>Treemap</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/treemap.png" width="300"></td>
-    <td align="center"><b>Radar</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/radar.png" width="300"></td>
+    <td align="center"><b>Sunburst</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/sunburst.png" width="300"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Heatmap</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/heatmap.png" width="300"></td>
+    <td align="center"><b>Waterfall</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/waterfall.png" width="300"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Sankey</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/sankey.png" width="300"></td>
+    <td align="center"><b>Mekko</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/mekko.png" width="300"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Butterfly</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/butterfly.png" width="300"></td>
+    <td align="center"><b>Quadrant</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/quadrant.png" width="300"></td>
   </tr>
 </table>
+
+### Chart Variants & Features
+
+| Chart | Key Variants | Key Props |
+|-------|--------------|-----------|
+| **LineChart** | Single series, multi-series, with points, custom curves | `x`, `y`/`series`, `showPoints`, `curve`, `strokeWidth`, `showGrid`, `showTooltip` |
+| **AreaChart** | Single series, stacked, with custom curves | `x`, `series`, `curve`, `fillOpacity`, `showGrid`, `showTooltip` |
+| **BarChart** | Grouped, stacked, horizontal | `x`, `series`, `stacked`, `showGrid`, `showLegend`, `showTooltip` |
+| **ScatterPlot** | Single/multi-series with point size, custom colors | `x`, `y`, `series`, `showTooltip`, `showLegend` |
+| **BubbleChart** | Multi-series with bubble size mapping | `x`, `y`, `value` (size), `series`, `showTooltip`, `showLegend` |
+| **PieChart** | Standard pie, donut (via `innerRadius`) | `data`, `value`, `label`, `innerRadius`, `showTooltip`, `showLegend` |
+| **Histogram** | Single/multi-series, custom bin counts | `data`, `value`, `series`, `binCount`, `showGrid`, `showTooltip` |
+| **RadarChart** | Multi-series, closed polygon paths | `data`, `series`, `showGrid`, `showTooltip`, `showLegend` |
+| **TreemapChart** | Flat, grouped, or nested via `childrenKey` | `data`, `value`, `label`, `childrenKey`, `showTooltip`, `showLegend` |
+| **SunburstChart** | Hierarchical with drill-down interaction | `data`, `value`, `label`, `childrenKey`, `showTooltip`, `showLegend` |
+| **HeatmapChart** | Color-scaled grid cells, custom color scales | `data`, `x`, `y`, `value`, `colorScale`, `showTooltip` |
+| **WaterfallChart** | Cumulative flows with positive/negative steps, total bars | `data`, `label`, `value`, `isTotal`, `showTooltip`, `showLegend` |
+| **SankeyDiagram** | Node-and-link flows with custom node widths | `data` (nodes/links), `nodePadding`, `showTooltip`, `showLegend` |
+| **MekkoChart** | Varying-width stacked bars, dual-dimension encoding | `data` (categories/series), `showTooltip`, `showLegend` |
+| **ButterflyChart** | Horizontal bars from center axis, dual series | `data`, `series`, `showTooltip`, `showLegend` |
+| **QuadrantChart** | Scatter with quadrant dividers and labels | `data`, `x`, `y`, `series`, `xAxisLabel`, `yAxisLabel`, `showTooltip` |
 
 ### New in v1.1.0 — Three New Chart Types
 
