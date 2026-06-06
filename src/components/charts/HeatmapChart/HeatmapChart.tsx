@@ -87,6 +87,7 @@ export function HeatmapChart({
   const theme = useTheme(themeOverride);
   const { width: containerWidth, height: containerHeight, svgWidth, svgHeight, onLayout } = useAutoSize(width, height, aspect);
   const [hoveredCell, setHoveredCell] = useState<{ x: number; y: number; value: number } | null>(null);
+  const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const margin = { ...DEFAULT_MARGIN, ...marginProp };
   const bounds = computeBounds(containerWidth, containerHeight, margin);
@@ -189,6 +190,7 @@ export function HeatmapChart({
   const handleMove = (evt: { x: number; y: number }) => {
     if (!showTooltip) return;
     const { x, y } = evt;
+    setMousePos({ x, y });
     for (const cell of cells) {
       const cellX = xScale(cell.x) ?? 0;
       const cellY = yScale(cell.y) ?? 0;
@@ -276,47 +278,57 @@ export function HeatmapChart({
       {/* Tooltip */}
       {showTooltip && hoveredCell && (
         <G>
-          <Rect
-            x={bounds.margin.left + bounds.innerWidth - 120}
-            y={bounds.margin.top + 10}
-            width={110}
-            height={50}
-            fill={theme.tooltip.background}
-            stroke={theme.tooltip.borderColor}
-            strokeWidth={1}
-            rx={4}
-          />
-          <SvgText
-            x={bounds.margin.left + bounds.innerWidth - 65}
-            y={bounds.margin.top + 20}
-            textAnchor="middle"
-            fontSize={12}
-            fill={theme.tooltip.color}
-            verticalAnchor="middle"
-          >
-            {`Row: ${yCategories[hoveredCell.y]}`}
-          </SvgText>
-          <SvgText
-            x={bounds.margin.left + bounds.innerWidth - 65}
-            y={bounds.margin.top + 35}
-            textAnchor="middle"
-            fontSize={12}
-            fill={theme.tooltip.color}
-            verticalAnchor="middle"
-          >
-            {`Col: ${xCategories[hoveredCell.x]}`}
-          </SvgText>
-          <SvgText
-            x={bounds.margin.left + bounds.innerWidth - 65}
-            y={bounds.margin.top + 50}
-            textAnchor="middle"
-            fontSize={13}
-            fontWeight="bold"
-            fill={theme.tooltip.color}
-            verticalAnchor="middle"
-          >
-            {`Val: ${formatValue(hoveredCell.value)}`}
-          </SvgText>
+          {(() => {
+            const pad = 8;
+            const lineH = 18;
+            const boxW = 120;
+            const boxH = 50;
+            const flip = mousePos.x + boxW + 12 > bounds.innerWidth;
+            const tooltipX = flip ? mousePos.x - boxW - 12 : mousePos.x + 12;
+            const tooltipY = Math.max(0, Math.min(mousePos.y - boxH / 2, bounds.innerHeight - boxH));
+            return (
+              <>
+                <Rect
+                  x={tooltipX}
+                  y={tooltipY}
+                  width={boxW}
+                  height={boxH}
+                  fill={theme.tooltip.background}
+                  stroke={theme.tooltip.borderColor}
+                  strokeWidth={1}
+                  rx={4}
+                />
+                <SvgText
+                  x={tooltipX + pad}
+                  y={tooltipY + pad + 4}
+                  fontSize={11}
+                  fill={theme.tooltip.color}
+                  verticalAnchor="start"
+                >
+                  {`Row: ${yCategories[hoveredCell.y]}`}
+                </SvgText>
+                <SvgText
+                  x={tooltipX + pad}
+                  y={tooltipY + pad + lineH}
+                  fontSize={11}
+                  fill={theme.tooltip.color}
+                  verticalAnchor="start"
+                >
+                  {`Col: ${xCategories[hoveredCell.x]}`}
+                </SvgText>
+                <SvgText
+                  x={tooltipX + pad}
+                  y={tooltipY + pad + lineH * 2}
+                  fontSize={12}
+                  fontWeight="bold"
+                  fill={theme.tooltip.color}
+                  verticalAnchor="start"
+                >
+                  {`Val: ${formatValue(hoveredCell.value)}`}
+                </SvgText>
+              </>
+            );
+          })()}
         </G>
       )}
     </Svg>
