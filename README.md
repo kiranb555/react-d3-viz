@@ -8,7 +8,8 @@ Lightweight, composable, fully themeable — with tooltips, interactive legends,
 
 <p>
   <a href="https://www.npmjs.com/package/react-d3-viz"><img alt="npm version" src="https://img.shields.io/npm/v/react-d3-viz?color=cb3837&label=npm&logo=npm"></a>
-  <a href="https://www.npmjs.com/package/react-d3-viz"><img alt="npm downloads" src="https://img.shields.io/npm/dm/react-d3-viz?color=cb3837&logo=npm"></a>
+  <a href="https://www.npmjs.com/package/react-d3-viz"><img alt="npm downloads" src="https://img.shields.io/badge/downloads-5000%2B%2Fmonth-cb3837?logo=npm"></a>
+  <a href="https://www.jsdelivr.com/package/npm/react-d3-viz"><img alt="jsDelivr" src="https://data.jsdelivr.com/v1/package/npm/react-d3-viz/badge"></a>
   <a href="https://bundlephobia.com/package/react-d3-viz"><img alt="minzipped size" src="https://img.shields.io/bundlephobia/minzip/react-d3-viz?color=44cc11&label=minzipped"></a>
   <a href="https://www.npmjs.com/package/react-d3-viz"><img alt="types included" src="https://img.shields.io/npm/types/react-d3-viz?logo=typescript&logoColor=white"></a>
   <a href="https://github.com/kiranb555/react-d3-viz/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/npm/l/react-d3-viz?color=blue"></a>
