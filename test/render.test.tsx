@@ -117,6 +117,37 @@ describe('chart rendering (web SVG)', () => {
     expect(container.querySelectorAll('path').length).toBeGreaterThan(0);
   });
 
+  it('PieChart donut renders a string centerLabel', () => {
+    const { getByText } = renderChart(
+      <PieChart data={pie} value="value" label="label" innerRadius={0.5} centerLabel="Total" width={300} height={300} />,
+    );
+    expect(getByText('Total')).toBeTruthy();
+  });
+
+  it('PieChart function-form centerLabel receives the visible total', () => {
+    const centerLabel = (total: number) => `Total: ${total}`;
+    const { getByText } = renderChart(
+      <PieChart data={pie} value="value" label="label" innerRadius={0.5} centerLabel={centerLabel} width={300} height={300} />,
+    );
+    // pie = [{ value: 30 }, { value: 70 }] => visible total is 100.
+    expect(getByText('Total: 100')).toBeTruthy();
+  });
+
+  it('PieChart hides centerLabel when innerRadius is 0 (full pie)', () => {
+    const { queryByText } = renderChart(
+      <PieChart data={pie} value="value" label="label" innerRadius={0} centerLabel="Hello" width={300} height={300} />,
+    );
+    expect(queryByText('Hello')).toBeNull();
+  });
+
+  it('PieChart hides an unreadably long centerLabel rather than overflow the hole', () => {
+    const longLabel = 'This Is A Very Long Center Label String For Testing';
+    const { queryByText } = renderChart(
+      <PieChart data={pie} value="value" label="label" innerRadius={0.15} centerLabel={longLabel} width={300} height={300} />,
+    );
+    expect(queryByText(longLabel)).toBeNull();
+  });
+
   it('Histogram renders bars', () => {
     const values = Array.from({ length: 100 }, (_, i) => i % 10);
     const { container } = renderChart(<Histogram values={values} bins={10} width={400} height={240} />);

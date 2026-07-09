@@ -235,7 +235,15 @@ export default function App() {
         </Card>
 
         <Card title="Donut">
-          <PieChart data={pie} value="value" label="label" innerRadius={0.6} height={340} />
+          <PieChart
+            data={pie}
+            value="value"
+            label="label"
+            innerRadius={0.6}
+            height={340}
+            centerLabel={(total) => total.toLocaleString()}
+            centerSubLabel="Total"
+          />
         </Card>
 
         <Card title="Histogram (500 ~normal values)">

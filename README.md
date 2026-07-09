@@ -236,7 +236,18 @@ const pie = [
 
 // Donut
 <PieChart data={pie} value="value" label="label" innerRadius={0.6} />
+
+// Donut with a total in the center hole
+<PieChart
+  data={pie}
+  value="value"
+  label="label"
+  innerRadius={0.6}
+  centerLabel={(total) => total.toLocaleString()}
+  centerSubLabel="Total"
+/>
 ```
+`centerLabel` (string or `(total: number) => string`) and `centerSubLabel` (string) render inside the donut hole (only shown when `innerRadius` > 0); `total` is the sum of the currently visible (non-legend-hidden) slice values.
 
 **Hierarchical sunburst chart**
 ```tsx
