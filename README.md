@@ -79,7 +79,7 @@ Most chart libraries are **web-only**. react-d3-viz separates **geometry computa
 | **🎨 Themeable end-to-end** | Global `ThemeProvider` or per-chart overrides. Colors, fonts, animations, axis/grid/tooltip/legend styles — all customizable. |
 | **📊 20 chart types** | Line, Area, Bar (grouped/stacked), Scatter, Bubble, Pie/Donut, Histogram, Radar, Treemap, Sunburst, Heatmap, Waterfall, Sankey, Mekko, Butterfly, Quadrant, Candlestick, Funnel, Gauge, Calendar Heatmap. |
 | **✨ Interactive by default** | Tooltips (hover/touch), togglable legends, smooth enter animations. No extra setup. |
-| **✅ Battle-tested** | 89+ unit & render tests. Used in production. |
+| **✅ Battle-tested** | 260+ unit & render tests. Used in production. |
 
 > **Coming from [recharts](https://www.npmjs.com/package/recharts) or [victory](https://www.npmjs.com/package/victory)?** Those excel on the web but are web-only. react-d3-viz gives you the same composable, themeable API while running unchanged on **React Native** too. Compare sizes on [Bundlephobia](https://bundlephobia.com/package/react-d3-viz).
 
@@ -530,7 +530,7 @@ npm install
 
 ```bash
 npm run dev      # Vite dev server (src/App.tsx) — view all 20 charts
-npm test         # Vitest — 89+ unit & render tests
+npm test         # Vitest — 260+ unit & render tests
 npm run build    # tsc → dist/ (preserves .native platform adapters)
 npm run lint     # ESLint
 npm run storybook # Storybook — interactive component library
