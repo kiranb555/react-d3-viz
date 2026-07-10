@@ -20,6 +20,7 @@ import {
   QuadrantChart,
   CandlestickChart,
   FunnelChart,
+  GaugeChart,
 } from '../src/index';
 
 afterEach(cleanup);
@@ -592,5 +593,45 @@ describe('chart rendering (web SVG)', () => {
     expect(container.querySelector('svg')).toBeTruthy();
     expect(container.querySelectorAll('path').length).toBe(1);
     expect(container.textContent ?? '').not.toContain('↓');
+  });
+
+  it('GaugeChart renders with default props (track + progress arc + value label)', () => {
+    const { container } = renderChart(<GaugeChart value={62} width={400} height={260} />);
+    expect(container.querySelector('svg')).toBeTruthy();
+    // track arc + single-color progress arc == 2 paths (no thresholds).
+    expect(container.querySelectorAll('path').length).toBe(2);
+    expect(container.textContent ?? '').toContain('62');
+  });
+
+  it('GaugeChart clamps an out-of-range value instead of throwing / rendering NaN geometry', () => {
+    const { container } = renderChart(
+      <GaugeChart value={500} min={0} max={100} width={400} height={260} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.innerHTML).not.toContain('NaN');
+    // The needle/arc — and the value label alongside it — clamp to `max`.
+    expect(container.textContent ?? '').toContain('100');
+  });
+
+  it('GaugeChart renders threshold bands instead of the single-color progress arc', () => {
+    const { container } = renderChart(
+      <GaugeChart
+        value={78}
+        width={400}
+        height={260}
+        thresholds={[
+          { from: 0, to: 50, color: '#ef4444' },
+          { from: 50, to: 80, color: '#f59e0b' },
+          { from: 80, to: 100, color: '#10b981' },
+        ]}
+      />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    // track arc + 3 band arcs == 4 paths.
+    expect(container.querySelectorAll('path').length).toBe(4);
+    const fills = Array.from(container.querySelectorAll('path')).map((p) => p.getAttribute('fill'));
+    expect(fills).toContain('#ef4444');
+    expect(fills).toContain('#f59e0b');
+    expect(fills).toContain('#10b981');
   });
 });

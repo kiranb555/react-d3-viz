@@ -19,6 +19,7 @@ import {
   QuadrantChart,
   CandlestickChart,
   FunnelChart,
+  GaugeChart,
 } from './index';
 
 const months = [
@@ -408,6 +409,21 @@ export default function App() {
             value="count"
             label="stage"
             height={380}
+          />
+        </Card>
+
+        <Card title="Gauge (customer satisfaction)">
+          <GaugeChart
+            value={78}
+            min={0}
+            max={100}
+            height={280}
+            thresholds={[
+              { from: 0, to: 50, color: '#ef4444' },
+              { from: 50, to: 80, color: '#f59e0b' },
+              { from: 80, to: 100, color: '#10b981' },
+            ]}
+            formatValue={(v) => `${Math.round(v)}%`}
           />
         </Card>
       </div>

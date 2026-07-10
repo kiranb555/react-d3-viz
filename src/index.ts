@@ -64,6 +64,9 @@ export type { CandlestickChartProps } from './components/charts/CandlestickChart
 export { FunnelChart } from './components/charts/FunnelChart/FunnelChart';
 export type { FunnelChartProps } from './components/charts/FunnelChart/FunnelChart';
 
+export { GaugeChart } from './components/charts/GaugeChart/GaugeChart';
+export type { GaugeChartProps, GaugeThreshold } from './components/charts/GaugeChart/GaugeChart';
+
 export type {
   WaterfallDataPoint,
   WaterfallLayoutResult,
@@ -111,7 +114,7 @@ export type { Dimension, ResolvedSize } from './hooks/useAutoSize';
 
 // ── Pure compute core (platform-agnostic) ──────────────────────────────────
 export { numericDomain, linear, time, band, point } from './core/scales';
-export { linePath, areaPath, pieArcs, resolveCurve } from './core/shapes';
+export { linePath, areaPath, pieArcs, resolveCurve, arcPath } from './core/shapes';
 export type { CurveType, Point, ComputedArc } from './core/shapes';
 export { treemapLayout } from './core/treemap';
 export type { TreemapInput, TreemapOptions, TreemapRect, ChildrenAccessor } from './core/treemap';
@@ -130,6 +133,8 @@ export { candlestickGeometry } from './core/candlestick';
 export type { OHLC, CandleGeometry, CandlestickOptions } from './core/candlestick';
 export { funnelLayout } from './core/funnel';
 export type { FunnelStage, FunnelOptions } from './core/funnel';
+export { gaugeLayout } from './core/gauge';
+export type { GaugeBand, GaugeOptions, GaugeResult } from './core/gauge';
 export type { Datum, Margin, ChartBounds, NumericDomain, Tick } from './core/types';
 
 // ── Color palettes & data helpers ──────────────────────────────────────────

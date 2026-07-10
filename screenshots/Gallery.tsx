@@ -19,6 +19,7 @@ import {
   QuadrantChart,
   CandlestickChart,
   FunnelChart,
+  GaugeChart,
 } from '../src/index';
 
 // Deterministic pseudo-random so screenshots are stable across runs.
@@ -442,6 +443,22 @@ export default function Gallery() {
               label="stage"
               width={W}
               height={H}
+              animate={false}
+            />
+          </Shot>
+          <Shot id="shot-gauge">
+            <GaugeChart
+              value={78}
+              min={0}
+              max={100}
+              width={W}
+              height={H}
+              thresholds={[
+                { from: 0, to: 50, color: '#ef4444' },
+                { from: 50, to: 80, color: '#f59e0b' },
+                { from: 80, to: 100, color: '#10b981' },
+              ]}
+              formatValue={(v) => `${Math.round(v)}%`}
               animate={false}
             />
           </Shot>

@@ -44,6 +44,7 @@ const SHOTS = [
   'shot-mekko',
   'shot-candlestick',
   'shot-funnel',
+  'shot-gauge',
 ];
 
 async function main() {
