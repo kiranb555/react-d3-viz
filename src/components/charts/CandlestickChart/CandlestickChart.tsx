@@ -35,8 +35,6 @@ export interface CandlestickChartProps {
   showXAxis?: boolean;
   showYAxis?: boolean;
   showTooltip?: boolean;
-  /** A legend adds no value for a single instrument. Default false. */
-  showLegend?: boolean;
   xTickCount?: number;
   yTickCount?: number;
   formatX?: (value: unknown, index: number) => string;
@@ -71,7 +69,6 @@ export function CandlestickChart({
   downColor = DEFAULT_DOWN_COLOR,
   wickWidth,
   bodyWidthRatio,
-  showLegend = false,
   animate,
   ...rest
 }: CandlestickChartProps) {
@@ -89,7 +86,12 @@ export function CandlestickChart({
       x={x}
       series={series}
       xScaleType="band"
-      showLegend={showLegend}
+      // These 4 series are an internal mechanism to make CartesianChart's y-domain
+      // computation cover [min(low), max(high)] — they are not meant to be user-facing.
+      // A legend would expose them, and toggling one off would shrink the y-domain
+      // while `Candles` keeps rendering every candle at full height straight from `data`,
+      // so candles would visually overflow the axis range. Always force it off.
+      showLegend={false}
       renderSeries={() => (
         <Candles
           open={open}

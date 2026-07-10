@@ -527,6 +527,21 @@ describe('chart rendering (web SVG)', () => {
     expect(container.querySelectorAll('line').length).toBeGreaterThan(0);
   });
 
+  it('CandlestickChart never renders a legend for its internal OHLC pseudo-series', () => {
+    const ohlc = [
+      { date: '2026-01-02', open: 100, high: 108, low: 96, close: 105 },
+      { date: '2026-01-05', open: 105, high: 110, low: 101, close: 99 },
+    ];
+    const { container } = renderChart(
+      <CandlestickChart data={ohlc} x="date" open="open" high="high" low="low" close="close" width={400} height={240} />,
+    );
+    const text = container.textContent ?? '';
+    expect(text).not.toContain('Open');
+    expect(text).not.toContain('High');
+    expect(text).not.toContain('Low');
+    expect(text).not.toContain('Close');
+  });
+
   it('QuadrantChart renders without error', () => {
     const data = Array.from({ length: 20 }, () => ({
       x: Math.random() * 100,
