@@ -43,6 +43,7 @@ const SHOTS = [
   'shot-sankey',
   'shot-mekko',
   'shot-candlestick',
+  'shot-funnel',
 ];
 
 async function main() {

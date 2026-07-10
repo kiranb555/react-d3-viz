@@ -18,6 +18,7 @@ import {
   MekkoChart,
   QuadrantChart,
   CandlestickChart,
+  FunnelChart,
 } from '../src/index';
 
 // Deterministic pseudo-random so screenshots are stable across runs.
@@ -158,6 +159,14 @@ const ohlcData = (() => {
   }
   return data;
 })();
+
+// Sample conversion funnel for the funnel shot.
+const funnelData = [
+  { stage: 'Visitors', count: 10000 },
+  { stage: 'Signups', count: 4200 },
+  { stage: 'Trials', count: 2100 },
+  { stage: 'Paid', count: 640 },
+];
 
 const sunburstData = {
   name: 'Organization',
@@ -421,6 +430,16 @@ export default function Gallery() {
               high="high"
               low="low"
               close="close"
+              width={W}
+              height={H}
+              animate={false}
+            />
+          </Shot>
+          <Shot id="shot-funnel">
+            <FunnelChart
+              data={funnelData}
+              value="count"
+              label="stage"
               width={W}
               height={H}
               animate={false}

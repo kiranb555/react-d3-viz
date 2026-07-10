@@ -19,6 +19,7 @@ import {
   SunburstChart,
   QuadrantChart,
   CandlestickChart,
+  FunnelChart,
 } from '../src/index';
 
 afterEach(cleanup);
@@ -558,5 +559,38 @@ describe('chart rendering (web SVG)', () => {
       />
     );
     expect(container.querySelector('svg')).toBeTruthy();
+  });
+
+  it('FunnelChart renders a trapezoid path per stage', () => {
+    const funnel = [
+      { stage: 'Visitors', count: 10000 },
+      { stage: 'Signups', count: 4200 },
+      { stage: 'Trials', count: 2100 },
+      { stage: 'Paid', count: 640 },
+    ];
+    const { container } = renderChart(
+      <FunnelChart data={funnel} value="count" label="stage" width={400} height={420} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.querySelectorAll('path').length).toBe(funnel.length);
+    expect(container.textContent ?? '').toContain('↓');
+  });
+
+  it('FunnelChart handles empty data gracefully', () => {
+    const { container } = renderChart(
+      <FunnelChart data={[]} value="count" label="stage" width={400} height={420} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.querySelectorAll('path').length).toBe(0);
+  });
+
+  it('FunnelChart renders a single-stage funnel without a drop-off label', () => {
+    const funnel = [{ stage: 'Visitors', count: 10000 }];
+    const { container } = renderChart(
+      <FunnelChart data={funnel} value="count" label="stage" width={400} height={420} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.querySelectorAll('path').length).toBe(1);
+    expect(container.textContent ?? '').not.toContain('↓');
   });
 });

@@ -61,6 +61,9 @@ export type { QuadrantChartProps } from './components/charts/QuadrantChart/Quadr
 export { CandlestickChart } from './components/charts/CandlestickChart/CandlestickChart';
 export type { CandlestickChartProps } from './components/charts/CandlestickChart/CandlestickChart';
 
+export { FunnelChart } from './components/charts/FunnelChart/FunnelChart';
+export type { FunnelChartProps } from './components/charts/FunnelChart/FunnelChart';
+
 export type {
   WaterfallDataPoint,
   WaterfallLayoutResult,
@@ -125,6 +128,8 @@ export { createLinearColorScale, createDivergingColorScale, computeHeatmapCells,
 export type { HeatmapColorScale, HeatmapCell, ColorInterpolation } from './core/heatmap';
 export { candlestickGeometry } from './core/candlestick';
 export type { OHLC, CandleGeometry, CandlestickOptions } from './core/candlestick';
+export { funnelLayout } from './core/funnel';
+export type { FunnelStage, FunnelOptions } from './core/funnel';
 export type { Datum, Margin, ChartBounds, NumericDomain, Tick } from './core/types';
 
 // ── Color palettes & data helpers ──────────────────────────────────────────

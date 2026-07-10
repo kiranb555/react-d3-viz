@@ -18,6 +18,7 @@ import {
   SunburstChart,
   QuadrantChart,
   CandlestickChart,
+  FunnelChart,
 } from './index';
 
 const months = [
@@ -189,6 +190,14 @@ const ohlcData = [
   { date: '2026-01-15', open: 107.9, high: 109.1, low: 105.3, close: 106.0 },
   { date: '2026-01-16', open: 106.0, high: 106.6, low: 102.1, close: 102.8 },
   { date: '2026-01-20', open: 102.8, high: 105.0, low: 101.9, close: 104.6 },
+];
+
+// Sample conversion funnel for the FunnelChart demo.
+const funnelData = [
+  { stage: 'Visitors', count: 10000 },
+  { stage: 'Signups', count: 4200 },
+  { stage: 'Trials', count: 2100 },
+  { stage: 'Paid', count: 640 },
 ];
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
@@ -390,6 +399,15 @@ export default function App() {
             close="close"
             showGrid
             height={320}
+          />
+        </Card>
+
+        <Card title="Funnel (conversion funnel)">
+          <FunnelChart
+            data={funnelData}
+            value="count"
+            label="stage"
+            height={380}
           />
         </Card>
       </div>
