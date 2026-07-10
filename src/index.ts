@@ -58,6 +58,9 @@ export type { SunburstChartProps } from './components/charts/SunburstChart/Sunbu
 export { QuadrantChart } from './components/charts/QuadrantChart/QuadrantChart';
 export type { QuadrantChartProps } from './components/charts/QuadrantChart/QuadrantChart';
 
+export { CandlestickChart } from './components/charts/CandlestickChart/CandlestickChart';
+export type { CandlestickChartProps } from './components/charts/CandlestickChart/CandlestickChart';
+
 export type {
   WaterfallDataPoint,
   WaterfallLayoutResult,
@@ -120,6 +123,8 @@ export { calculateMekkoLayout } from './core/mekko';
 export type { MekkoCategory, MekkoSeriesData, MekkoSeries, MekkoData, MekkoSegment, MekkoColumn, MekkoLayoutResult } from './core/mekko';
 export { createLinearColorScale, createDivergingColorScale, computeHeatmapCells, heatmapExtent } from './core/heatmap';
 export type { HeatmapColorScale, HeatmapCell, ColorInterpolation } from './core/heatmap';
+export { candlestickGeometry } from './core/candlestick';
+export type { OHLC, CandleGeometry, CandlestickOptions } from './core/candlestick';
 export type { Datum, Margin, ChartBounds, NumericDomain, Tick } from './core/types';
 
 // ── Color palettes & data helpers ──────────────────────────────────────────

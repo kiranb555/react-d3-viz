@@ -17,6 +17,7 @@ import {
   HeatmapChart,
   SunburstChart,
   QuadrantChart,
+  CandlestickChart,
 } from './index';
 
 const months = [
@@ -173,6 +174,22 @@ const sunburstData = {
     },
   ],
 };
+
+// Sample daily OHLC series for the candlestick demo.
+const ohlcData = [
+  { date: '2026-01-02', open: 100.0, high: 104.5, low: 98.2, close: 103.1 },
+  { date: '2026-01-05', open: 103.1, high: 105.8, low: 101.5, close: 102.0 },
+  { date: '2026-01-06', open: 102.0, high: 102.9, low: 97.4, close: 98.6 },
+  { date: '2026-01-07', open: 98.6, high: 101.2, low: 96.8, close: 100.9 },
+  { date: '2026-01-08', open: 100.9, high: 106.3, low: 100.1, close: 105.7 },
+  { date: '2026-01-09', open: 105.7, high: 107.0, low: 103.9, close: 104.4 },
+  { date: '2026-01-12', open: 104.4, high: 104.9, low: 100.6, close: 101.2 },
+  { date: '2026-01-13', open: 101.2, high: 103.5, low: 100.8, close: 103.0 },
+  { date: '2026-01-14', open: 103.0, high: 108.4, low: 102.7, close: 107.9 },
+  { date: '2026-01-15', open: 107.9, high: 109.1, low: 105.3, close: 106.0 },
+  { date: '2026-01-16', open: 106.0, high: 106.6, low: 102.1, close: 102.8 },
+  { date: '2026-01-20', open: 102.8, high: 105.0, low: 101.9, close: 104.6 },
+];
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -360,6 +377,19 @@ export default function App() {
             label="name"
             childrenKey="children"
             height={360}
+          />
+        </Card>
+
+        <Card title="Candlestick (daily OHLC)">
+          <CandlestickChart
+            data={ohlcData}
+            x="date"
+            open="open"
+            high="high"
+            low="low"
+            close="close"
+            showGrid
+            height={320}
           />
         </Card>
       </div>

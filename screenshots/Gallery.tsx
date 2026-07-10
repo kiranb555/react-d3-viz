@@ -17,6 +17,7 @@ import {
   SankeyDiagram,
   MekkoChart,
   QuadrantChart,
+  CandlestickChart,
 } from '../src/index';
 
 // Deterministic pseudo-random so screenshots are stable across runs.
@@ -138,6 +139,25 @@ const quadrantData = Array.from({ length: 50 }, () => ({
   x: rnd() * 100,
   value: rnd() * 100,
 }));
+
+// Deterministic daily OHLC series for the candlestick shot.
+const ohlcData = (() => {
+  const data: { date: string; open: number; high: number; low: number; close: number }[] = [];
+  let price = 100;
+  const start = new Date('2026-01-02');
+  for (let i = 0; i < 24; i++) {
+    const d = new Date(start);
+    d.setDate(start.getDate() + i);
+    const open = price;
+    const change = (rnd() - 0.5) * 5;
+    const close = Math.max(1, open + change);
+    const high = Math.max(open, close) + rnd() * 2;
+    const low = Math.max(0.5, Math.min(open, close) - rnd() * 2);
+    data.push({ date: d.toISOString().slice(0, 10), open, high, low, close });
+    price = close;
+  }
+  return data;
+})();
 
 const sunburstData = {
   name: 'Organization',
@@ -388,6 +408,19 @@ export default function Gallery() {
           <Shot id="shot-mekko">
             <MekkoChart
               data={mekkoData}
+              width={W}
+              height={H}
+              animate={false}
+            />
+          </Shot>
+          <Shot id="shot-candlestick">
+            <CandlestickChart
+              data={ohlcData}
+              x="date"
+              open="open"
+              high="high"
+              low="low"
+              close="close"
               width={W}
               height={H}
               animate={false}

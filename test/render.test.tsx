@@ -18,6 +18,7 @@ import {
   HeatmapChart,
   SunburstChart,
   QuadrantChart,
+  CandlestickChart,
 } from '../src/index';
 
 afterEach(cleanup);
@@ -493,6 +494,37 @@ describe('chart rendering (web SVG)', () => {
   it('SunburstChart handles empty data gracefully', () => {
     const { container } = renderChart(<SunburstChart data={[]} value="value" width={300} height={300} />);
     expect(container.querySelector('svg')).toBeTruthy();
+  });
+
+  it('CandlestickChart renders wicks and bodies', () => {
+    const ohlc = [
+      { date: '2026-01-02', open: 100, high: 108, low: 96, close: 105 },
+      { date: '2026-01-05', open: 105, high: 110, low: 101, close: 99 },
+      { date: '2026-01-06', open: 99, high: 103, low: 95, close: 102 },
+    ];
+    const { container } = renderChart(
+      <CandlestickChart data={ohlc} x="date" open="open" high="high" low="low" close="close" width={400} height={240} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.querySelectorAll('rect').length).toBeGreaterThan(0);
+    expect(container.querySelectorAll('line').length).toBeGreaterThan(0);
+  });
+
+  it('CandlestickChart handles empty data gracefully', () => {
+    const { container } = renderChart(
+      <CandlestickChart data={[]} x="date" open="open" high="high" low="low" close="close" width={400} height={240} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+  });
+
+  it('CandlestickChart handles a single candle', () => {
+    const ohlc = [{ date: '2026-01-02', open: 100, high: 108, low: 96, close: 105 }];
+    const { container } = renderChart(
+      <CandlestickChart data={ohlc} x="date" open="open" high="high" low="low" close="close" width={400} height={240} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.querySelectorAll('rect').length).toBeGreaterThan(0);
+    expect(container.querySelectorAll('line').length).toBeGreaterThan(0);
   });
 
   it('QuadrantChart renders without error', () => {

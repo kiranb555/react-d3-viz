@@ -31,7 +31,7 @@ Lightweight, composable, fully themeable — with tooltips, interactive legends,
 - [Why react-d3-viz](#why-react-d3-viz)
 - [Features](#features)
 - [Quick Start](#quick-start)
-- [16 Chart Types](#charts)
+- [17 Chart Types](#charts)
 - [Installation](#install)
 - [Usage Examples](#usage)
 - [Responsive Sizing](#responsive-sizing-widthauto)
@@ -77,7 +77,7 @@ Most chart libraries are **web-only**. react-d3-viz separates **geometry computa
 | **🤝 No lock-in** | `react` / `react-dom` are optional peer deps (web only). `react-native-svg` is **not** a peer dep — web installs never get surprised by native packages. Everything is optional. |
 | **🔷 TypeScript-first** | Full `.d.ts` for every component, prop, and theme token. Type-safe by default. |
 | **🎨 Themeable end-to-end** | Global `ThemeProvider` or per-chart overrides. Colors, fonts, animations, axis/grid/tooltip/legend styles — all customizable. |
-| **📊 16 chart types** | Line, Area, Bar (grouped/stacked), Scatter, Bubble, Pie/Donut, Histogram, Radar, Treemap, Sunburst, Heatmap, Waterfall, Sankey, Mekko, Butterfly, Quadrant. |
+| **📊 17 chart types** | Line, Area, Bar (grouped/stacked), Scatter, Bubble, Pie/Donut, Histogram, Radar, Treemap, Sunburst, Heatmap, Waterfall, Sankey, Mekko, Butterfly, Quadrant, Candlestick. |
 | **✨ Interactive by default** | Tooltips (hover/touch), togglable legends, smooth enter animations. No extra setup. |
 | **✅ Battle-tested** | 89+ unit & render tests. Used in production. |
 
@@ -85,9 +85,9 @@ Most chart libraries are **web-only**. react-d3-viz separates **geometry computa
 
 ## Charts
 
-**16 interactive chart types** — all responsive, themeable, and cross-platform:
+**17 interactive chart types** — all responsive, themeable, and cross-platform:
 
-`LineChart` · `AreaChart` · `BarChart` · `ScatterPlot` · `BubbleChart` · `PieChart` · `Histogram` · `RadarChart` · `TreemapChart` · `SunburstChart` · `HeatmapChart` · `WaterfallChart` · `SankeyDiagram` · `MekkoChart` · `ButterflyChart` · `QuadrantChart`
+`LineChart` · `AreaChart` · `BarChart` · `ScatterPlot` · `BubbleChart` · `PieChart` · `Histogram` · `RadarChart` · `TreemapChart` · `SunburstChart` · `HeatmapChart` · `WaterfallChart` · `SankeyDiagram` · `MekkoChart` · `ButterflyChart` · `QuadrantChart` · `CandlestickChart`
 
 <table>
   <tr>
@@ -126,6 +126,9 @@ Most chart libraries are **web-only**. react-d3-viz separates **geometry computa
     <td align="center"><b>Butterfly</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/butterfly.png" width="300"></td>
     <td align="center"><b>Quadrant</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/quadrant.png" width="300"></td>
   </tr>
+  <tr>
+    <td align="center"><b>Candlestick</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/candlestick.png" width="300"></td>
+  </tr>
 </table>
 
 ### Chart Types & Features
@@ -148,6 +151,7 @@ Most chart libraries are **web-only**. react-d3-viz separates **geometry computa
 | **MekkoChart** | Two-dimensional stacked data (width + height) | `data` (categories/series) |
 | **ButterflyChart** | Symmetrical comparison (e.g., population pyramids) | `data`, `series` |
 | **QuadrantChart** | Four-quadrant analysis, strategic positioning | `data`, `x`, `y`, `xAxisLabel`, `yAxisLabel` |
+| **CandlestickChart** | Financial OHLC time series, trading charts | `data`, `x`, `open`, `high`, `low`, `close`, `upColor`, `downColor` |
 
 ---
 
@@ -274,6 +278,27 @@ const hierarchy = {
   childrenKey="children"
 />
 ```
+
+**Candlestick / OHLC chart**
+```tsx
+const daily = [
+  { date: '2026-01-02', open: 100.0, high: 104.5, low: 98.2, close: 103.1 },
+  { date: '2026-01-05', open: 103.1, high: 105.8, low: 101.5, close: 102.0 },
+  { date: '2026-01-06', open: 102.0, high: 102.9, low: 97.4, close: 98.6 },
+];
+
+<CandlestickChart
+  data={daily}
+  x="date"
+  open="open"
+  high="high"
+  low="low"
+  close="close"
+  upColor="#10b981"
+  downColor="#ef4444"
+/>
+```
+`x` is stringified into a `band` scale (like `BarChart`'s x-axis), so non-trading days never show as gaps. `open`/`high`/`low`/`close` are `Accessor<number>` — a key or a function.
 
 > 💡 **All examples are live & editable** in the **[Interactive Playground](https://kiranb555.github.io/react-d3-viz-ui/)**. Edit the code, change props, and see updates instantly.
 
@@ -405,7 +430,7 @@ import { LineChart } from 'react-d3-viz';
 |----------|------|
 | Single chart (LineChart) | ~8 KB (gzipped) |
 | Three charts | ~12 KB (gzipped) |
-| All 16 charts | ~45 KB (gzipped) |
+| All 17 charts | ~47 KB (gzipped) |
 
 See [Bundlephobia](https://bundlephobia.com/package/react-d3-viz) for live build size analysis.
 
@@ -425,7 +450,7 @@ See [Bundlephobia](https://bundlephobia.com/package/react-d3-viz) for live build
 | **Cross-platform (web + RN)** | ✅ | ❌ | ❌ | ❌ |
 | **Tree-shakeable** | ✅ | ⚠️ | ⚠️ | ❌ |
 | **TypeScript support** | ✅ Full | ✅ Partial | ✅ Full | ✅ Full |
-| **Chart types** | 16 | 11 | 10+ | 27+ |
+| **Chart types** | 17 | 11 | 10+ | 27+ |
 | **Themeable** | ✅ Full | ✅ Partial | ✅ Partial | ✅ Full |
 | **Bundle size (single chart)** | ~8 KB | ~15 KB | ~20 KB | ~45 KB |
 | **SVG only** | ✅ | ✅ | ✅ | ✅ Canvas option |
@@ -445,7 +470,7 @@ npm install
 ### Commands
 
 ```bash
-npm run dev      # Vite dev server (src/App.tsx) — view all 16 charts
+npm run dev      # Vite dev server (src/App.tsx) — view all 17 charts
 npm test         # Vitest — 89+ unit & render tests
 npm run build    # tsc → dist/ (preserves .native platform adapters)
 npm run lint     # ESLint
