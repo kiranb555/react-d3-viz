@@ -67,6 +67,9 @@ export type { FunnelChartProps } from './components/charts/FunnelChart/FunnelCha
 export { GaugeChart } from './components/charts/GaugeChart/GaugeChart';
 export type { GaugeChartProps, GaugeThreshold } from './components/charts/GaugeChart/GaugeChart';
 
+export { CalendarHeatmapChart } from './components/charts/CalendarHeatmapChart/CalendarHeatmapChart';
+export type { CalendarHeatmapChartProps } from './components/charts/CalendarHeatmapChart/CalendarHeatmapChart';
+
 export type {
   WaterfallDataPoint,
   WaterfallLayoutResult,
@@ -135,6 +138,8 @@ export { funnelLayout } from './core/funnel';
 export type { FunnelStage, FunnelOptions } from './core/funnel';
 export { gaugeLayout } from './core/gauge';
 export type { GaugeBand, GaugeOptions, GaugeResult } from './core/gauge';
+export { calendarHeatmapLayout } from './core/calendarHeatmap';
+export type { CalendarCell, CalendarLayoutOptions, CalendarLayoutResult } from './core/calendarHeatmap';
 export type { Datum, Margin, ChartBounds, NumericDomain, Tick } from './core/types';
 
 // ── Color palettes & data helpers ──────────────────────────────────────────

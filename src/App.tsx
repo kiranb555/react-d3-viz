@@ -20,6 +20,7 @@ import {
   CandlestickChart,
   FunnelChart,
   GaugeChart,
+  CalendarHeatmapChart,
 } from './index';
 
 const months = [
@@ -200,6 +201,23 @@ const funnelData = [
   { stage: 'Trials', count: 2100 },
   { stage: 'Paid', count: 640 },
 ];
+
+// A year of pseudo-random daily activity (with realistic gaps) for the CalendarHeatmapChart demo.
+const calendarData = (() => {
+  let seed = 7;
+  const rnd = () => {
+    seed = (seed * 9301 + 49297) % 233280;
+    return seed / 233280;
+  };
+  const start = new Date('2025-07-10T00:00:00Z');
+  const out: { date: string; value: number }[] = [];
+  for (let i = 0; i < 365; i++) {
+    if (rnd() > 0.7) continue; // not every day has activity
+    const d = new Date(start.getTime() + i * 24 * 60 * 60 * 1000);
+    out.push({ date: d.toISOString().slice(0, 10), value: Math.round(rnd() * rnd() * 20) });
+  }
+  return out;
+})();
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -425,6 +443,10 @@ export default function App() {
             ]}
             formatValue={(v) => `${Math.round(v)}%`}
           />
+        </Card>
+
+        <Card title="Calendar Heatmap (daily activity)">
+          <CalendarHeatmapChart data={calendarData} height={200} />
         </Card>
       </div>
     </ThemeProvider>

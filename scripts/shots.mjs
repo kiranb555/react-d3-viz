@@ -45,6 +45,7 @@ const SHOTS = [
   'shot-candlestick',
   'shot-funnel',
   'shot-gauge',
+  'shot-calendar-heatmap',
 ];
 
 async function main() {

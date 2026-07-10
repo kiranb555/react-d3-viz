@@ -20,6 +20,7 @@ import {
   CandlestickChart,
   FunnelChart,
   GaugeChart,
+  CalendarHeatmapChart,
 } from '../src/index';
 
 // Deterministic pseudo-random so screenshots are stable across runs.
@@ -168,6 +169,23 @@ const funnelData = [
   { stage: 'Trials', count: 2100 },
   { stage: 'Paid', count: 640 },
 ];
+
+// Deterministic year of daily activity (with realistic gaps) for the calendar heatmap shot.
+const calendarData = (() => {
+  let seed = 7;
+  const rnd = () => {
+    seed = (seed * 9301 + 49297) % 233280;
+    return seed / 233280;
+  };
+  const start = new Date('2025-07-10T00:00:00Z');
+  const out: { date: string; value: number }[] = [];
+  for (let i = 0; i < 365; i++) {
+    if (rnd() > 0.7) continue;
+    const d = new Date(start.getTime() + i * 24 * 60 * 60 * 1000);
+    out.push({ date: d.toISOString().slice(0, 10), value: Math.round(rnd() * rnd() * 20) });
+  }
+  return out;
+})();
 
 const sunburstData = {
   name: 'Organization',
@@ -461,6 +479,9 @@ export default function Gallery() {
               formatValue={(v) => `${Math.round(v)}%`}
               animate={false}
             />
+          </Shot>
+          <Shot id="shot-calendar-heatmap">
+            <CalendarHeatmapChart data={calendarData} width={W} height={H} animate={false} />
           </Shot>
         </div>
       </div>

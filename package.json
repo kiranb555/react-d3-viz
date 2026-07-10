@@ -1,7 +1,7 @@
 {
   "name": "react-d3-viz",
   "version": "1.2.3",
-  "description": "19 cross-platform SVG charts for React & React Native: LineChart, AreaChart, BarChart, ScatterPlot, BubbleChart, PieChart, QuadrantChart, Histogram, RadarChart, TreemapChart, SunburstChart, HeatmapChart, WaterfallChart, SankeyDiagram, MekkoChart, ButterflyChart, CandlestickChart, FunnelChart, GaugeChart. Composable, themeable, with tooltips, legends, animations.",
+  "description": "20 cross-platform SVG charts for React & React Native: LineChart, AreaChart, BarChart, ScatterPlot, BubbleChart, PieChart, QuadrantChart, Histogram, RadarChart, TreemapChart, SunburstChart, HeatmapChart, WaterfallChart, SankeyDiagram, MekkoChart, ButterflyChart, CandlestickChart, FunnelChart, GaugeChart, CalendarHeatmapChart. Composable, themeable, with tooltips, legends, animations.",
   "license": "MIT",
   "author": "www.kirandev.in",
   "homepage": "https://kiranb555.github.io/react-d3-viz-ui/",
@@ -48,6 +48,7 @@
     "ohlc",
     "funnel-chart",
     "gauge-chart",
+    "calendar-heatmap",
     "cross-platform",
     "typescript",
     "composable",

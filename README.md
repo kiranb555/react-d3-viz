@@ -31,7 +31,7 @@ Lightweight, composable, fully themeable — with tooltips, interactive legends,
 - [Why react-d3-viz](#why-react-d3-viz)
 - [Features](#features)
 - [Quick Start](#quick-start)
-- [19 Chart Types](#charts)
+- [20 Chart Types](#charts)
 - [Installation](#install)
 - [Usage Examples](#usage)
 - [Responsive Sizing](#responsive-sizing-widthauto)
@@ -77,7 +77,7 @@ Most chart libraries are **web-only**. react-d3-viz separates **geometry computa
 | **🤝 No lock-in** | `react` / `react-dom` are optional peer deps (web only). `react-native-svg` is **not** a peer dep — web installs never get surprised by native packages. Everything is optional. |
 | **🔷 TypeScript-first** | Full `.d.ts` for every component, prop, and theme token. Type-safe by default. |
 | **🎨 Themeable end-to-end** | Global `ThemeProvider` or per-chart overrides. Colors, fonts, animations, axis/grid/tooltip/legend styles — all customizable. |
-| **📊 19 chart types** | Line, Area, Bar (grouped/stacked), Scatter, Bubble, Pie/Donut, Histogram, Radar, Treemap, Sunburst, Heatmap, Waterfall, Sankey, Mekko, Butterfly, Quadrant, Candlestick, Funnel, Gauge. |
+| **📊 20 chart types** | Line, Area, Bar (grouped/stacked), Scatter, Bubble, Pie/Donut, Histogram, Radar, Treemap, Sunburst, Heatmap, Waterfall, Sankey, Mekko, Butterfly, Quadrant, Candlestick, Funnel, Gauge, Calendar Heatmap. |
 | **✨ Interactive by default** | Tooltips (hover/touch), togglable legends, smooth enter animations. No extra setup. |
 | **✅ Battle-tested** | 89+ unit & render tests. Used in production. |
 
@@ -85,9 +85,9 @@ Most chart libraries are **web-only**. react-d3-viz separates **geometry computa
 
 ## Charts
 
-**19 interactive chart types** — all responsive, themeable, and cross-platform:
+**20 interactive chart types** — all responsive, themeable, and cross-platform:
 
-`LineChart` · `AreaChart` · `BarChart` · `ScatterPlot` · `BubbleChart` · `PieChart` · `Histogram` · `RadarChart` · `TreemapChart` · `SunburstChart` · `HeatmapChart` · `WaterfallChart` · `SankeyDiagram` · `MekkoChart` · `ButterflyChart` · `QuadrantChart` · `CandlestickChart` · `FunnelChart` · `GaugeChart`
+`LineChart` · `AreaChart` · `BarChart` · `ScatterPlot` · `BubbleChart` · `PieChart` · `Histogram` · `RadarChart` · `TreemapChart` · `SunburstChart` · `HeatmapChart` · `WaterfallChart` · `SankeyDiagram` · `MekkoChart` · `ButterflyChart` · `QuadrantChart` · `CandlestickChart` · `FunnelChart` · `GaugeChart` · `CalendarHeatmapChart`
 
 <table>
   <tr>
@@ -132,6 +132,7 @@ Most chart libraries are **web-only**. react-d3-viz separates **geometry computa
   </tr>
   <tr>
     <td align="center"><b>Gauge</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/gauge.png" width="300"></td>
+    <td align="center"><b>Calendar Heatmap</b><br><img src="https://raw.githubusercontent.com/kiranb555/react-d3-viz/main/assets/calendar-heatmap.png" width="300"></td>
   </tr>
 </table>
 
@@ -158,6 +159,7 @@ Most chart libraries are **web-only**. react-d3-viz separates **geometry computa
 | **CandlestickChart** | Financial OHLC time series, trading charts | `data`, `x`, `open`, `high`, `low`, `close`, `upColor`, `downColor` |
 | **FunnelChart** | Conversion funnels, sequential drop-off analysis | `data`, `value`, `label`, `orientation`, `showDropOff` |
 | **GaugeChart** | KPI dials, speedometers, single-value readouts against thresholds | `value`, `min`, `max`, `thresholds`, `showNeedle`, `showTicks` |
+| **CalendarHeatmapChart** | Daily activity / contribution graphs, GitHub-style day-by-day trends | `data`, `startDate`, `endDate`, `cellSize`, `weekStart`, `colorStart`, `colorEnd` |
 
 ---
 
@@ -340,6 +342,23 @@ Stages taper continuously (each stage's top width matches the previous stage's b
 ```
 `value` is clamped to `[min, max]` (default 0/100) before it's plotted — the needle, arc, and value label all reflect the clamped reading. Pass `thresholds` (`{from, to, color, label?}[]`) for colored zones (e.g. red/yellow/green); omit it for a single-color progress arc using `colors`/the theme palette. `startAngle`/`endAngle` (radians) customize the sweep — the default is a speedometer-style ~270° sweep, not a plain semicircle. `showNeedle`, `showTicks`, and `showValue` each default to `true`.
 
+**Calendar Heatmap (GitHub-style contribution graph)**
+```tsx
+const activity = [
+  { date: '2026-01-02', value: 4 },
+  { date: '2026-01-03', value: 12 },
+  { date: '2026-01-06', value: 1 },
+  // ...one entry per active day — gaps are fine
+];
+
+<CalendarHeatmapChart
+  data={activity}
+  colorStart="#ebedf0"
+  colorEnd="#196127"
+/>
+```
+Renders one cell per calendar day in `[startDate, endDate]` (auto-derived from `data`'s date extent when omitted); days without a matching entry render as neutral/empty cells rather than being skipped, so the grid always covers the full range. `weekStart` (`0` Sunday-first / `1` Monday-first, default `0`) and `cellSize` (a max — it shrinks, never grows, to fit the container width) control the grid. `colorStart`/`colorEnd` set the sequential value scale (same convention as `HeatmapChart`); `colorDomain` overrides the auto-derived `[min, max]`.
+
 > 💡 **All examples are live & editable** in the **[Interactive Playground](https://kiranb555.github.io/react-d3-viz-ui/)**. Edit the code, change props, and see updates instantly.
 
 ### Responsive Sizing
@@ -470,7 +489,7 @@ import { LineChart } from 'react-d3-viz';
 |----------|------|
 | Single chart (LineChart) | ~8 KB (gzipped) |
 | Three charts | ~12 KB (gzipped) |
-| All 19 charts | ~49 KB (gzipped) |
+| All 20 charts | ~51 KB (gzipped) |
 
 See [Bundlephobia](https://bundlephobia.com/package/react-d3-viz) for live build size analysis.
 
@@ -490,7 +509,7 @@ See [Bundlephobia](https://bundlephobia.com/package/react-d3-viz) for live build
 | **Cross-platform (web + RN)** | ✅ | ❌ | ❌ | ❌ |
 | **Tree-shakeable** | ✅ | ⚠️ | ⚠️ | ❌ |
 | **TypeScript support** | ✅ Full | ✅ Partial | ✅ Full | ✅ Full |
-| **Chart types** | 19 | 11 | 10+ | 27+ |
+| **Chart types** | 20 | 11 | 10+ | 27+ |
 | **Themeable** | ✅ Full | ✅ Partial | ✅ Partial | ✅ Full |
 | **Bundle size (single chart)** | ~8 KB | ~15 KB | ~20 KB | ~45 KB |
 | **SVG only** | ✅ | ✅ | ✅ | ✅ Canvas option |
@@ -510,7 +529,7 @@ npm install
 ### Commands
 
 ```bash
-npm run dev      # Vite dev server (src/App.tsx) — view all 19 charts
+npm run dev      # Vite dev server (src/App.tsx) — view all 20 charts
 npm test         # Vitest — 89+ unit & render tests
 npm run build    # tsc → dist/ (preserves .native platform adapters)
 npm run lint     # ESLint

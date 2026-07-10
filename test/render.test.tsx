@@ -21,6 +21,7 @@ import {
   CandlestickChart,
   FunnelChart,
   GaugeChart,
+  CalendarHeatmapChart,
 } from '../src/index';
 
 afterEach(cleanup);
@@ -633,5 +634,45 @@ describe('chart rendering (web SVG)', () => {
     expect(fills).toContain('#ef4444');
     expect(fills).toContain('#f59e0b');
     expect(fills).toContain('#10b981');
+  });
+
+  it('CalendarHeatmapChart renders with default props (one rect per day in range)', () => {
+    const data = [
+      { date: '2024-01-01', value: 3 },
+      { date: '2024-01-15', value: 9 },
+      { date: '2024-01-31', value: 1 },
+    ];
+    const { container } = renderChart(
+      <CalendarHeatmapChart data={data} startDate="2024-01-01" endDate="2024-01-31" width={400} height={200} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    // 31 day cells; legend swatches (6) also render as rects, so assert a lower bound.
+    expect(container.querySelectorAll('rect').length).toBeGreaterThanOrEqual(31);
+  });
+
+  it('CalendarHeatmapChart handles empty data over an explicit date range without crashing', () => {
+    const { container } = renderChart(
+      <CalendarHeatmapChart data={[]} startDate="2024-03-01" endDate="2024-03-31" width={400} height={200} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.innerHTML).not.toContain('NaN');
+    // Still one cell per day in the explicit range even with no data.
+    expect(container.querySelectorAll('rect').length).toBeGreaterThanOrEqual(31);
+  });
+
+  it('CalendarHeatmapChart respects weekStart (Monday-first shows "Sat" not "Sun" as the second label row)', () => {
+    const data = [{ date: '2024-01-01', value: 5 }];
+    const { container: sundayFirst } = renderChart(
+      <CalendarHeatmapChart data={data} startDate="2024-01-01" endDate="2024-01-07" weekStart={0} width={400} height={200} />,
+    );
+    expect(sundayFirst.textContent ?? '').toContain('Mon');
+
+    cleanup();
+
+    const { container: mondayFirst } = renderChart(
+      <CalendarHeatmapChart data={data} startDate="2024-01-01" endDate="2024-01-07" weekStart={1} width={400} height={200} />,
+    );
+    // Monday-first row order is Mon,Tue,Wed,Thu,Fri,Sat,Sun — labeled rows (odd index) are Tue/Thu/Sat.
+    expect(mondayFirst.textContent ?? '').toContain('Tue');
   });
 });
