@@ -25,6 +25,8 @@ const meta = {
     showLabels: { control: 'boolean' },
     showLegend: { control: 'boolean' },
     animate: { control: 'boolean' },
+    centerLabel: { control: 'text' },
+    centerSubLabel: { control: 'text' },
   },
 } satisfies Meta<typeof PieChart>;
 
@@ -65,5 +67,15 @@ export const NoAnimation: Story = {
     showLabels: true,
     animate: false,
     showLegend: true,
+  },
+};
+
+export const DonutWithCenterLabel: Story = {
+  args: {
+    innerRadius: 0.65,
+    showLabels: true,
+    showLegend: true,
+    centerLabel: (total: number) => total.toLocaleString(),
+    centerSubLabel: 'Total',
   },
 };

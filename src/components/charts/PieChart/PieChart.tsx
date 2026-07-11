@@ -36,9 +36,25 @@ export interface PieChartProps {
   /** Override the categorical palette. */
   colors?: string[];
   animate?: boolean;
+  /**
+   * Text rendered in the donut hole (only shown when `innerRadius` > 0). Pass
+   * a function to derive it from the visible slices' total (e.g. a running
+   * sum that updates as legend items are toggled).
+   */
+  centerLabel?: string | ((total: number) => string);
+  /** Smaller line rendered below `centerLabel`, e.g. `'Total'`. */
+  centerSubLabel?: string;
 }
 
 const CHAR_W = 0.6;
+const MIN_CENTER_FONT = 9;
+
+/** Largest font size (px) that keeps `text` within the donut hole without overflowing it. */
+function fitCenterFontSize(text: string, innerR: number): number {
+  const maxByWidth = (innerR * 1.6) / (Math.max(text.length, 1) * CHAR_W);
+  const maxByHeight = innerR * 0.8;
+  return Math.floor(Math.min(maxByWidth, maxByHeight, 40));
+}
 
 /**
  * Pie / donut chart. Self-contained (does not use the Cartesian frame). Set
@@ -60,6 +76,8 @@ export function PieChart({
   showLabels = true,
   colors,
   animate,
+  centerLabel,
+  centerSubLabel,
 }: PieChartProps) {
   const theme = useTheme(themeOverride);
   const size = useAutoSize(width, height ?? 'auto', aspect);
@@ -87,6 +105,7 @@ export function PieChart({
 
   const visible = items.filter((it) => !hidden.has(it.originalIndex));
   const total = visible.reduce((acc, it) => acc + (Number.isFinite(it.value) ? it.value : 0), 0);
+  const resolvedLabel = typeof centerLabel === 'function' ? centerLabel(total) : centerLabel;
   const arcs = pieArcs(
     visible.map((it) => (Number.isFinite(it.value) ? it.value : 0)),
     radius,
@@ -132,6 +151,41 @@ export function PieChart({
             </G>
           );
         })}
+        {innerR > 0 && resolvedLabel && (() => {
+          const fontSize = fitCenterFontSize(resolvedLabel, innerR);
+          if (fontSize < MIN_CENTER_FONT) return null;
+          const subFontSize = Math.round(fontSize * 0.5);
+          const canFitSubLabel = !!centerSubLabel && innerR * 2 >= fontSize + subFontSize + 6;
+          return (
+            <>
+              <SvgText
+                x={0}
+                y={canFitSubLabel ? -(subFontSize / 2 + 2) : 0}
+                fill={theme.font.color}
+                fontSize={fontSize}
+                fontFamily={theme.font.family}
+                fontWeight="bold"
+                textAnchor="middle"
+                verticalAnchor="middle"
+              >
+                {resolvedLabel}
+              </SvgText>
+              {canFitSubLabel && (
+                <SvgText
+                  x={0}
+                  y={fontSize / 2 + 2}
+                  fill={theme.legend.color}
+                  fontSize={subFontSize}
+                  fontFamily={theme.font.family}
+                  textAnchor="middle"
+                  verticalAnchor="middle"
+                >
+                  {centerSubLabel}
+                </SvgText>
+              )}
+            </>
+          );
+        })()}
       </G>
 
           {showLegend && <PieLegend items={items} hidden={hidden} theme={theme} width={size.width} y={size.height - legendH + 2} onToggle={(idx) => {

@@ -17,6 +17,10 @@ import {
   HeatmapChart,
   SunburstChart,
   QuadrantChart,
+  CandlestickChart,
+  FunnelChart,
+  GaugeChart,
+  CalendarHeatmapChart,
 } from './index';
 
 const months = [
@@ -174,6 +178,47 @@ const sunburstData = {
   ],
 };
 
+// Sample daily OHLC series for the candlestick demo.
+const ohlcData = [
+  { date: '2026-01-02', open: 100.0, high: 104.5, low: 98.2, close: 103.1 },
+  { date: '2026-01-05', open: 103.1, high: 105.8, low: 101.5, close: 102.0 },
+  { date: '2026-01-06', open: 102.0, high: 102.9, low: 97.4, close: 98.6 },
+  { date: '2026-01-07', open: 98.6, high: 101.2, low: 96.8, close: 100.9 },
+  { date: '2026-01-08', open: 100.9, high: 106.3, low: 100.1, close: 105.7 },
+  { date: '2026-01-09', open: 105.7, high: 107.0, low: 103.9, close: 104.4 },
+  { date: '2026-01-12', open: 104.4, high: 104.9, low: 100.6, close: 101.2 },
+  { date: '2026-01-13', open: 101.2, high: 103.5, low: 100.8, close: 103.0 },
+  { date: '2026-01-14', open: 103.0, high: 108.4, low: 102.7, close: 107.9 },
+  { date: '2026-01-15', open: 107.9, high: 109.1, low: 105.3, close: 106.0 },
+  { date: '2026-01-16', open: 106.0, high: 106.6, low: 102.1, close: 102.8 },
+  { date: '2026-01-20', open: 102.8, high: 105.0, low: 101.9, close: 104.6 },
+];
+
+// Sample conversion funnel for the FunnelChart demo.
+const funnelData = [
+  { stage: 'Visitors', count: 10000 },
+  { stage: 'Signups', count: 4200 },
+  { stage: 'Trials', count: 2100 },
+  { stage: 'Paid', count: 640 },
+];
+
+// A year of pseudo-random daily activity (with realistic gaps) for the CalendarHeatmapChart demo.
+const calendarData = (() => {
+  let seed = 7;
+  const rnd = () => {
+    seed = (seed * 9301 + 49297) % 233280;
+    return seed / 233280;
+  };
+  const start = new Date('2025-07-10T00:00:00Z');
+  const out: { date: string; value: number }[] = [];
+  for (let i = 0; i < 365; i++) {
+    if (rnd() > 0.7) continue; // not every day has activity
+    const d = new Date(start.getTime() + i * 24 * 60 * 60 * 1000);
+    out.push({ date: d.toISOString().slice(0, 10), value: Math.round(rnd() * rnd() * 20) });
+  }
+  return out;
+})();
+
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div style={{ background: '#fff', borderRadius: 12, padding: 20, boxShadow: '0 1px 3px rgba(0,0,0,0.08)', marginBottom: 28 }}>
@@ -235,7 +280,15 @@ export default function App() {
         </Card>
 
         <Card title="Donut">
-          <PieChart data={pie} value="value" label="label" innerRadius={0.6} height={340} />
+          <PieChart
+            data={pie}
+            value="value"
+            label="label"
+            innerRadius={0.6}
+            height={340}
+            centerLabel={(total) => total.toLocaleString()}
+            centerSubLabel="Total"
+          />
         </Card>
 
         <Card title="Histogram (500 ~normal values)">
@@ -353,6 +406,47 @@ export default function App() {
             childrenKey="children"
             height={360}
           />
+        </Card>
+
+        <Card title="Candlestick (daily OHLC)">
+          <CandlestickChart
+            data={ohlcData}
+            x="date"
+            open="open"
+            high="high"
+            low="low"
+            close="close"
+            showGrid
+            height={320}
+          />
+        </Card>
+
+        <Card title="Funnel (conversion funnel)">
+          <FunnelChart
+            data={funnelData}
+            value="count"
+            label="stage"
+            height={380}
+          />
+        </Card>
+
+        <Card title="Gauge (customer satisfaction)">
+          <GaugeChart
+            value={78}
+            min={0}
+            max={100}
+            height={280}
+            thresholds={[
+              { from: 0, to: 50, color: '#ef4444' },
+              { from: 50, to: 80, color: '#f59e0b' },
+              { from: 80, to: 100, color: '#10b981' },
+            ]}
+            formatValue={(v) => `${Math.round(v)}%`}
+          />
+        </Card>
+
+        <Card title="Calendar Heatmap (daily activity)">
+          <CalendarHeatmapChart data={calendarData} height={200} />
         </Card>
       </div>
     </ThemeProvider>

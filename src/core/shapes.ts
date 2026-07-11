@@ -105,3 +105,31 @@ export function pieArcs(
     centroid: generator.centroid(slice as never) as [number, number],
   }));
 }
+
+/**
+ * Build a single open arc path — e.g. for gauges, progress rings, or any
+ * freestanding arc that isn't part of a `d3.pie()` layout. Uses `d3-shape`'s
+ * `arc()` generator directly with constant `startAngle`/`endAngle` (not a
+ * per-datum accessor), so no pie layout step is needed. Angles follow
+ * d3-shape's arc convention: radians, 0 at 12 o'clock, increasing clockwise.
+ * The path is centered at the origin — the caller translates the group.
+ */
+export function arcPath(
+  startAngle: number,
+  endAngle: number,
+  outerRadius: number,
+  innerRadius = 0,
+  cornerRadius = 0,
+): { path: string; centroid: [number, number] } {
+  const generator = d3arc()
+    .innerRadius(innerRadius)
+    .outerRadius(outerRadius)
+    .cornerRadius(cornerRadius)
+    .startAngle(startAngle)
+    .endAngle(endAngle);
+
+  return {
+    path: generator(undefined as never) ?? '',
+    centroid: generator.centroid(undefined as never) as [number, number],
+  };
+}

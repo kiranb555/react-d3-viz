@@ -17,6 +17,10 @@ import {
   SankeyDiagram,
   MekkoChart,
   QuadrantChart,
+  CandlestickChart,
+  FunnelChart,
+  GaugeChart,
+  CalendarHeatmapChart,
 } from '../src/index';
 
 // Deterministic pseudo-random so screenshots are stable across runs.
@@ -138,6 +142,50 @@ const quadrantData = Array.from({ length: 50 }, () => ({
   x: rnd() * 100,
   value: rnd() * 100,
 }));
+
+// Deterministic daily OHLC series for the candlestick shot.
+const ohlcData = (() => {
+  const data: { date: string; open: number; high: number; low: number; close: number }[] = [];
+  let price = 100;
+  const start = new Date('2026-01-02');
+  for (let i = 0; i < 24; i++) {
+    const d = new Date(start);
+    d.setDate(start.getDate() + i);
+    const open = price;
+    const change = (rnd() - 0.5) * 5;
+    const close = Math.max(1, open + change);
+    const high = Math.max(open, close) + rnd() * 2;
+    const low = Math.max(0.5, Math.min(open, close) - rnd() * 2);
+    data.push({ date: d.toISOString().slice(0, 10), open, high, low, close });
+    price = close;
+  }
+  return data;
+})();
+
+// Sample conversion funnel for the funnel shot.
+const funnelData = [
+  { stage: 'Visitors', count: 10000 },
+  { stage: 'Signups', count: 4200 },
+  { stage: 'Trials', count: 2100 },
+  { stage: 'Paid', count: 640 },
+];
+
+// Deterministic year of daily activity (with realistic gaps) for the calendar heatmap shot.
+const calendarData = (() => {
+  let seed = 7;
+  const rnd = () => {
+    seed = (seed * 9301 + 49297) % 233280;
+    return seed / 233280;
+  };
+  const start = new Date('2025-07-10T00:00:00Z');
+  const out: { date: string; value: number }[] = [];
+  for (let i = 0; i < 365; i++) {
+    if (rnd() > 0.7) continue;
+    const d = new Date(start.getTime() + i * 24 * 60 * 60 * 1000);
+    out.push({ date: d.toISOString().slice(0, 10), value: Math.round(rnd() * rnd() * 20) });
+  }
+  return out;
+})();
 
 const sunburstData = {
   name: 'Organization',
@@ -392,6 +440,48 @@ export default function Gallery() {
               height={H}
               animate={false}
             />
+          </Shot>
+          <Shot id="shot-candlestick">
+            <CandlestickChart
+              data={ohlcData}
+              x="date"
+              open="open"
+              high="high"
+              low="low"
+              close="close"
+              width={W}
+              height={H}
+              animate={false}
+            />
+          </Shot>
+          <Shot id="shot-funnel">
+            <FunnelChart
+              data={funnelData}
+              value="count"
+              label="stage"
+              width={W}
+              height={H}
+              animate={false}
+            />
+          </Shot>
+          <Shot id="shot-gauge">
+            <GaugeChart
+              value={78}
+              min={0}
+              max={100}
+              width={W}
+              height={H}
+              thresholds={[
+                { from: 0, to: 50, color: '#ef4444' },
+                { from: 50, to: 80, color: '#f59e0b' },
+                { from: 80, to: 100, color: '#10b981' },
+              ]}
+              formatValue={(v) => `${Math.round(v)}%`}
+              animate={false}
+            />
+          </Shot>
+          <Shot id="shot-calendar-heatmap">
+            <CalendarHeatmapChart data={calendarData} width={W} height={H} animate={false} />
           </Shot>
         </div>
       </div>

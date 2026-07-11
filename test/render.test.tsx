@@ -18,6 +18,10 @@ import {
   HeatmapChart,
   SunburstChart,
   QuadrantChart,
+  CandlestickChart,
+  FunnelChart,
+  GaugeChart,
+  CalendarHeatmapChart,
 } from '../src/index';
 
 afterEach(cleanup);
@@ -115,6 +119,37 @@ describe('chart rendering (web SVG)', () => {
   it('PieChart renders slice paths', () => {
     const { container } = renderChart(<PieChart data={pie} value="value" label="label" width={300} height={300} />);
     expect(container.querySelectorAll('path').length).toBeGreaterThan(0);
+  });
+
+  it('PieChart donut renders a string centerLabel', () => {
+    const { getByText } = renderChart(
+      <PieChart data={pie} value="value" label="label" innerRadius={0.5} centerLabel="Total" width={300} height={300} />,
+    );
+    expect(getByText('Total')).toBeTruthy();
+  });
+
+  it('PieChart function-form centerLabel receives the visible total', () => {
+    const centerLabel = (total: number) => `Total: ${total}`;
+    const { getByText } = renderChart(
+      <PieChart data={pie} value="value" label="label" innerRadius={0.5} centerLabel={centerLabel} width={300} height={300} />,
+    );
+    // pie = [{ value: 30 }, { value: 70 }] => visible total is 100.
+    expect(getByText('Total: 100')).toBeTruthy();
+  });
+
+  it('PieChart hides centerLabel when innerRadius is 0 (full pie)', () => {
+    const { queryByText } = renderChart(
+      <PieChart data={pie} value="value" label="label" innerRadius={0} centerLabel="Hello" width={300} height={300} />,
+    );
+    expect(queryByText('Hello')).toBeNull();
+  });
+
+  it('PieChart hides an unreadably long centerLabel rather than overflow the hole', () => {
+    const longLabel = 'This Is A Very Long Center Label String For Testing';
+    const { queryByText } = renderChart(
+      <PieChart data={pie} value="value" label="label" innerRadius={0.15} centerLabel={longLabel} width={300} height={300} />,
+    );
+    expect(queryByText(longLabel)).toBeNull();
   });
 
   it('Histogram renders bars', () => {
@@ -464,6 +499,52 @@ describe('chart rendering (web SVG)', () => {
     expect(container.querySelector('svg')).toBeTruthy();
   });
 
+  it('CandlestickChart renders wicks and bodies', () => {
+    const ohlc = [
+      { date: '2026-01-02', open: 100, high: 108, low: 96, close: 105 },
+      { date: '2026-01-05', open: 105, high: 110, low: 101, close: 99 },
+      { date: '2026-01-06', open: 99, high: 103, low: 95, close: 102 },
+    ];
+    const { container } = renderChart(
+      <CandlestickChart data={ohlc} x="date" open="open" high="high" low="low" close="close" width={400} height={240} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.querySelectorAll('rect').length).toBeGreaterThan(0);
+    expect(container.querySelectorAll('line').length).toBeGreaterThan(0);
+  });
+
+  it('CandlestickChart handles empty data gracefully', () => {
+    const { container } = renderChart(
+      <CandlestickChart data={[]} x="date" open="open" high="high" low="low" close="close" width={400} height={240} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+  });
+
+  it('CandlestickChart handles a single candle', () => {
+    const ohlc = [{ date: '2026-01-02', open: 100, high: 108, low: 96, close: 105 }];
+    const { container } = renderChart(
+      <CandlestickChart data={ohlc} x="date" open="open" high="high" low="low" close="close" width={400} height={240} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.querySelectorAll('rect').length).toBeGreaterThan(0);
+    expect(container.querySelectorAll('line').length).toBeGreaterThan(0);
+  });
+
+  it('CandlestickChart never renders a legend for its internal OHLC pseudo-series', () => {
+    const ohlc = [
+      { date: '2026-01-02', open: 100, high: 108, low: 96, close: 105 },
+      { date: '2026-01-05', open: 105, high: 110, low: 101, close: 99 },
+    ];
+    const { container } = renderChart(
+      <CandlestickChart data={ohlc} x="date" open="open" high="high" low="low" close="close" width={400} height={240} />,
+    );
+    const text = container.textContent ?? '';
+    expect(text).not.toContain('Open');
+    expect(text).not.toContain('High');
+    expect(text).not.toContain('Low');
+    expect(text).not.toContain('Close');
+  });
+
   it('QuadrantChart renders without error', () => {
     const data = Array.from({ length: 20 }, () => ({
       x: Math.random() * 100,
@@ -480,5 +561,118 @@ describe('chart rendering (web SVG)', () => {
       />
     );
     expect(container.querySelector('svg')).toBeTruthy();
+  });
+
+  it('FunnelChart renders a trapezoid path per stage', () => {
+    const funnel = [
+      { stage: 'Visitors', count: 10000 },
+      { stage: 'Signups', count: 4200 },
+      { stage: 'Trials', count: 2100 },
+      { stage: 'Paid', count: 640 },
+    ];
+    const { container } = renderChart(
+      <FunnelChart data={funnel} value="count" label="stage" width={400} height={420} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.querySelectorAll('path').length).toBe(funnel.length);
+    expect(container.textContent ?? '').toContain('↓');
+  });
+
+  it('FunnelChart handles empty data gracefully', () => {
+    const { container } = renderChart(
+      <FunnelChart data={[]} value="count" label="stage" width={400} height={420} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.querySelectorAll('path').length).toBe(0);
+  });
+
+  it('FunnelChart renders a single-stage funnel without a drop-off label', () => {
+    const funnel = [{ stage: 'Visitors', count: 10000 }];
+    const { container } = renderChart(
+      <FunnelChart data={funnel} value="count" label="stage" width={400} height={420} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.querySelectorAll('path').length).toBe(1);
+    expect(container.textContent ?? '').not.toContain('↓');
+  });
+
+  it('GaugeChart renders with default props (track + progress arc + value label)', () => {
+    const { container } = renderChart(<GaugeChart value={62} width={400} height={260} />);
+    expect(container.querySelector('svg')).toBeTruthy();
+    // track arc + single-color progress arc == 2 paths (no thresholds).
+    expect(container.querySelectorAll('path').length).toBe(2);
+    expect(container.textContent ?? '').toContain('62');
+  });
+
+  it('GaugeChart clamps an out-of-range value instead of throwing / rendering NaN geometry', () => {
+    const { container } = renderChart(
+      <GaugeChart value={500} min={0} max={100} width={400} height={260} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.innerHTML).not.toContain('NaN');
+    // The needle/arc — and the value label alongside it — clamp to `max`.
+    expect(container.textContent ?? '').toContain('100');
+  });
+
+  it('GaugeChart renders threshold bands instead of the single-color progress arc', () => {
+    const { container } = renderChart(
+      <GaugeChart
+        value={78}
+        width={400}
+        height={260}
+        thresholds={[
+          { from: 0, to: 50, color: '#ef4444' },
+          { from: 50, to: 80, color: '#f59e0b' },
+          { from: 80, to: 100, color: '#10b981' },
+        ]}
+      />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    // track arc + 3 band arcs == 4 paths.
+    expect(container.querySelectorAll('path').length).toBe(4);
+    const fills = Array.from(container.querySelectorAll('path')).map((p) => p.getAttribute('fill'));
+    expect(fills).toContain('#ef4444');
+    expect(fills).toContain('#f59e0b');
+    expect(fills).toContain('#10b981');
+  });
+
+  it('CalendarHeatmapChart renders with default props (one rect per day in range)', () => {
+    const data = [
+      { date: '2024-01-01', value: 3 },
+      { date: '2024-01-15', value: 9 },
+      { date: '2024-01-31', value: 1 },
+    ];
+    const { container } = renderChart(
+      <CalendarHeatmapChart data={data} startDate="2024-01-01" endDate="2024-01-31" width={400} height={200} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    // 31 day cells; legend swatches (6) also render as rects, so assert a lower bound.
+    expect(container.querySelectorAll('rect').length).toBeGreaterThanOrEqual(31);
+  });
+
+  it('CalendarHeatmapChart handles empty data over an explicit date range without crashing', () => {
+    const { container } = renderChart(
+      <CalendarHeatmapChart data={[]} startDate="2024-03-01" endDate="2024-03-31" width={400} height={200} />,
+    );
+    expect(container.querySelector('svg')).toBeTruthy();
+    expect(container.innerHTML).not.toContain('NaN');
+    // Still one cell per day in the explicit range even with no data.
+    expect(container.querySelectorAll('rect').length).toBeGreaterThanOrEqual(31);
+  });
+
+  it('CalendarHeatmapChart respects weekStart (Monday-first shows "Sat" not "Sun" as the second label row)', () => {
+    const data = [{ date: '2024-01-01', value: 5 }];
+    const { container: sundayFirst } = renderChart(
+      <CalendarHeatmapChart data={data} startDate="2024-01-01" endDate="2024-01-07" weekStart={0} width={400} height={200} />,
+    );
+    expect(sundayFirst.textContent ?? '').toContain('Mon');
+
+    cleanup();
+
+    const { container: mondayFirst } = renderChart(
+      <CalendarHeatmapChart data={data} startDate="2024-01-01" endDate="2024-01-07" weekStart={1} width={400} height={200} />,
+    );
+    // Monday-first row order is Mon,Tue,Wed,Thu,Fri,Sat,Sun — labeled rows (odd index) are Tue/Thu/Sat.
+    expect(mondayFirst.textContent ?? '').toContain('Tue');
   });
 });

@@ -42,6 +42,10 @@ const SHOTS = [
   'shot-waterfall',
   'shot-sankey',
   'shot-mekko',
+  'shot-candlestick',
+  'shot-funnel',
+  'shot-gauge',
+  'shot-calendar-heatmap',
 ];
 
 async function main() {
